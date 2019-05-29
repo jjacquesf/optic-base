@@ -34,6 +34,17 @@ return [
                 ],
             ],
         ],
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@app/views' => ['@app/themes/gentelella'],
+                    '@common/modules' => ['@app/themes/gentelella/modules'],
+                    // '@app/views' => ['@app/themes/main'],
+                    // '@vendor/yii2mod/yii2-user/views' => '@app/themes/main/user'
+                ],
+                'baseUrl' => '@web',
+            ],
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
