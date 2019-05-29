@@ -11,6 +11,7 @@ use yii\web\IdentityInterface;
  * User model
  *
  * @property integer $id
+ * @property integer $type
  * @property string $username
  * @property string $password_hash
  * @property string $password_reset_token
@@ -25,9 +26,18 @@ use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
+    const STATUS_DISABLED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    const TYPE_USER = 0;
+    const TYPE_OPERATOR = 1;
+
+    public $status_options = [
+        self::STATUS_DISABLED => 'Suspendido',
+        self::STATUS_INACTIVE => 'Por validar',
+        self::STATUS_ACTIVE => 'Activo',
+    ];
 
     /**
      * {@inheritdoc}
@@ -58,6 +68,20 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    public function getProfile()
+    {
+        return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
+    }
+
+    public function getTravels()
+    {
+        return $this->hasOne(Travel::clasName(), ['user_id' => 'id']);
+    }
+
+    public function getTravelVehicles()
+    {
+        return $this->hasOne(TravelVehicle::clasName(), ['operator_id' => 'id']);
+    }
     /**
      * {@inheritdoc}
      */
