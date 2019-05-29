@@ -6,7 +6,7 @@ use Yii;
 
 class EActiveRecord extends \yii\db\ActiveRecord
 {
-    public function getFormatted($attr, $lang = null)
+    public function getFormatted($attr, $lang)
     {
         switch ($attr) {
             default:
