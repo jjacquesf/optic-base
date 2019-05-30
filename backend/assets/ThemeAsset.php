@@ -15,8 +15,8 @@ class ThemeAsset extends AssetBundle
         'main.css',
     ];
     public $js = [
-        'vendor.js',
-        'main.js',
+        // 'vendor.js',
+        // 'main.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

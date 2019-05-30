@@ -18,7 +18,7 @@ class ZoneSearch extends Zone
     {
         return [
             [['id'], 'integer'],
-            [['name', 'points'], 'safe'],
+            [['name', 'polygon'], 'safe'],
         ];
     }
 
@@ -62,7 +62,7 @@ class ZoneSearch extends Zone
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'points', $this->points]);
+            ->andFilterWhere(['like', 'polygon', $this->polygon]);
 
         return $dataProvider;
     }

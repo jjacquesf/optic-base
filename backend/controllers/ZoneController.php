@@ -23,10 +23,10 @@ class ZoneController extends Controller
         return [
             'access' => [
                  'class' => AccessControl::className(),
-                 'only' => ['index', 'view', 'create', 'update', 'delete'],
+                 'only' => ['index', 'create', 'update', 'delete'],
                  'rules' => [
                      [
-                         'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                         'actions' => ['index', 'create', 'update', 'delete'],
                          'allow' => true,
                          'roles' => ['@'],
                      ],
@@ -57,21 +57,8 @@ class ZoneController extends Controller
     }
 
     /**
-     * Displays a single Zone model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Creates a new Zone model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
@@ -79,7 +66,7 @@ class ZoneController extends Controller
         $model = new Zone();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -89,7 +76,7 @@ class ZoneController extends Controller
 
     /**
      * Updates an existing Zone model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * If update is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -99,7 +86,7 @@ class ZoneController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
