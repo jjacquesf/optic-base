@@ -17,7 +17,7 @@ use common\models\Config;
 
     <?= $form->field($model, 'price')->textInput() ?>
 
-    <div class="form-group">
+    <div class="text-right">
         <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success']) ?>
     </div>
 

@@ -9,8 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property int $status
- * @property int $public_vehicle_rate_id
- * @property int $public_vehicle_zone_rate_id
+ * @property int $rate_id
  * @property string $languages
  */
 class Config extends EActiveRecord
@@ -37,8 +36,8 @@ class Config extends EActiveRecord
     public function rules()
     {
         return [
-            [['status', 'public_vehicle_rate_id', 'public_vehicle_zone_rate_id'], 'required'],
-            [['status', 'public_vehicle_rate_id', 'public_vehicle_zone_rate_id'], 'integer'],
+            [['status', 'rate_id'], 'required'],
+            [['status', 'rate_id'], 'integer'],
             ['languages', 'default', 'value' => 'es|en']
         ];
     }
@@ -51,8 +50,7 @@ class Config extends EActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'status' => Yii::t('app', 'Estado'),
-            'public_vehicle_rate_id' => Yii::t('app', 'tarifa publica por hora'),
-            'public_vehicle_zone_rate_id' => Yii::t('app', 'Tarifa publica por zona'),
+            'rate_id' => Yii::t('app', 'tarifa pública'),
             'languages' => Yii::t('app', 'Idiomas'),
         ];
     }

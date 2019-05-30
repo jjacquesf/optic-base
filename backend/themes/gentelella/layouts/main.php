@@ -70,7 +70,14 @@ $this->registerCss('@media print { a:after { content: "" !important;  } }');
                                             'label' => Yii::t('app', 'Home'), 
                                             'url' => '/', 'icon' => 'home'
                                         ],
-                                        
+                                        [
+                                            'label' => Yii::t('app', 'Tarifas'), 
+                                            'url' => ['/rate/index'], 'icon' => 'home'
+                                        ],
+                                        [
+                                            'label' => Yii::t('app', 'Clientes'), 
+                                            'url' => ['/client/index'], 'icon' => 'home'
+                                        ],
                                         [
                                             'label' => Yii::t('app', 'Zonas'), 
                                             'url' => ['/zone/index'], 'icon' => 'home'

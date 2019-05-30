@@ -90,24 +90,27 @@ $this->registerJs("
 	initMap();
 ", View::POS_READY);
 ?>
+<div class="tab-content">
+	<div id="general-panel" class="tab-pane active">
+		<div class="tab-pane active">
+			<div class="zone-form">
+				<?php $form = ActiveForm::begin(); ?>
 
-<div class="zone-form">
+				<?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+				<?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
-    <?php $form = ActiveForm::begin(); ?>
+				<div class="form-group">
+					<label for="zone-polygon">Define el área</label>
+				    <?= Html::activeHiddenInput($model, 'polygon'); ?>
+				    <div id="map" style="width: 100%; height: 400px;"></div>
+				</div>	
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+				<div class="text-right">
+				    <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success']) ?>
+				</div>
 
-	<div class="form-group">
-		<label for="zone-polygon">Define el área</label>
-        <?= Html::activeHiddenInput($model, 'polygon'); ?>
-        <div id="map" style="width: 100%; height: 400px;"></div>
-    </div>	
-    
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
+				<?php ActiveForm::end(); ?>
+			</div>
+		</div>
+	</div>
 </div>

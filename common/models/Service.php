@@ -64,4 +64,9 @@ class Service extends EActiveRecord
                 break;
         }
     }
+
+    public function getTravels()
+    {
+        return $this->hasMany(Travel::className(), ['service_id' => 'id']);
+    }
 }

@@ -97,4 +97,24 @@ class Zone extends EActiveRecord
             return $model->getFormatted('polygon');
         }));
     }
+
+    public static function getCross()
+    {   
+        $cross = [];
+        $zones = self::find()->orderBy(['id' => SORT_ASC])->all();
+        foreach($zones as $zone) {
+            foreach($zones as $zone2) {
+                if($zone->id != $zone2->id) {
+                    $cross[] = [
+                        'field_name' => "VehicleTypeZoneRate[{$zone->id}_{$zone2->id}]",
+                        'z1' => $zone,
+                        'z2' => $zone2,
+                    ];
+                }
+            }   
+        }
+
+        return $cross;
+    }
+
 }
