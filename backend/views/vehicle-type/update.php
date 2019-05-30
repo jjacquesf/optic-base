@@ -7,11 +7,9 @@ $assets = ThemeAsset::register($this);
 /* @var $this yii\web\View */
 /* @var $model common\models\VehicleType */
 
-$this->title = 'Update Vehicle Type: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Vehicle Types', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
-?>
+$this->title = Yii::t('app', 'Modificar: ') . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Tipos de vehículo', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name];
 <div class="vehicle-type-update">
 
 	<div class="page-title">

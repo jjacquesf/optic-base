@@ -8,10 +8,12 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
+    'name' => 'Optic',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
+    'language' => 'es',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',

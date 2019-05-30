@@ -12,6 +12,11 @@ use Yii;
  */
 class Service extends EActiveRecord
 {
+    public $translated_content = [
+        'name' => 'Service_name',
+        'description' => 'Service_description',
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -38,12 +43,25 @@ class Service extends EActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'price' => Yii::t('app', 'Price'),
+            'price' => Yii::t('app', 'Precio'),
+            'name' => Yii::t('app', 'Nombre'),
+            'description' => Yii::t('app', 'Descripción'),
         ];
     }
 
-    public function getTravels()
+    public function getFormatted($attr, $lang = 'es')
     {
-        return $this->hasMany(Travel::className(), ['service_id' => 'id']);
+        switch ($attr) {
+            case 'name':
+                return $this->getTranslate('Service_name', $lang);
+                break;
+            case 'description':
+                return $this->getTranslate('Service_description', $lang);
+                break;
+            
+            default:
+                return parent::getFormatted($attr, $lang);
+                break;
+        }
     }
 }

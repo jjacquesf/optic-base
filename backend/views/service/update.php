@@ -7,10 +7,9 @@ $assets = ThemeAsset::register($this);
 /* @var $this yii\web\View */
 /* @var $model common\models\Service */
 
-$this->title = 'Update Service: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Services', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = Yii::t('app', 'Modificar: ') . $model->getFormatted('name');
+$this->params['breadcrumbs'][] = ['label' => 'Amenidades', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->getFormatted('name')];
 ?>
 <div class="service-update">
 

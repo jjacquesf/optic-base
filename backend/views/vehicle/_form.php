@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use common\models\VehicleType;
+use common\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Vehicle */
@@ -12,9 +14,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->dropDownList($model->status_options) ?>
 
-    <?= $form->field($model, 'vehicle_type_id')->textInput() ?>
+    <?= $form->field($model, 'vehicle_type_id')->dropDownList(VehicleType::getListData()) ?>
 
     <?= $form->field($model, 'plate')->textInput(['maxlength' => true]) ?>
 
@@ -22,10 +24,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'color')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'default_operator_id')->textInput() ?>
+    <?= $form->field($model, 'default_operator_id')->dropDownList(User::getListData(User::TYPE_OPERATOR), ['prompt' => '- Ninguno -']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

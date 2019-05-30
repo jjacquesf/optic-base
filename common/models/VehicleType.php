@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+
 
 /**
  * This is the model class for table "optic_vehicle_type".
@@ -41,9 +43,14 @@ class VehicleType extends EActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'max_passangers' => Yii::t('app', 'Max Passangers'),
-            'max_bags' => Yii::t('app', 'Max Bags'),
+            'name' => Yii::t('app', 'Nombre'),
+            'max_passangers' => Yii::t('app', 'Pasajeros (max)'),
+            'max_bags' => Yii::t('app', 'Maletas (max)'),
         ];
+    }
+
+    public static function getListData()
+    {
+        return ArrayHelper::map(self::find()->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 }

@@ -7,8 +7,8 @@ $assets = ThemeAsset::register($this);
 /* @var $this yii\web\View */
 /* @var $model common\models\Vehicle */
 
-$this->title = 'Create Vehicle';
-$this->params['breadcrumbs'][] = ['label' => 'Vehicles', 'url' => ['index']];
+$this->title = Yii::t('app', 'Agregar vehículo');
+$this->params['breadcrumbs'][] = ['label' => 'Vehículos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="vehicle-create">

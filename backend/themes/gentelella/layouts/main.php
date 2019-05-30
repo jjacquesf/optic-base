@@ -65,8 +65,28 @@ $this->registerCss('@media print { a:after { content: "" !important;  } }');
                             <?=
                             \yiister\gentelella\widgets\Menu::widget(
                                 [
-                                    "items" => [
-                                        ["label" => "Home", "url" => "/", "icon" => "home"],
+                                    'items' => [
+                                        [
+                                            'label' => Yii::t('app', 'Home'), 
+                                            'url' => '/', 'icon' => 'home'
+                                        ],
+                                        
+                                        [
+                                            'label' => Yii::t('app', 'Zonas'), 
+                                            'url' => ['/zone/index'], 'icon' => 'home'
+                                        ],
+                                        [
+                                            'label' => Yii::t('app', 'Vehículos'), 
+                                            'url' => ['/vehicle/index'], 'icon' => 'home'
+                                        ],
+                                        [
+                                            'label' => Yii::t('app', 'Tipos de vehículos'), 
+                                            'url' => ['/vehicle-type/index'], 'icon' => 'home'
+                                        ],
+                                        [
+                                            'label' => Yii::t('app', 'Amenidades'), 
+                                            'url' => ['/service/index'], 'icon' => 'home'
+                                        ],
                                     ],
                                 ]
                             )

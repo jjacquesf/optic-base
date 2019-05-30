@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\VehicleTypeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Vehicle Types';
+$this->title = Yii::t('app', 'Tipos de vehículos');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="vehicle-type-index">
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="x_content">
                 <p class="text-left">
-                    <?= Html::a('Create Vehicle Type', ['create'], ['class' => 'btn btn-info pull-right']) ?>
+                    <?= Html::a(Yii::t('app', 'Agregar'), ['create'], ['class' => 'btn btn-info pull-right']) ?>
                 </p>
 
                                                     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -41,14 +41,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
         'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
+                            // ['class' => 'yii\grid\SerialColumn'],
 
-                            'id',
+                            // 'id',
             'name',
             'max_passangers',
             'max_bags',
 
-                            ['class' => 'yii\grid\ActionColumn'],
+                            [
+                                'class' => 'yii\grid\ActionColumn',
+                                'template' => '{update} {delete}',
+                            ],
                         ],
                     ]); ?>
                 

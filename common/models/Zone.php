@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $name
+ * @property string $description
  * @property string $points
  */
 class Zone extends EActiveRecord
@@ -29,7 +30,7 @@ class Zone extends EActiveRecord
         return [
             [['name', 'points'], 'required'],
             [['points'], 'string'],
-            [['name'], 'string', 'max' => 60],
+            [['name', 'description'], 'string', 'max' => 60],
         ];
     }
 
@@ -40,8 +41,9 @@ class Zone extends EActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'points' => Yii::t('app', 'Points'),
+            'name' => Yii::t('app', 'Nombre'),
+            'description' => Yii::t('app', 'Descripción'),
+            'points' => Yii::t('app', 'Puntos'),
         ];
     }
 

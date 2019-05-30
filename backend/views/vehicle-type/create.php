@@ -7,7 +7,7 @@ $assets = ThemeAsset::register($this);
 /* @var $this yii\web\View */
 /* @var $model common\models\VehicleType */
 
-$this->title = 'Create Vehicle Type';
+$this->title = Yii::t('app', 'Agregar tipo de vehículo');
 $this->params['breadcrumbs'][] = ['label' => 'Vehicle Types', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

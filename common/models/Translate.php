@@ -52,13 +52,44 @@ class Translate extends EActiveRecord
         ];
     }
 
-    public static function getContent($object_id, $code, $language)
+    public static function setTranlatedContent($object_id, $code, $language, $content)
+    {
+        if(Config::isLanguageAvailable($language)) {
+
+            $model = self::getTranslated($object_id, $code, $language);
+            if($model == null) {
+                $model = new Translate();
+                $model->object_id = $object_id;
+                $model->code = $code;
+                $model->language = $language;   
+            }
+
+            $model->content = $content;
+
+            return $model->save();;
+        }
+
+        return false;
+    }
+
+    public static function getTranslated($object_id, $code, $language)
     {
         $translate = Translate::find()->where([
-            'object_id' => $object_id,
-            'language' => $language,
-            'code' => $code,
-        ])->one();
+                            'object_id' => $object_id,
+                            'language' => $language,
+                            'code' => $code,
+                        ])->one();
+
+        if( $translate != null ) {
+            return $translate;
+        }
+
+        return null;
+    }
+
+    public static function getContent($object_id, $code, $language)
+    {
+        $translate = Translate::getTranslated($object_id, $code, $language);
 
         if( $translate != null ) {
             return $translate->content;

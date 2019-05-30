@@ -7,8 +7,8 @@ $assets = ThemeAsset::register($this);
 /* @var $this yii\web\View */
 /* @var $model common\models\Zone */
 
-$this->title = 'Create Zone';
-$this->params['breadcrumbs'][] = ['label' => 'Zones', 'url' => ['index']];
+$this->title = Yii::t('app', 'Agregar zona');
+$this->params['breadcrumbs'][] = ['label' => 'Zonas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="zone-create">

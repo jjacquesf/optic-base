@@ -31,11 +31,13 @@ class UserProfile extends EActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'file_id', 'name', 'phone', 'licence', 'freeday'], 'required'],
+            [['user_id', 'name'], 'required'],
             [['user_id', 'file_id', 'freeday'], 'integer'],
             [['name'], 'string', 'max' => 60],
             [['phone'], 'string', 'max' => 25],
             [['licence'], 'string', 'max' => 15],
+            [['phone', 'licence', 'freeday'], 'default', 'value' => ''],
+            ['file_id', 'default', 'value' => 0],
         ];
     }
 

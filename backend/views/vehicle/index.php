@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\VehicleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Vehicles';
+$this->title = Yii::t('app', 'Vehículos');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="vehicle-index">
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="x_content">
                 <p class="text-left">
-                    <?= Html::a('Create Vehicle', ['create'], ['class' => 'btn btn-info pull-right']) ?>
+                    <?= Html::a(Yii::t('app', 'Agregar'), ['create'], ['class' => 'btn btn-info pull-right']) ?>
                 </p>
 
                                                     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -40,18 +40,45 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
-        'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
+                        'columns' => [
+                            // ['class' => 'yii\grid\SerialColumn'],
 
-                            'id',
-            'status',
-            'vehicle_type_id',
-            'plate',
-            'model',
-            //'color',
-            //'default_operator_id',
+                            // 'id',
+                            // 'status',
+                            [
+                                'class' => 'yii\grid\DataColumn',
+                                'attribute' => 'status',
+                                'format' => 'raw',
+                                'value' => function($model, $key, $index, $column){
+                                  return $model->getFormatted('status');
+                                },
+                            ],
+                            [
+                                'class' => 'yii\grid\DataColumn',
+                                'attribute' => 'vehicle_type_id',
+                                'format' => 'raw',
+                                'value' => function($model, $key, $index, $column){
+                                  return $model->getFormatted('vehicle_type');
+                                },
+                            ],
+                            // 'vehicle_type_id',
+                            'plate',
+                            'model',
+                            //'color',
+                            //'default_operator_id',
+                            [
+                                'class' => 'yii\grid\DataColumn',
+                                'attribute' => 'default_operator_id',
+                                'format' => 'raw',
+                                'value' => function($model, $key, $index, $column){
+                                  return $model->getFormatted('default_operator');
+                                },
+                            ],
 
-                            ['class' => 'yii\grid\ActionColumn'],
+                            [
+                                'class' => 'yii\grid\ActionColumn',
+                                'template' => '{update} {delete}'
+                            ],
                         ],
                     ]); ?>
                 

@@ -13,6 +13,11 @@ use Yii;
  */
 class Additional extends EActiveRecord
 {
+    public $translated_content = [
+        'name' => 'Additional_name',
+        'description' => 'Additional_description',
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -42,6 +47,8 @@ class Additional extends EActiveRecord
             'id' => Yii::t('app', 'ID'),
             'price' => Yii::t('app', 'Price'),
             'qty' => Yii::t('app', 'Qty'),
+            'name' => Yii::t('app', 'Nombre'),
+            'description' => Yii::t('app', 'Descripción'),
         ];
     }
 }

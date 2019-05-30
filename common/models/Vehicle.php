@@ -21,8 +21,8 @@ class Vehicle extends EActiveRecord
     const STATUS_AVAILABLE = 1;
 
     public $status_options = [
-        self::STATUS_USELESS => 'No Disponible',
         self::STATUS_AVAILABLE => 'Disponible',
+        self::STATUS_USELESS => 'No Disponible',
     ];
 
     /**
@@ -53,22 +53,41 @@ class Vehicle extends EActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'status' => Yii::t('app', 'Status'),
-            'vehicle_type_id' => Yii::t('app', 'Vehicle Type ID'),
-            'plate' => Yii::t('app', 'Plate'),
-            'model' => Yii::t('app', 'Model'),
+            'status' => Yii::t('app', 'Estatus'),
+            'vehicle_type_id' => Yii::t('app', 'Tipo de vehículo'),
+            'plate' => Yii::t('app', 'Placas'),
+            'model' => Yii::t('app', 'Modelo (Año)'),
             'color' => Yii::t('app', 'Color'),
-            'default_operator_id' => Yii::t('app', 'Default Operator ID'),
+            'default_operator_id' => Yii::t('app', 'Operador por dedault'),
         ];
     }
 
     public function getVehicleType()
     {
-        return $this->hasOne(VehicleType::clasName(), ['id' => 'vehicle_type_id']);
+        return $this->hasOne(VehicleType::className(), ['id' => 'vehicle_type_id']);
     }
 
     public function getDefaultOperator()
     {
-        return $this->hasOne(User::clasName(), ['id' => 'default_operator_id']);
+        return $this->hasOne(User::className(), ['id' => 'default_operator_id']);
+    }
+
+    public function getFormatted($attr, $lang = 'es')
+    {
+        switch ($attr) {
+            case 'status':
+                return $this->status_options[$this->status] ? $this->status_options[$this->status] : '';
+                break;
+            case 'vehicle_type':
+                return $this->vehicleType != null ? $this->vehicleType->name : 'Ninguno';
+                break;
+            case 'default_operator':
+                return $this->defaultOperator != null ? $this->default_operator->profile->name : 'Ninguno';
+                break;
+            
+            default:
+                return parent::getFormatted($attr, $lang);
+                break;
+        }
     }
 }

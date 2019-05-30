@@ -7,10 +7,10 @@ $assets = ThemeAsset::register($this);
 /* @var $this yii\web\View */
 /* @var $model common\models\Zone */
 
-$this->title = 'Update Zone: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Zones', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = Yii::t('app', 'Modificar: ') . $model->getFormatted('name');
+$this->params['breadcrumbs'][] = ['label' => 'Zonas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name];
+
 ?>
 <div class="zone-update">
 

@@ -3,10 +3,13 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\Html;
 
 class EActiveRecord extends \yii\db\ActiveRecord
 {
-    public function getFormatted($attr, $lang)
+    public $translated_content = [];
+
+    public function getFormatted($attr, $lang = 'es')
     {
         switch ($attr) {
             default:
@@ -17,5 +20,52 @@ class EActiveRecord extends \yii\db\ActiveRecord
         }
 
         return '';
+    }
+
+    public function setTranslate($code, $lang, $content)
+    {
+        if(!$this->isNewRecord) {
+            return Translate::setTranlatedContent($this->id, $code, $lang, $content);
+        }
+        
+        return false;
+    }
+
+    public function getTranslate($code, $lang)
+    {
+        return $this->isNewRecord ? '' : Translate::getContent($this->id, $code, $lang);
+    }
+
+    public function translateContent()
+    {
+        $content = [];
+        foreach(Config::getLangs() as $lang) {
+            foreach($this->translated_content as $tc_name => $tc_code) {
+                $content[] = Html::beginTag('div', ['class' => 'form-group']);
+                $content[] = Html::label(Yii::t('app', sprintf('%s (%s)', $this->getAttributeLabel($tc_name), ucfirst($lang))), '');
+                $content[] = Html::textInput("Translate[{$lang}][{$tc_code}]", $this->getTranslate($tc_code, $lang), [
+                    'class' => 'form-control'
+                ]);
+                $content[] = Html::endTag('div');
+            }
+        }
+
+        return implode('', $content);
+    }
+
+    public function saveTranslations($data)
+    {
+        if(!$this->isNewRecord && isset($data['Translate'])) {
+
+            foreach($data['Translate'] as $lang => $translation) {
+                foreach($translation as $code => $content) {
+                    $this->setTranslate($code, $lang, $content);
+                }
+            }            
+
+            return true;
+        }
+
+        return false;
     }
 }

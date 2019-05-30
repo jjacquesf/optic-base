@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\ServiceSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Services';
+$this->title = Yii::t('app', 'Amenidades');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="service-index">
@@ -32,21 +32,48 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="x_content">
                 <p class="text-left">
-                    <?= Html::a('Create Service', ['create'], ['class' => 'btn btn-info pull-right']) ?>
+                    <?= Html::a(Yii::t('app', 'Agregar'), ['create'], ['class' => 'btn btn-info pull-right']) ?>
                 </p>
 
                                                     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
                 
                                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
-                        'filterModel' => $searchModel,
-        'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
-
-                            'id',
-            'price',
-
-                            ['class' => 'yii\grid\ActionColumn'],
+                        // 'filterModel' => $searchModel,
+                        'columns' => [
+                            // ['class' => 'yii\grid\SerialColumn'],
+                            // 'id',
+                            [
+                                'class' => 'yii\grid\DataColumn',
+                                'header' => 'Nombre',
+                                'format' => 'raw',
+                                'value' => function($model, $key, $index, $column){
+                                  return $model->getFormatted('name');
+                                },
+                            ],
+                            [
+                                'class' => 'yii\grid\DataColumn',
+                                'header' => 'Descripción',
+                                'format' => 'raw',
+                                'value' => function($model, $key, $index, $column){
+                                  return $model->getFormatted('description');
+                                },
+                            ],
+                            'price',
+                            [
+                                'class' => 'yii\grid\ActionColumn',
+                                'template' => '{update} {delete}',
+                                'buttons' => [
+                                    'delete' => function ($url, $model, $key) {
+                                        if(empty($model->travels)) {
+                                            return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                                                'data-method' => 'post',
+                                                'confirm' => Yii::t('app', '¿Está seguro de eliminar este elemento?')
+                                            ]);
+                                        }
+                                    },
+                                ],
+                            ],
                         ],
                     ]); ?>
                 

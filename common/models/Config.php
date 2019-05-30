@@ -11,8 +11,9 @@ use Yii;
  * @property int $status
  * @property int $public_vehicle_rate_id
  * @property int $public_vehicle_zone_rate_id
+ * @property string $languages
  */
-class Config extends extends EActiveRecord
+class Config extends EActiveRecord
 {
     const STATUS_DISABLED = 0;
     const STATUS_ENABLED = 1;
@@ -38,6 +39,7 @@ class Config extends extends EActiveRecord
         return [
             [['status', 'public_vehicle_rate_id', 'public_vehicle_zone_rate_id'], 'required'],
             [['status', 'public_vehicle_rate_id', 'public_vehicle_zone_rate_id'], 'integer'],
+            ['languages', 'default', 'value' => 'es|en']
         ];
     }
 
@@ -48,15 +50,34 @@ class Config extends extends EActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'status' => Yii::t('app', 'Status'),
-            'public_vehicle_rate_id' => Yii::t('app', 'Public Vehicle Rate ID'),
-            'public_vehicle_zone_rate_id' => Yii::t('app', 'Public Vehicle Zone Rate ID'),
+            'status' => Yii::t('app', 'Estado'),
+            'public_vehicle_rate_id' => Yii::t('app', 'tarifa publica por hora'),
+            'public_vehicle_zone_rate_id' => Yii::t('app', 'Tarifa publica por zona'),
+            'languages' => Yii::t('app', 'Idiomas'),
         ];
+    }
+
+    public static function getConfig()
+    {
+        return self::find()->one();
+    }
+
+    public static function getLangs()
+    {
+        $model = self::getConfig();
+        return explode('|', $model->languages);
+    }
+
+    public static function isLanguageAvailable($lang)
+    {
+        $languages = self::getLangs();
+
+        return in_array($lang, $languages) ? true : false;
     }
 
     public static function getValue($config)
     {
-        $model = self::find();
+        $model = self::getConfig();
         if(isset($model->{$config})) {
             return $model->{$config};
         }

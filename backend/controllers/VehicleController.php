@@ -23,10 +23,10 @@ class VehicleController extends Controller
         return [
             'access' => [
                  'class' => AccessControl::className(),
-                 'only' => ['index', 'view', 'create', 'update', 'delete'],
+                 'only' => ['index', 'create', 'update', 'delete'],
                  'rules' => [
                      [
-                         'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                         'actions' => ['index', 'create', 'update', 'delete'],
                          'allow' => true,
                          'roles' => ['@'],
                      ],
@@ -57,19 +57,6 @@ class VehicleController extends Controller
     }
 
     /**
-     * Displays a single Vehicle model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Creates a new Vehicle model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -79,7 +66,7 @@ class VehicleController extends Controller
         $model = new Vehicle();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -99,7 +86,7 @@ class VehicleController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [

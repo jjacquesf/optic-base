@@ -6,6 +6,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\helpers\ArrayHelper;
 
 /**
  * User model
@@ -69,6 +70,18 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    public static function getListData($type = null)
+    {
+        $query = self::find();
+        $query->joinWith(['profile']);
+        $query->andFilterWhere(['type' => $type]);
+        $query->orderBy(['optic_user_profile.name' => SORT_ASC]);
+
+        return ArrayHelper::map($query->all(), 'id', function($model) {
+            return sprintf('%s (%s)', $model->profile->name, $model->getFormatted('status'));
+        });
+    }
+
     public function getProfile()
     {
         return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
@@ -83,6 +96,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasOne(TravelVehicle::clasName(), ['operator_id' => 'id']);
     }
+
     /**
      * {@inheritdoc}
      */

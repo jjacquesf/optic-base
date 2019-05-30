@@ -10,7 +10,8 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\ZoneSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Zones';
+$this->title = Yii::t('app', 'Zonas');
+
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="zone-index">
@@ -32,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="x_content">
                 <p class="text-left">
-                    <?= Html::a('Create Zone', ['create'], ['class' => 'btn btn-info pull-right']) ?>
+                    <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-info pull-right']) ?>
                 </p>
 
                                                     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -43,11 +44,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
 
-                            'id',
-            'name',
-            'points:ntext',
+                            // 'id',
+                            'name',
+                            'description',
+                            // 'points:ntext',
 
-                            ['class' => 'yii\grid\ActionColumn'],
+                            [
+                                'class' => 'yii\grid\ActionColumn',
+                                'template' => '{update} {delete}'
+                            ],
                         ],
                     ]); ?>
                 
