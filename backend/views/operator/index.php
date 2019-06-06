@@ -7,13 +7,13 @@ $assets = ThemeAsset::register($this);
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\RateSearch */
+/* @var $searchModel backend\models\OperatorSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Tarifas');
+$this->title = Yii::t('app', 'Operadores');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="rate-index">
+<div class="user-index">
 
     <div class="page-title">
         <div class="title_left">
@@ -32,21 +32,19 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="x_content">
                 <p class="text-left">
-                    <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-info pull-right']) ?>
+                    <?= Html::a(Yii::t('app', 'Agregar'), ['create'], ['class' => 'btn btn-info pull-right']) ?>
                 </p>
 
-                                                    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-                
-                                    <?= GridView::widget([
+                <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+                    <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
-        'columns' => [
-                            // ['class' => 'yii\grid\SerialColumn'],
-
-                            // 'id',
-            'name',
-
-                            ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}'],
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+                            //'status',
+                            'profile.name',
+                            'email',
+                            ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {update} {delete}'],
                         ],
                     ]); ?>
                 

@@ -30,43 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="x_panel">
 			<div class="x_title"></div>
 			<div class="x_content">
-				
-				<div class="client-form">
-
-				    <?php $form = ActiveForm::begin(); ?>
-						
-						<div class="row">
-							<div class="col-sm-4">
-								<?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-							</div>
-							<div class="col-sm-4">
-								<?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-							</div>
-							<div class="col-sm-4">
-								<?= $form->field($model, 'password')->passwordInput() ?>
-							</div>
-							
-						</div>
-						<div class="row">
-							<div class="col-sm-4">
-								<?= $form->field($model, 'contact_name')->textInput(['maxlength' => true]) ?>
-							</div>
-							<div class="col-sm-4">
-								<?= $form->field($model, 'contact_phone')->textInput(['maxlength' => true]) ?>
-							</div>
-							<div class="col-sm-4">
-								<?= $form->field($model, 'rate_id')->dropDownList(Rate::getListData()) ?>
-							</div>
-						</div>
-					    
-					    <div class="form-group text-right">
-					        <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success']) ?>
-					    </div>
-
-				    <?php ActiveForm::end(); ?>
-
-				</div>
-
+				<?= $this->render('_form', [
+			        'model' => $model,
+			    ]) ?>
 			</div>
 		</div>
 	</div>

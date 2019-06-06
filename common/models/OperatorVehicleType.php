@@ -48,4 +48,5 @@ class OperatorVehicleType extends EActiveRecord
     {
         return $this->hasMany(Vehicle::className(), ['vehicle_type_id' => 'id']);
     }
+
 }

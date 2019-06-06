@@ -9,8 +9,9 @@ use common\models\Config;
 /**
  * ClientSignup form
  */
-class ClientSignupForm extends Model
+class ClientSignupForm extends Client
 {
+    public $status;
     public $name;
     public $contact_name;
     public $contact_phone;
@@ -31,10 +32,14 @@ class ClientSignupForm extends Model
             ['contact_name', 'trim'],
             ['contact_name', 'required'],
 
+            ['status', 'required'],
+            ['status', 'integer'],
+
             ['contact_phone', 'trim'],
             ['contact_phone', 'required'],
+            [['contact_phone'], 'string', 'max' => 25],
 
-            [['name', 'contact_name', 'contact_phone'], 'string', 'max' => 60],
+            [['name', 'contact_name'], 'string', 'max' => 60],
 
             ['email', 'trim'],
             ['email', 'required'],
@@ -42,15 +47,32 @@ class ClientSignupForm extends Model
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\Client', 'message' => 'This email address has already been taken.'],
 
-            ['password', 'required'],
+            ['password', 'required', 'on' => 'create'],
             ['password', 'string', 'min' => 6],
 
             ['rate_id', 'default', 'value' => Config::getConfig('rate_id')],
         ];
     }
 
+    public function saveData($client)
+    {
+        $client->status = $this->status;
+        $client->email = $this->email;
+        $client->username = $this->email;
+        $client->status = $this->status;
+        if(!empty($this->password)) {
+            $client->setPassword($this->password);
+        }
+
+        $client->profile->name = $this->name;
+        $client->profile->contact_name = $this->contact_name;
+        $client->profile->contact_phone = $this->contact_phone;
+
+        return $client->save() && $client->profile->save();
+    }
+
     /**
-     * Signs user up.
+     * Signs client up.
      *
      * @return bool whether the creating new account was successful and email was sent
      */
@@ -83,8 +105,6 @@ class ClientSignupForm extends Model
         	}
 
         	return $client;
-        } else {
-            var_dump($client->getErrors()); die();
         }
 
         return $client->save();

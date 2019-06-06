@@ -2,49 +2,47 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use common\models\Rate;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Client */
+/* @var $model common\models\User */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="client-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'user_id')->textInput() ?>
-
-    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'password_hash')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'password_reset_token')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <?= $form->field($model, 'verification_token')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'default_zone')->textInput() ?>
-
-    <?= $form->field($model, 'default_location')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'default_address')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'balance')->textInput() ?>
-
-    <?= $form->field($model, 'rate_id')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-    </div>
+        
+        <div class="row">
+            <div class="col-sm-3">
+                <?= $form->field($model, 'status')->dropDownList($model->status_options) ?>
+            </div>
+            <div class="col-sm-3">
+                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-sm-3">
+                <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-sm-3">
+                <?= $form->field($model, 'password')->passwordInput() ?>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <?= $form->field($model, 'contact_name')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-sm-4">
+                <?= $form->field($model, 'contact_phone')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-sm-4">
+                <?= $form->field($model, 'rate_id')->dropDownList(Rate::getListData()) ?>
+            </div>
+        </div>
+        
+        <div class="form-group text-right">
+            <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success']) ?>
+        </div>
 
     <?php ActiveForm::end(); ?>
 

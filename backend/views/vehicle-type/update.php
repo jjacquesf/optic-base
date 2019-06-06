@@ -10,6 +10,7 @@ $assets = ThemeAsset::register($this);
 $this->title = Yii::t('app', 'Modificar: ') . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Tipos de vehículo', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name];
+?>
 <div class="vehicle-type-update">
 
 	<div class="page-title">

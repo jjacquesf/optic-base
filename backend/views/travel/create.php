@@ -5,14 +5,14 @@ use backend\assets\ThemeAsset;
 $assets = ThemeAsset::register($this);
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Vehicle */
+/* @var $model common\models\Travel */
 
-
-$this->title = Yii::t('app', 'Modificar: ') . $model->getFormatted('plate');
-$this->params['breadcrumbs'][] = ['label' => 'Vehículos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->plate];
+$this->title = Yii::t('app', 'Registrar nuevo.');
+$this->params['breadcrumbs'][] = ['label' => 'Servicios registrados', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="vehicle-update">
+<div class="travel-create">
+
 	<div class="page-title">
 		<div class="title_left">
 			<h3><?= Html::encode($this->title) ?></h3>
@@ -25,12 +25,15 @@ $this->params['breadcrumbs'][] = ['label' => $model->plate];
 
 	<div class="row">
 		<div class="x_panel">
-			<div class="x_title"><h5>Información general</h5></div>
+			<div class="x_title" style="overflow: auto;"><h2>Asistente para nuevo servicio <small>Complete los pasos indicados</small></h2></div>
 			<div class="x_content">
+
 				<?= $this->render('_form', [
-			        'model' => $model,
-			    ]) ?>
+						        'model' => $model,
+						        'tvModel' => $tvModel,
+						    ]); ?>
 			</div>
 		</div>
 	</div>
+
 </div>

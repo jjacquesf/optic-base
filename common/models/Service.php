@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "optic_service".
@@ -68,5 +69,22 @@ class Service extends EActiveRecord
     public function getTravels()
     {
         return $this->hasMany(Travel::className(), ['service_id' => 'id']);
+    }
+
+    public function getTranslation()
+    {
+        return $this->hasOne(Translate::className(), ['object_id' => 'id'])
+                    ->andWhere([
+                        'optic_translate.code' => 'Service_name',
+                        'optic_translate.language' => Yii::$app->language,
+                    ]);
+    }
+
+    public static function getListData()
+    {
+        return ArrayHelper::map(self::find()
+                                        ->joinWith(['translation'])
+                                        ->orderBy(['optic_translate.content' => SORT_ASC])
+                                        ->all(), 'id', 'translation.content');
     }
 }

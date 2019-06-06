@@ -12,6 +12,15 @@ class EActiveRecord extends \yii\db\ActiveRecord
     public function getFormatted($attr, $lang = 'es')
     {
         switch ($attr) {
+            case 'status':
+                if(isset($this->status)) {
+                    if(isset($this->status_options[$this->status])) {
+                        return $this->status_options[$this->status];
+                    }
+
+                    return $this->status;
+                }
+                break;
             default:
                 if(isset($this->{$attr})) {
                     return $this->{$attr};

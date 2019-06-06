@@ -82,8 +82,12 @@ class Vehicle extends EActiveRecord
                 return $this->vehicleType != null ? $this->vehicleType->name : 'Ninguno';
                 break;
             case 'default_operator':
-                return $this->defaultOperator != null ? $this->default_operator->profile->name : 'Ninguno';
+                return $this->defaultOperator != null ? $this->defaultOperator->getFormatted('name') : 'Ninguno';
                 break;
+            case 'label':
+                return sprintf('%s %d/%s (%s)', $this->color, $this->model, $this->plate, $this->getFormatted('status'));
+                break;
+                
             
             default:
                 return parent::getFormatted($attr, $lang);

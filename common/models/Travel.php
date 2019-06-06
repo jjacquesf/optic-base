@@ -6,7 +6,7 @@ use Yii;
 use yii\db\Expression;
 
 /**
- * This is the model class for table "optic_travel".
+ * This is the model class for table "{{%travel}}".
  *
  * @property int $id
  * @property int $status
@@ -33,8 +33,8 @@ class Travel extends EActiveRecord
 {
     const STATUS_CANCELED = 0;
     const STATUS_PENDING = 1;
-    const STATUS_ACTIVE = 1;
-    const STATUS_COMPLETE = 1;
+    const STATUS_ACTIVE = 2;
+    const STATUS_COMPLETE = 3;
 
     const TYPE_ARRIVAL = 1;
     const TYPE_DEPARTURE = 2;
@@ -47,24 +47,24 @@ class Travel extends EActiveRecord
     const PAYED_STATUS_COMPLETE = 2;
 
     public $status_options = [
-        self::STATUS_CANCELED => Yii::t('app', 'Cancelado'),
-        self::STATUS_PENDING => Yii::t('app', 'Pendiente'),
-        self::STATUS_ACTIVE => Yii::t('app', 'En Servicio'),
-        self::STATUS_COMPLETE => Yii::t('app', 'Completa'),
+        self::STATUS_CANCELED => 'Cancelado',
+        self::STATUS_PENDING => 'Pendiente',
+        self::STATUS_ACTIVE => 'En Servicio',
+        self::STATUS_COMPLETE => 'Completa',
     ];
 
     public $type_options = [
-        self::TYPE_ARRIVAL => Yii::t('app', 'Llegada'),
-        self::TYPE_DEPARTURE => Yii::t('app', 'Salida'),
-        self::TYPE_SPECIAL => Yii::t('app', 'Especial'),
-        self::TYPE_COLLECTIVE_ARRIVAL => Yii::t('app', 'Llegada Colectiva'),
-        self::TYPE_COLLECTIVE_DEPARTURE => Yii::t('app', 'Salida Colectiva'),
+        self::TYPE_ARRIVAL => 'Llegada',
+        self::TYPE_DEPARTURE => 'Salida',
+        self::TYPE_SPECIAL => 'Especial',
+        self::TYPE_COLLECTIVE_ARRIVAL => 'Llegada Colectiva',
+        self::TYPE_COLLECTIVE_DEPARTURE => 'Salida Colectiva',
     ];
 
-    public $type_options = [
-        self::PAYED_STATUS_PENDING => Yii::t('app', 'Pendiente'),
-        self::PAYED_STATUS_PARTIAL => Yii::t('app', 'Parcial'),
-        self::PAYED_STATUS_COMPLETE => Yii::t('app', 'Completo'),
+    public $payed_status_options = [
+        self::PAYED_STATUS_PENDING => 'Pendiente',
+        self::PAYED_STATUS_PARTIAL => 'Parcial',
+        self::PAYED_STATUS_COMPLETE => 'Completo',
     ];
 
     public $info_contents = [
@@ -91,14 +91,14 @@ class Travel extends EActiveRecord
             [ 'code' => 'ROOMS', 'content' => '', ],
             [ 'code' => 'COMMENTS', 'content' => '', ],
         ],
-    ]; 
+    ];
 
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'optic_travel';
+        return '{{%travel}}';
     }
 
     /**
@@ -107,12 +107,11 @@ class Travel extends EActiveRecord
     public function rules()
     {
         return [
-            [['status', 'type', 'payed_status', 'client_id', 'created_at', 'service_id', 'from_zone_id', 'from_location', 'from_address', 'to_zone_id', 'to_location', 'to_address', 'passanger_name', 'pickup', 'total', 'payed', 'balance'], 'required'],
+            [['status', 'type', 'payed_status', 'client_id', 'service_id', 'from_zone_id', 'from_location', 'from_address', 'to_zone_id', 'to_location', 'to_address', 'passanger_name', 'pickup', 'total', 'payed', 'balance'], 'required'],
             [['status', 'type', 'payed_status', 'client_id', 'user_id', 'previous_travel_id', 'service_id', 'from_zone_id', 'to_zone_id'], 'integer'],
             [['created_at', 'pickup'], 'safe'],
             [['total', 'payed', 'balance'], 'number'],
-            [['from_location', 'from_address', 'to_location', 'to_address', 'passanger_name'], 'string', 'max' => 120],
-
+            [['from_location', 'from_address', 'to_location', 'to_address', 'passanger_name'], 'string', 'max' => 255],
             ['created_at', 'default', 'value' => new Expression('NOW()')],
         ];
     }
@@ -124,92 +123,134 @@ class Travel extends EActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'status' => Yii::t('app', 'Status'),
-            'type' => Yii::t('app', 'Type'),
-            'payed_status' => Yii::t('app', 'Payed Status'),
-            'client_id' => Yii::t('app', 'Client ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'previous_travel_id' => Yii::t('app', 'Previous Travel ID'),
-            'service_id' => Yii::t('app', 'Service ID'),
+            'status' => Yii::t('app', 'Estatus'),
+            'type' => Yii::t('app', 'Tipo de servicio'),
+            'payed_status' => Yii::t('app', 'Estatus de pago'),
+            'client_id' => Yii::t('app', 'Cliente'),
+            'user_id' => Yii::t('app', 'Administrador'),
+            'created_at' => Yii::t('app', 'Creado'),
+            'previous_travel_id' => Yii::t('app', 'Servicio anterior'),
+            'service_id' => Yii::t('app', 'Amenidades'),
             'from_zone_id' => Yii::t('app', 'From Zone'),
             'from_location' => Yii::t('app', 'From Location'),
-            'from_address' => Yii::t('app', 'From Address'),
+            'from_address' => Yii::t('app', 'Origen'),
             'to_zone_id' => Yii::t('app', 'To Zone'),
             'to_location' => Yii::t('app', 'To Location'),
-            'to_address' => Yii::t('app', 'To Address'),
-            'passanger_name' => Yii::t('app', 'Passanger Name'),
-            'pickup' => Yii::t('app', 'Pickup'),
+            'to_address' => Yii::t('app', 'Destino'),
+            'passanger_name' => Yii::t('app', 'Información de los pasajero'),
+            'pickup' => Yii::t('app', 'Hora del servicio'),
+            'dropoff' => Yii::t('app', 'Finaliza el servicio'),
             'total' => Yii::t('app', 'Total'),
-            'payed' => Yii::t('app', 'Payed'),
-            'balance' => Yii::t('app', 'Balance'),
+            'payed' => Yii::t('app', 'Pagado'),
+            'balance' => Yii::t('app', 'Saldo'),
         ];
     }
 
-    public function getFormatted($attr, $lang)
+    public function addVehicle($data)
     {
-        return parent::getFormatted($attr, $lang)
+        $model = new TravelVehicle();
+        $model->travel_id = $this->id;
+        $model->vehicle_type_id = $data['vehicle_type_id'];
+
+
+        if($this->client != null) {
+            $model->vehicle_rate = VehicleTypeRate::getRatePrice($data['vehicle_type_id'], $this->client->rate_id);
+        }
+
+        if($this->client != null) {
+            $model->vehicle_zone_rate = VehicleTypeZoneRate::getRatePrice($this->from_zone_id, $this->to_zone_id, $this->client->rate_id, $data['vehicle_type_id']);
+        }
+
+        
+        $model->validate();
+        // var_dump($model->getErrors());
+        // die();
+
+        return $model->save() && $this->updateTotals();
+    }
+
+    public function updateTotals()
+    {
+        $this->total = 0;
+        foreach($this->vehicles as $vehicle) {
+            $this->total += $vehicle->vehicle_zone_rate;
+        }
+
+        $this->balance = $this->total - $this->payed;
+
+        return $this->save();
+    }
+
+    public function getFormatted($attr, $lang = 'es')
+    {
+        switch($attr)
+        {
+            case 'type':
+                if(isset($this->type_options[$this->type])) {
+                    return $this->type_options[$this->type];
+                }
+                break;
+            case 'client.name':
+                return $this->client->profile->name;
+                break;
+        }
+
+        return parent::getFormatted($attr, $lang);
     }
 
     public function getClient()
     {
-        return $this->hasOne(Client::clasName(), ['id' => 'client_id']);
+        return $this->hasOne(Client::className(), ['id' => 'client_id']);
     }
 
     public function getUser()
     {
-        return $this->hasOne(User::clasName(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     public function getParent()
     {
-        return $this->hasOne(Travel::clasName(), ['id' => 'previous_travel_id']);
+        return $this->hasOne(Travel::className(), ['id' => 'previous_travel_id']);
     }
 
     public function getService()
     {
-        return $this->hasOne(Service::clasName(), ['id' => 'service_id']);
+        return $this->hasOne(Service::className(), ['id' => 'service_id']);
     }
 
     public function getFromZone()
     {
-        return $this->hasOne(Zone::clasName(), ['id' => 'from_zone_id']);
+        return $this->hasOne(Zone::className(), ['id' => 'from_zone_id']);
     }
 
     public function getToZone()
     {
-        return $this->hasOne(Zone::clasName(), ['id' => 'to_zone_id']);
+        return $this->hasOne(Zone::className(), ['id' => 'to_zone_id']);
     }
 
     public function getAdditionals()
     {
-        return $this->hasMany(TravelAdditional::clasName(), ['id' => 'travel_id']);
-    }
-
-    public function getAdditionals()
-    {
-        return $this->hasMany(TravelAdditional::clasName(), ['travel_id' => 'id']);
+        return $this->hasMany(TravelAdditional::className(), ['travel_id' => 'id']);
     }
 
     public function getPassangers()
     {
-        return $this->hasMany(TravelPassangers::clasName(), ['travel_id' => 'id']);
+        return $this->hasMany(TravelPassangers::className(), ['travel_id' => 'id']);
     }
 
     public function getInfo()
     {
-        return $this->hasMany(TravelInfo::clasName(), ['travel_id' => 'id']);
+        return $this->hasMany(TravelInfo::className(), ['travel_id' => 'id']);
     }
 
     public function getPayments()
     {
-        return $this->hasMany(TravelInfo::clasName(), ['travel_id' => 'id']);
+        return $this->hasMany(TravelPayment::className(), ['travel_id' => 'id']);
     }
 
     public function getVehicles()
     {
-        return $this->hasMany(TravelInfo::clasName(), ['travel_id' => 'id']);
+        return $this->hasMany(TravelVehicle::className(), ['travel_id' => 'id']);
     }
-
 
 }

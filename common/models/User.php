@@ -24,7 +24,7 @@ use yii\helpers\ArrayHelper;
  * @property integer $updated_at
  * @property string $password write-only password
  */
-class User extends ActiveRecord implements IdentityInterface
+class User extends EActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_DISABLED = 0;
@@ -35,9 +35,9 @@ class User extends ActiveRecord implements IdentityInterface
     const TYPE_OPERATOR = 1;
 
     public $status_options = [
+        self::STATUS_ACTIVE => 'Activo',
         self::STATUS_DISABLED => 'Suspendido',
         self::STATUS_INACTIVE => 'Por validar',
-        self::STATUS_ACTIVE => 'Activo',
     ];
 
     /**
@@ -70,6 +70,40 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    public function addVehicleType($vehicle_type_id)
+    {
+        $vehicle_types = array_keys(VehicleType::getListData());
+        if($this->type == self::TYPE_OPERATOR && in_array($vehicle_type_id, $vehicle_types)) {
+            $model = new OperatorVehicleType();
+            $model->user_id = $this->id;
+            $model->vehicle_type_id = $vehicle_type_id;
+
+            return $model->save();            
+        }
+    }
+
+    public function getFormatted($attr, $lang = 'es')
+    {
+        switch($attr)
+        {
+            case 'name':
+                
+                if(isset($this->profile->name)) {
+                    return $this->profile->name;
+                }
+
+                break;
+            case 'label':
+                
+                return sprintf('%s (%s)', $this->getFormatted('name'), $this->getFormatted('status'));
+
+                break;
+            default:
+                return parent::getFormatted($attr, $lang);
+                break;
+        }
+    }
+
     public static function getListData($type = null)
     {
         $query = self::find();
@@ -78,7 +112,7 @@ class User extends ActiveRecord implements IdentityInterface
         $query->orderBy(['optic_user_profile.name' => SORT_ASC]);
 
         return ArrayHelper::map($query->all(), 'id', function($model) {
-            return sprintf('%s (%s)', $model->profile->name, $model->getFormatted('status'));
+            return sprintf('%s (%s)', $model->getFormatted('name'), $model->getFormatted('status'));
         });
     }
 
@@ -89,12 +123,17 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getTravels()
     {
-        return $this->hasOne(Travel::clasName(), ['user_id' => 'id']);
+        return $this->hasOne(Travel::className(), ['user_id' => 'id']);
     }
 
     public function getTravelVehicles()
     {
-        return $this->hasOne(TravelVehicle::clasName(), ['operator_id' => 'id']);
+        return $this->hasOne(TravelVehicle::className(), ['operator_id' => 'id']);
+    }
+
+    public function getVehicleTypes()
+    {
+        return $this->hasMany(OperatorVehicleType::className(), ['user_id' => 'id']);
     }
 
     /**

@@ -5,14 +5,15 @@ use backend\assets\ThemeAsset;
 $assets = ThemeAsset::register($this);
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Vehicle */
+/* @var $model common\models\Travel */
 
-
-$this->title = Yii::t('app', 'Modificar: ') . $model->getFormatted('plate');
-$this->params['breadcrumbs'][] = ['label' => 'Vehículos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->plate];
+$this->title = 'Update Travel: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Travels', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="vehicle-update">
+<div class="travel-update">
+
 	<div class="page-title">
 		<div class="title_left">
 			<h3><?= Html::encode($this->title) ?></h3>
@@ -25,7 +26,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->plate];
 
 	<div class="row">
 		<div class="x_panel">
-			<div class="x_title"><h5>Información general</h5></div>
+			<div class="x_title"></div>
 			<div class="x_content">
 				<?= $this->render('_form', [
 			        'model' => $model,

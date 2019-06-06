@@ -15,7 +15,7 @@ use Yii;
  * @property double $vehicle_rate
  * @property double $vehicle_zone_rate
  */
-class TravelVehicle extends \yii\db\ActiveRecord
+class TravelVehicle extends EActiveRecord
 {
     /**
      * {@inheritdoc}

@@ -7,10 +7,10 @@ $assets = ThemeAsset::register($this);
 /* @var $this yii\web\View */
 /* @var $model common\models\Client */
 
-$this->title = 'Update Client: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Clients', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Modificar cliente ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Cliente', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name];
+$this->params['breadcrumbs'][] = 'Modificar';
 ?>
 <div class="client-update">
 

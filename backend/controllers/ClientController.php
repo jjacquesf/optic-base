@@ -78,6 +78,7 @@ class ClientController extends Controller
     public function actionCreate()
     {
         $model = new ClientSignupForm();
+        $model->scenario = 'create';
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             return $this->redirect(['index']);
@@ -97,9 +98,13 @@ class ClientController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $client = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $model = new ClientSignupForm();
+        $model->load($client->attributes, '');
+        $model->load($client->profile->attributes, '');
+
+        if ($model->load(Yii::$app->request->post()) && $model->saveData($client)) {
             return $this->redirect(['index']);
         }
 
@@ -117,7 +122,9 @@ class ClientController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model->$this->findModel($id);
+        $model->profile->delete();
+        $model->delete();
 
         return $this->redirect(['index']);
     }

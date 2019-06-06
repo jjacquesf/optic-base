@@ -8,7 +8,7 @@
 use common\modules\store\models\Order;
 use yii\helpers\Html;
 
-$bundle = yiister\gentelella\assets\Asset::register($this);
+$bundle = backend\assets\AppAsset::register($this);
 
 $this->registerCss('@media print { a:after { content: "" !important;  } }');
 
@@ -68,31 +68,48 @@ $this->registerCss('@media print { a:after { content: "" !important;  } }');
                                     'items' => [
                                         [
                                             'label' => Yii::t('app', 'Home'), 
-                                            'url' => '/', 'icon' => 'home'
+                                            'url' => '/', 
+                                            // 'icon' => 'home'
+                                        ],
+                                        [
+                                            'label' => Yii::t('app', 'Servicios'), 
+                                            'url' => ['/travel/index'], 
+                                            // 'icon' => 'home'
                                         ],
                                         [
                                             'label' => Yii::t('app', 'Tarifas'), 
-                                            'url' => ['/rate/index'], 'icon' => 'home'
+                                            'url' => ['/rate/index'], 
+                                            // 'icon' => 'home'
                                         ],
                                         [
                                             'label' => Yii::t('app', 'Clientes'), 
-                                            'url' => ['/client/index'], 'icon' => 'home'
+                                            'url' => ['/client/index'], 
+                                            // 'icon' => 'home'
                                         ],
                                         [
                                             'label' => Yii::t('app', 'Zonas'), 
-                                            'url' => ['/zone/index'], 'icon' => 'home'
+                                            'url' => ['/zone/index'], 
+                                            // 'icon' => 'home'
                                         ],
                                         [
                                             'label' => Yii::t('app', 'Vehículos'), 
-                                            'url' => ['/vehicle/index'], 'icon' => 'home'
+                                            'url' => ['/vehicle/index'], 
+                                            // 'icon' => 'home'
                                         ],
                                         [
                                             'label' => Yii::t('app', 'Tipos de vehículos'), 
-                                            'url' => ['/vehicle-type/index'], 'icon' => 'home'
+                                            'url' => ['/vehicle-type/index'], 
+                                            // 'icon' => 'home'
+                                        ],
+                                        [
+                                            'label' => Yii::t('app', 'Operadores'), 
+                                            'url' => ['/operator/index'], 
+                                            // 'icon' => 'home'
                                         ],
                                         [
                                             'label' => Yii::t('app', 'Amenidades'), 
-                                            'url' => ['/service/index'], 'icon' => 'home'
+                                            'url' => ['/service/index'], 
+                                            // 'icon' => 'home'
                                         ],
                                     ],
                                 ]

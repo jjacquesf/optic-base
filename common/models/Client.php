@@ -108,6 +108,11 @@ class Client extends EActiveRecord
         ];
     }
 
+    public function getListData()
+    {
+        return ArrayHelper::map(self::find()->where(['status' => self::STATUS_ACTIVE])->all(), 'id', 'profile.name');
+    }
+
     public function getFormatted($attr, $lang = 'es')
     {
         switch($attr)
@@ -130,6 +135,11 @@ class Client extends EActiveRecord
     public function getProfile()
     {
         return $this->hasOne(ClientProfile::className(), ['client_id' => 'id']);
+    }
+
+    public function getRate()
+    {
+        return $this->hasOne(Rate::className(), ['id' => 'rate_id']);
     }
 
     /**

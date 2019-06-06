@@ -6,6 +6,8 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use backend\models\QuotationForm;
+use common\models\Travel;
 
 /**
  * Site controller
@@ -60,7 +62,19 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = new QuotationForm();
+
+        $travel = new Travel();
+
+        $result = false;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $result = $model->request();
+        } 
+
+        return $this->render('index', [
+            'model' => $model,
+            'result' => $result,
+        ]);
     }
 
     /**

@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                                     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
                 
-                                    <?= GridView::widget([
+                    <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'columns' => [
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             //'balance',
                             //'rate_id',
 
-                            ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {update} {delete}'],
+                            ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}'],
                         ],
                     ]); ?>
                 
