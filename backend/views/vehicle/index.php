@@ -74,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                   return $model->getFormatted('default_operator');
                                 },
                             ],
-
+                            
                             [
                                 'class' => 'yii\grid\ActionColumn',
                                 'template' => '{update} {delete}'

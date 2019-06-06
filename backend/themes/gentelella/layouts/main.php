@@ -66,24 +66,24 @@ $this->registerCss('@media print { a:after { content: "" !important;  } }');
                             \yiister\gentelella\widgets\Menu::widget(
                                 [
                                     'items' => [
-                                        [
-                                            'label' => Yii::t('app', 'Home'), 
-                                            'url' => '/', 
-                                            // 'icon' => 'home'
-                                        ],
+                                        // [
+                                        //     'label' => Yii::t('app', 'Home'), 
+                                        //     'url' => '/', 
+                                        //     // 'icon' => 'home'
+                                        // ],
                                         [
                                             'label' => Yii::t('app', 'Servicios'), 
                                             'url' => ['/travel/index'], 
                                             // 'icon' => 'home'
                                         ],
                                         [
-                                            'label' => Yii::t('app', 'Tarifas'), 
-                                            'url' => ['/rate/index'], 
+                                            'label' => Yii::t('app', 'Clientes'), 
+                                            'url' => ['/client/index'], 
                                             // 'icon' => 'home'
                                         ],
                                         [
-                                            'label' => Yii::t('app', 'Clientes'), 
-                                            'url' => ['/client/index'], 
+                                            'label' => Yii::t('app', 'Tarifas'), 
+                                            'url' => ['/rate/index'], 
                                             // 'icon' => 'home'
                                         ],
                                         [

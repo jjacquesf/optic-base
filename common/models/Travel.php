@@ -143,6 +143,7 @@ class Travel extends EActiveRecord
             'total' => Yii::t('app', 'Total'),
             'payed' => Yii::t('app', 'Pagado'),
             'balance' => Yii::t('app', 'Saldo'),
+            'reference' => Yii::t('app', 'Referencia'),
         ];
     }
 
@@ -174,6 +175,10 @@ class Travel extends EActiveRecord
         $this->total = 0;
         foreach($this->vehicles as $vehicle) {
             $this->total += $vehicle->vehicle_zone_rate;
+        }
+
+        if($this->service != null) {
+            $this->total += $this->service->price;
         }
 
         $this->balance = $this->total - $this->payed;
