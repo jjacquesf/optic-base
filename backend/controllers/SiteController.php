@@ -62,6 +62,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        return $this->redirect(['travel/index']);
         $model = new QuotationForm();
 
         $travel = new Travel();
