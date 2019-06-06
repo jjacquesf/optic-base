@@ -60,6 +60,7 @@ class ClientSignupForm extends Client
         $client->email = $this->email;
         $client->username = $this->email;
         $client->status = $this->status;
+        $client->rate_id = $this->rate_id;
         if(!empty($this->password)) {
             $client->setPassword($this->password);
         }

@@ -61,6 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             'profile.name',
                             'email:email',
+                            'rate.name',
                             //'created_at',
                             //'updated_at',
                             //'verification_token',

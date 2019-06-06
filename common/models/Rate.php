@@ -40,7 +40,7 @@ class Rate extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Nombre'),
+            'name' => Yii::t('app', 'Nombre tarifa'),
         ];
     }
 
