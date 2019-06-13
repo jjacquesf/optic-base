@@ -14,6 +14,9 @@ use Yii;
  * @property int $operator_id
  * @property double $vehicle_rate
  * @property double $vehicle_zone_rate
+ * @property int $adults
+ * @property int $children
+ * @property int $bags
  */
 class TravelVehicle extends EActiveRecord
 {
@@ -32,8 +35,9 @@ class TravelVehicle extends EActiveRecord
     {
         return [
             [['travel_id', 'vehicle_type_id', 'vehicle_rate', 'vehicle_zone_rate'], 'required'],
-            [['travel_id', 'vehicle_type_id', 'vehicle_id', 'operator_id'], 'integer'],
-            [['vehicle_rate', 'vehicle_zone_rate'], 'number'],
+            [['travel_id', 'vehicle_type_id', 'vehicle_id', 'operator_id', 'adults', 'children', 'bags'], 'integer'],
+            [['vehicle_rate', 'vehicle_zone_rate', 'adults', 'children', 'bags'], 'number'],
+            [['adults', 'children', 'bags'], 'default', 'value' => 0],
         ];
     }
 
@@ -50,6 +54,9 @@ class TravelVehicle extends EActiveRecord
             'operator_id' => Yii::t('app', 'Operator ID'),
             'vehicle_rate' => Yii::t('app', 'Vehicle Rate'),
             'vehicle_zone_rate' => Yii::t('app', 'Vehicle Zone Rate'),
+            'adults' => Yii::t('app', 'Adultos'),
+            'children' => Yii::t('app', 'Niños'),
+            'bags' => Yii::t('app', 'Equipaje'),
         ];
     }
     

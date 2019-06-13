@@ -8,6 +8,8 @@ use common\models\Vehicle;
 use common\models\OperatorVehicleType;
 use common\models\User;
 use common\models\TravelVehicle;
+use common\models\VehicleType;
+use common\models\Service;
 use backend\models\TravelForm;
 use backend\models\TravelSearch;
 use yii\web\Controller;
@@ -29,10 +31,10 @@ class TravelController extends Controller
         return [
             'access' => [
                  'class' => AccessControl::className(),
-                 'only' => ['index', 'view', 'create', 'update', 'delete', 'get-vehicles', 'get-operators'],
+                 'only' => ['index', 'view', 'create', 'update', 'delete', 'get-vehicle-type', 'quote'],
                  'rules' => [
                      [
-                         'actions' => ['index', 'view', 'create', 'update', 'delete', 'get-vehicles', 'get-operators'],
+                         'actions' => ['index', 'view', 'create', 'update', 'delete', 'get-vehicle-type', 'quote'],
                          'allow' => true,
                          'roles' => ['@'],
                      ],
@@ -45,6 +47,62 @@ class TravelController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actionQuote()
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        // return Yii::$app->request->get();
+
+        $model = new TravelForm();
+        if($model->load(Yii::$app->request->post()) 
+            && $model->validate()) {
+
+            $quote = ['subtotal' => 0, 'service' => 0, 'additional' => 0, 'total' => 0];
+
+            if( isset($_POST['TravelVehicleForm']) && is_array($_POST['TravelVehicleForm']) ) {
+                foreach($_POST['TravelVehicleForm'] as $tvf) {
+                    $tvf['from_zone_id'] = $model->from_zone_id;
+                    $tvf['to_zone_id'] = $model->to_zone_id;
+                    $tvf['date'] = $model->date;
+                    $tvf['pickup'] = $model->pickup;
+                    $tvf['dropoff'] = $model->dropoff;
+                    $quote['subtotal'] += Travel::quoteVehicle($model->client_id, $model->type, $tvf);
+                }
+            }
+
+            $quote['total'] = $quote['service'] + $quote['subtotal'] + $quote['additional'];
+
+            $service = Service::find()->where(['id' => $model->service_id])->one();
+            if($service != null) {
+                $quote['service'] = $service->price;
+            }
+
+            return [
+                'success' => true,
+                'data' => [
+                    'subtotal' => sprintf('$ %s', number_format($quote['subtotal'], 2)),
+                    'service' => sprintf('$ %s', number_format($quote['service'], 2)),
+                    'additional' => sprintf('$ %s', number_format($quote['additional'], 2)),
+                    'total' => sprintf('$ %s', number_format($quote['total'], 2)),
+                ],
+            ];
+        }
+        
+
+        // $quote = ['subtotal' => rand(100,200), 'additional' => rand(100,200), 'total' => rand(100,200)];
+
+        // return [
+        //         'success' => true,
+        //         'data' => [
+        //             'subtotal' => sprintf('$ %s', number_format($quote['subtotal'], 2)),
+        //             'additional' => sprintf('$ %s', number_format($quote['additional'], 2)),
+        //             'total' => sprintf('$ %s', number_format($quote['total'], 2)),
+        //         ],
+        //     ];
+
+        return [ 'success' => false, 'dataw' => $model->attributes, 'data' => $model->getErrors() ];
     }
 
     /**
@@ -76,54 +134,59 @@ class TravelController extends Controller
         ]);
     }
 
-    public function actionGetVehicles($id)
+    public function actionGetVehicleType($id)
     {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-        $data = [];
-        foreach(Vehicle::find()->where([
-                'vehicle_type_id' => $id, 
-            ])->all() as $vehicle) {
+        $model = VehicleType::findOne($id);
 
-            $data[] = ['id' => $vehicle->id, 'label' => $vehicle->getFormatted('label')];
+        if($model != null) {
+
+            $vehicles = [];
+            foreach(Vehicle::find()->where([
+                    'vehicle_type_id' => $model->id, 
+                ])->all() as $vehicle) {
+
+                $vehicles[] = ['id' => $vehicle->id, 'label' => $vehicle->getFormatted('label')];
+            }
+      
+            // - - - - -
+            
+            $users_id = array_values(ArrayHelper::map(OperatorVehicleType::find()->where(['vehicle_type_id' => $model->id])->all(), 'user_id', 'user_id'));
+            
+            $operators = [];
+            $query = User::find();
+            $query->joinWith(['profile']);
+
+            if(!empty($query)) {
+                $query->where(['optic_user.id' => $users_id]);
+            } else {
+                $query->where(['1 != 0']);
+            }
+
+            if($vehicle->default_operator_id) {
+                $query->orderBy("`optic_user`.`id` = {$vehicle->default_operator_id} DESC, `optic_user_profile`.`name` ASC");
+            }
+
+            $users = $query->all();
+            foreach($users as $user) {
+                $operators[] = ['id' => $user->id, 'label' => $user->getFormatted('name')];
+            }
+
+            // - - - - -
+
+            $data = $model->attributes;
+            $data['vehicles'] = $vehicles;
+            $data['operators'] = $operators;
+
+            return [
+                'success' => true,
+                'data' => $data,
+            ];
         }
 
         return [
-            'success' => true,
-            'data' => $data,
-        ];
-    }
-
-    public function actionGetOperators($id)
-    {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-        $vehicle = Vehicle::findOne($id);
-        
-        $users_id = array_values(ArrayHelper::map(OperatorVehicleType::find()->where(['vehicle_type_id' => $vehicle->vehicle_type_id])->all(), 'user_id', 'user_id'));
-        
-        $data = [];
-        $query = User::find();
-        $query->joinWith(['profile']);
-
-        if(!empty($query)) {
-            $query->where(['optic_user.id' => $users_id]);
-        } else {
-            $query->where(['1 != 0']);
-        }
-
-        if($vehicle->default_operator_id) {
-            $query->orderBy("`optic_user`.`id` = {$vehicle->default_operator_id} DESC, `optic_user_profile`.`name` ASC");
-        }
-
-        $users = $query->all();
-        foreach($users as $user) {
-            $data[] = ['id' => $user->id, 'label' => $user->getFormatted('name')];
-        }
-
-        return [
-            'success' => true,
-            'data' => $data,
+            'success' => false,
         ];
     }
 
@@ -137,26 +200,21 @@ class TravelController extends Controller
         $model = new TravelForm();
         $tvModel = new TravelVehicle();
 
-        // var_dump($_POST);
-        // die();
-
         if ($model->load(Yii::$app->request->post()) && ( $travel = $model->register() )) {
-
             if( isset($_POST['TravelVehicleForm']) && is_array($_POST['TravelVehicleForm']) ) {
-                
                 foreach($_POST['TravelVehicleForm'] as $tvf) {
-                    // var_dump($tvf);
                     $travel->addVehicle($tvf);
                 }
-
-                // die();
             }
-            
-            // die();
+
             return $this->redirect(['index']);
         }
 
-        // die();
+        // var_dump( $model->validate() );
+        // var_dump( $model->getErrors() );
+
+
+        // die('end2');
 
         return $this->render('create', [
             'model' => $model,

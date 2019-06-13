@@ -2,8 +2,7 @@
 function init_daterangepicker_right() {
   
 	if( typeof ($.fn.daterangepicker) === 'undefined'){ return; }
-	console.log('init_daterangepicker_right');
-
+	
 	var cb = function(start, end, label) {
 	  console.log(start.toISOString(), end.toISOString(), label);
 	  $('#reportrange_right span').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'));
@@ -83,7 +82,64 @@ function init_SmartWizard() {
 	
 };
 
+function init_clockpicker() {
+	$(".clockpicker").clockpicker({ donetext: "Hecho" });
+};
+
+function init() {
+	$.each($('.dependant'), function(i,o) {
+		
+		var dependant = this;
+		var field = $(o).data('field');
+		var value = $(o).data('value');
+		var action = $(o).data('action');
+
+		switch(action) 
+		{
+			case 'hide':
+
+				if($(field).val() == value) {
+					$(o).addClass("d-none");
+				} else {
+					$(o).removeClass("d-none");
+				}
+
+				$(field).on('change', function(e) {
+					if($(this).val() == value) {
+						$(dependant).addClass('d-none');
+					} else {
+						$(dependant).removeClass('d-none');
+					}
+				});
+
+				break;
+
+			case 'show':
+			default:
+
+				if($(field).val() == value) {
+					$(o).removeClass("d-none");
+				} else {
+					$(o).addClass("d-none");
+				}
+
+				$(field).on('change', function(e) {
+					if($(this).val() == value) {
+						$(dependant).removeClass('d-none');
+					} else {
+						$(dependant).addClass('d-none');
+					}
+				});
+
+				break;
+		}
+	});
+}
+
 $(document).ready(function() {
 	init_daterangepicker_right();
 	init_SmartWizard();
+	init_clockpicker();
+
+	init();
 });		

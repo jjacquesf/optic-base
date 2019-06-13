@@ -96,7 +96,7 @@ class TravelSearch extends Travel
             $this->to_date = date('Y-m-d');
         }
 
-        $query->andWhere('( pickup >= :from_date AND pickup <= :to_date )')
+        $query->andWhere('( DATE(pickup) >= :from_date AND DATE(pickup) <= :to_date )')
             ->addParams([':from_date' => $this->from_date, ':to_date' => $this->to_date]);
 
         return $dataProvider;

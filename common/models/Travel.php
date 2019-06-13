@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\db\Expression;
+use Moment\Moment;
 
 /**
  * This is the model class for table "{{%travel}}".
@@ -107,9 +108,15 @@ class Travel extends EActiveRecord
     public function rules()
     {
         return [
-            [['status', 'type', 'payed_status', 'client_id', 'service_id', 'from_zone_id', 'from_location', 'from_address', 'to_zone_id', 'to_location', 'to_address', 'passanger_name', 'pickup', 'total', 'payed', 'balance'], 'required'],
+            [['status', 'type', 'payed_status', 'client_id', 'service_id', 'from_zone_id', 'from_location', 'from_address', 'pickup', 'total', 'payed', 'balance'], 'required'],
+
+            // [['to_zone_id', 'to_location', 'to_address', 'passanger_name'], 'required'],
+            
+            [['to_location', 'to_address', 'passanger_name'], 'default', 'value' => ''],
+            [['to_zone_id'], 'default', 'value' => 0],
+
             [['status', 'type', 'payed_status', 'client_id', 'user_id', 'previous_travel_id', 'service_id', 'from_zone_id', 'to_zone_id'], 'integer'],
-            [['created_at', 'pickup'], 'safe'],
+            [['created_at', 'pickup', 'dropoff'], 'safe'],
             [['total', 'payed', 'balance'], 'number'],
             [['from_location', 'from_address', 'to_location', 'to_address', 'passanger_name'], 'string', 'max' => 255],
             ['created_at', 'default', 'value' => new Expression('NOW()')],
@@ -137,7 +144,7 @@ class Travel extends EActiveRecord
             'to_zone_id' => Yii::t('app', 'To Zone'),
             'to_location' => Yii::t('app', 'To Location'),
             'to_address' => Yii::t('app', 'Destino'),
-            'passanger_name' => Yii::t('app', 'Información de los pasajero'),
+            'passanger_name' => Yii::t('app', 'Información de los pasajeros'),
             'pickup' => Yii::t('app', 'Hora del servicio'),
             'dropoff' => Yii::t('app', 'Finaliza el servicio'),
             'total' => Yii::t('app', 'Total'),
@@ -145,6 +152,29 @@ class Travel extends EActiveRecord
             'balance' => Yii::t('app', 'Saldo'),
             'reference' => Yii::t('app', 'Referencia'),
         ];
+    }
+
+    public static function quoteVehicle($client_id, $type, $data)
+    {
+        $client = Client::findOne($client_id);
+        if($client != null) {
+
+            if($type == self::TYPE_SPECIAL) {
+                $rate = VehicleTypeRate::getRatePrice($data['vehicle_type_id'], $client->rate_id);
+                $date = Moment::createFromFormat('d/m/Y', $data['date']);
+                if($date) {
+                    $pickup = new Moment( sprintf('%s %s:00', $date->format('Y-m-d'), $data['pickup']) );
+                    $dropoff = new Moment( sprintf('%s %s:00', $date->format('Y-m-d'), $data['dropoff']) );
+
+                    $vo = $dropoff->from($pickup);
+                    return $rate * ceil(abs($vo->getMinutes()) / 60);
+                }
+            } else {
+                return VehicleTypeZoneRate::getRatePrice($data['from_zone_id'], $data['to_zone_id'], $client->rate_id, $data['vehicle_type_id']);
+            }
+        }
+
+        return 0;
     }
 
     public function addVehicle($data)
@@ -161,12 +191,9 @@ class Travel extends EActiveRecord
         if($this->client != null) {
             $model->vehicle_zone_rate = VehicleTypeZoneRate::getRatePrice($this->from_zone_id, $this->to_zone_id, $this->client->rate_id, $data['vehicle_type_id']);
         }
-
         
-        $model->validate();
-        // var_dump($model->getErrors());
-        // die();
-
+        // $model->validate();
+        // var_dump($model->getErrors()); die();        
         return $model->save() && $this->updateTotals();
     }
 
@@ -174,7 +201,21 @@ class Travel extends EActiveRecord
     {
         $this->total = 0;
         foreach($this->vehicles as $vehicle) {
-            $this->total += $vehicle->vehicle_zone_rate;
+
+            if($this->type != self::TYPE_SPECIAL) {
+                $this->total += $vehicle->vehicle_zone_rate;
+            } else {
+
+                $pickup = new Moment( $this->pickup );
+                $dropoff = new Moment( $this->dropoff );
+
+                if($pickup != null && $dropoff != null) {
+                    $vo = $dropoff->from($pickup);
+                    $this->total += $vehicle->vehicle_rate * ceil(abs($vo->getMinutes()) / 60);                    
+                } else {
+                    $this->total += 0;    
+                }
+            }
         }
 
         if($this->service != null) {

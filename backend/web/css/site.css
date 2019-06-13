@@ -2,3 +2,16 @@ h2 {
     font-size: 18px;
     font-weight: 400;
 }
+
+.invoice-col address > div {
+	margin-bottom: 0.5em;
+}
+
+.invoice-col address span {
+	padding-left: 1em;
+	display: block;
+}
+
+p.lead {
+	margin-bottom: 0.3em;
+}

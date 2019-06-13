@@ -23,29 +23,22 @@ class TravelForm extends Travel
     public function rules()
     {
         return [
-            [['service_id', 'from_zone_id', 'from_location', 'from_address', 'to_zone_id', 'to_location', 'to_address', 'passanger_name', 'pickup', 'total'], 'required'],
+            [['service_id', 'from_zone_id', 'from_location', 'from_address', 'pickup'], 'required'],
 
-            [['to_zone_id', 'to_location', 'to_address'], 'required', 
-        		'when' => function($model) {
-        			return $model->type != Travel::TYPE_SPECIAL;
-        		},
-        		'whenClient' => new JsExpression('function (attribute, value) {
-					return parseInt( $("#travelform-type").val() ) != '.Travel::TYPE_SPECIAL.';
-			     }'),
-        	],
+            // [['to_zone_id', 'to_location', 'to_address'], 'required'],
 
-     //        [['dropoff'], 'required', 
+     //        [['to_zone_id', 'to_location', 'to_address'], 'required', 
      //    		'when' => function($model) {
-     //    			return $model->type == Travel::TYPE_SPECIAL;
+     //    			return $model->type != Travel::TYPE_SPECIAL;
      //    		},
      //    		'whenClient' => new JsExpression('function (attribute, value) {
-					// return parseInt( $("#travelform-type").val() ) == '.Travel::TYPE_SPECIAL.';
+					// return parseInt( $("#travelform-type").val() ) != '.Travel::TYPE_SPECIAL.';
 			  //    }'),
      //    	],
 
             [['type', 'client_id', 'previous_travel_id', 'service_id', 'from_zone_id', 'to_zone_id'], 'integer'],
             [['date', 'pickup', 'dropoff'], 'safe'],
-            [['total'], 'number'],
+            // [['total'], 'number'],
             [['from_location', 'from_address', 'to_location', 'to_address', 'passanger_name'], 'string', 'max' => 255],
         ];
     }
@@ -97,6 +90,7 @@ class TravelForm extends Travel
             $model->balance = 0;
             $model->reference = Sequence::getNext($this->type);
             $model->pickup = sprintf('%s %s:00', $date->format('Y-m-d'), $model->pickup);
+            $model->dropoff = sprintf('%s %s:00', $date->format('Y-m-d'), $model->dropoff);
             $model->passanger_name = 'Lorem de pasajeros';
 
             return $model->save() ? $model : null;
@@ -104,4 +98,5 @@ class TravelForm extends Travel
 
     	return null;
     }
+
 }
