@@ -7,10 +7,9 @@ $assets = ThemeAsset::register($this);
 /* @var $this yii\web\View */
 /* @var $model common\models\Travel */
 
-$this->title = 'Update Travel: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Travels', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Modificar servicio: ' . $model->reference;
+$this->params['breadcrumbs'][] = ['label' => 'Servicios', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'Modificar';
 ?>
 <div class="travel-update">
 
@@ -30,6 +29,8 @@ $this->params['breadcrumbs'][] = 'Update';
 			<div class="x_content">
 				<?= $this->render('_form', [
 			        'model' => $model,
+			        'travel' => $travel,
+			        'tvModel' => $tvModel,
 			    ]) ?>
 			</div>
 		</div>

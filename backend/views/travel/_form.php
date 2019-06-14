@@ -336,7 +336,7 @@ $this->registerJs("
                 alert('Superas el máximo de pasajeros permitidos: ' + max);
             }
 
-            updateTotal();
+            // updateTotal();
         });
 
         $(context + ' .bags-field').unbind('change');
@@ -522,8 +522,8 @@ $this->registerJs("
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if( $model->isNewRecord ): ?>
-                                <?php foreach($model->vehicles as $vehicle): ?>
+                            <?php if( !$travel->isNewRecord ): ?>
+                                <?php foreach($travel->vehicles as $vehicle): ?>
                                     <tr class="vehicle-<?= $vehicle->id; ?>">
                                         <td class="text-center">
                                             <button
@@ -535,44 +535,44 @@ $this->registerJs("
                                         <td><?= Html::activeDropDownList($vehicle, 'vehicle_type_id', VehicleType::getListData(), [ 
                                                     'prompt' => '- Selecciona -',
                                                     'class' => 'form-control vehicle-type-field',
-                                                    'name' => "TravelVehicle[{$vehicle->id}]",
+                                                    'name' => "TravelVehicle[{$vehicle->id}][vehicle_type_id]",
                                                     'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'vehicle_type_id'), $vehicle->id),
                                                     'data-suffix_id' => $vehicle->id,
                                                 ]); ?></td>
-                                        <td><?= Html::activeTextInput($tvModel, 'adults', [ 
+                                        <td><?= Html::activeTextInput($vehicle, 'adults', [ 
                                                 'placeholder' => '0',
                                                 'class' => 'form-control passangers-field',
-                                                'name' => "TravelVehicleForm[{$vehicle->id}][adults]",
+                                                'name' => "TravelVehicle[{$vehicle->id}][adults]",
                                                 'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'adults'), $vehicle->id),
                                                 'data-suffix_id' => $vehicle->id,
                                                 'data-type' => 'adults',
                                             ]); ?></td>
-                                        <td><?= Html::activeTextInput($tvModel, 'children', [ 
+                                        <td><?= Html::activeTextInput($vehicle, 'children', [ 
                                                 'placeholder' => '0',
                                                 'class' => 'form-control passangers-field',
-                                                'name' => "TravelVehicleForm[{$vehicle->id}][children]",
+                                                'name' => "TravelVehicle[{$vehicle->id}][children]",
                                                 'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'children'), $vehicle->id),
                                                 'data-suffix_id' => $vehicle->id,
                                                 'data-type' => 'children',
                                             ]); ?></td>
-                                        <td><?= Html::activeTextInput($tvModel, 'bags', [ 
+                                        <td><?= Html::activeTextInput($vehicle, 'bags', [ 
                                                 'placeholder' => '0',
                                                 'class' => 'form-control bags-field',
-                                                'name' => "TravelVehicleForm[{$vehicle->id}][bags]",
+                                                'name' => "TravelVehicle[{$vehicle->id}][bags]",
                                                 'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'bags'), $vehicle->id),
                                                 'data-suffix_id' => $vehicle->id,
                                             ]); ?></td>
                                         <td><?= Html::activeDropDownList($vehicle, 'vehicle_id', [], [ 
                                                     'prompt' => '- Selecciona -',
                                                     'class' => 'form-control',
-                                                    'name' => "TravelVehicle[{$vehicle->id}]",
+                                                    'name' => "TravelVehicle[{$vehicle->id}][vehicle_id]",
                                                     'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'vehicle_id'), $vehicle->id),
                                                     'data-suffix_id' => $vehicle->id,
                                                 ]); ?></td>
                                         <td><?= Html::activeDropDownList($vehicle, 'operator_id', [], [ 
                                                     'prompt' => '- Selecciona -',
                                                     'class' => 'form-control',
-                                                    'name' => "TravelVehicle[{$vehicle->id}]",
+                                                    'name' => "TravelVehicle[{$vehicle->id}][operator_id]",
                                                     'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'operator_id'), $vehicle->id),
                                                     'data-suffix_id' => $vehicle->id,
                                                 ]); ?></td>                                
@@ -648,13 +648,13 @@ $this->registerJs("
                             <span>2 adultos, 3 menores</span>
                         </div>
                       </div>
-                      <div>
+<!--                       <div>
                         <b>Adicionales: </b>
                         <div class="aditionals">
                             <span>1 x Silla Baby</span>
                             <span>2 x Silla Niño 8 - 12</span>
                         </div>
-                      </div>
+                      </div> -->
 <!--                       <div>
                         <b>Tipo de servicio: </b>
                         <div class="service-type">

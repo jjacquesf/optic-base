@@ -17,6 +17,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
+use Moment\Moment;
 
 /**
  * TravelController implements the CRUD actions for Travel model.
@@ -53,8 +54,6 @@ class TravelController extends Controller
     {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-        // return Yii::$app->request->get();
-
         $model = new TravelForm();
         if($model->load(Yii::$app->request->post()) 
             && $model->validate()) {
@@ -63,6 +62,17 @@ class TravelController extends Controller
 
             if( isset($_POST['TravelVehicleForm']) && is_array($_POST['TravelVehicleForm']) ) {
                 foreach($_POST['TravelVehicleForm'] as $tvf) {
+                    $tvf['from_zone_id'] = $model->from_zone_id;
+                    $tvf['to_zone_id'] = $model->to_zone_id;
+                    $tvf['date'] = $model->date;
+                    $tvf['pickup'] = $model->pickup;
+                    $tvf['dropoff'] = $model->dropoff;
+                    $quote['subtotal'] += Travel::quoteVehicle($model->client_id, $model->type, $tvf);
+                }
+            }
+
+            if( isset($_POST['TravelVehicle']) && is_array($_POST['TravelVehicle']) ) {
+                foreach($_POST['TravelVehicle'] as $tvf) {
                     $tvf['from_zone_id'] = $model->from_zone_id;
                     $tvf['to_zone_id'] = $model->to_zone_id;
                     $tvf['date'] = $model->date;
@@ -89,18 +99,6 @@ class TravelController extends Controller
                 ],
             ];
         }
-        
-
-        // $quote = ['subtotal' => rand(100,200), 'additional' => rand(100,200), 'total' => rand(100,200)];
-
-        // return [
-        //         'success' => true,
-        //         'data' => [
-        //             'subtotal' => sprintf('$ %s', number_format($quote['subtotal'], 2)),
-        //             'additional' => sprintf('$ %s', number_format($quote['additional'], 2)),
-        //             'total' => sprintf('$ %s', number_format($quote['total'], 2)),
-        //         ],
-        //     ];
 
         return [ 'success' => false, 'dataw' => $model->attributes, 'data' => $model->getErrors() ];
     }
@@ -210,12 +208,6 @@ class TravelController extends Controller
             return $this->redirect(['index']);
         }
 
-        // var_dump( $model->validate() );
-        // var_dump( $model->getErrors() );
-
-
-        // die('end2');
-
         return $this->render('create', [
             'model' => $model,
             'step' => $step,
@@ -232,14 +224,43 @@ class TravelController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $travel = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model = new TravelForm();
+        $model->attributes = $travel->attributes;
+
+        $pickup = new Moment($model->pickup);
+        $dropoff = new Moment($model->dropoff);
+
+        $model->date = $pickup->format('d/m/Y');
+        $model->pickup = $pickup->format('H:i');
+        $model->dropoff = $dropoff->format('H:i');
+
+        $tvModel = new TravelVehicle();
+
+        if ($model->load(Yii::$app->request->post()) && $model->updateData($travel)) {
+            if( isset($_POST['TravelVehicleForm']) && is_array($_POST['TravelVehicleForm']) ) {
+                foreach($_POST['TravelVehicleForm'] as $tvf) {
+                    $travel->addVehicle($tvf);
+                }
+            }
+
+            if( isset($_POST['TravelVehicle']) && is_array($_POST['TravelVehicle']) ) {
+                foreach($_POST['TravelVehicle'] as $id => $tv) {
+                    // var_dump($id);
+                    // var_dump($tv);
+                    // die();
+                    $travel->updateVehicle($id, $tv);
+                }
+            }
+
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
+            'travel' => $travel,
             'model' => $model,
+            'tvModel' => $tvModel,
         ]);
     }
 

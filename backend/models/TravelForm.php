@@ -64,7 +64,33 @@ class TravelForm extends Travel
         return $labels;
     }
 
+    public function updateData($model)
+    {
+        $date = DateTime::createFromFormat('d/m/Y', $this->date);
 
+        if($date) {
+
+            $model->service_id = $this->service_id;
+            $model->from_zone_id = $this->from_zone_id;
+            $model->from_location = $this->from_location;
+            $model->from_address = $this->from_address;
+            $model->type = $this->type;
+            $model->client_id = $this->client_id;
+            $model->previous_travel_id = $this->previous_travel_id;
+            $model->to_zone_id   = $this->to_zone_id  ;
+            $model->to_location = $this->to_location;
+            $model->to_address = $this->to_address;
+            $model->passanger_name = $this->passanger_name;
+            $model->pickup = sprintf('%s %s:00', $date->format('Y-m-d'), $this->pickup);
+            if($model->type == Travel::TYPE_SPECIAL) {
+                $model->dropoff = sprintf('%s %s:00', $date->format('Y-m-d'), $this->dropoff);
+            }
+
+            return $model->save() ? $model : null;
+        }
+
+        return null;
+    }
 
     /**
      * Save
@@ -81,6 +107,7 @@ class TravelForm extends Travel
         if($date) {
 
             $model = new Travel();
+            $model->scenario = Travel::SCENARIO_CREATE;            
             $model->load($this->attributes, '');
             $model->status = self::STATUS_PENDING;
             $model->payed_status = self::PAYED_STATUS_PENDING;
@@ -90,7 +117,11 @@ class TravelForm extends Travel
             $model->balance = 0;
             $model->reference = Sequence::getNext($this->type);
             $model->pickup = sprintf('%s %s:00', $date->format('Y-m-d'), $model->pickup);
-            $model->dropoff = sprintf('%s %s:00', $date->format('Y-m-d'), $model->dropoff);
+            $model->dropoff = '';
+            if($model->type == Travel::TYPE_SPECIAL) {
+                $model->dropoff = sprintf('%s %s:00', $date->format('Y-m-d'), $model->dropoff);
+            }
+
             $model->passanger_name = 'Lorem de pasajeros';
 
             return $model->save() ? $model : null;

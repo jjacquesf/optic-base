@@ -145,7 +145,7 @@ $this->registerJs('
                                     //'payed',
                                     //'balance',
 
-                                    ['class' => 'yii\grid\ActionColumn', 'template' => '{delete}'],
+                                    ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}'],
                                 ],
                             ]); 
                         ?>

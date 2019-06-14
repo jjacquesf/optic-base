@@ -47,6 +47,8 @@ class Travel extends EActiveRecord
     const PAYED_STATUS_PARTIAL = 1;
     const PAYED_STATUS_COMPLETE = 2;
 
+    const SCENARIO_CREATE = 'create';
+
     public $status_options = [
         self::STATUS_CANCELED => 'Cancelado',
         self::STATUS_PENDING => 'Pendiente',
@@ -108,10 +110,10 @@ class Travel extends EActiveRecord
     public function rules()
     {
         return [
-            [['status', 'type', 'payed_status', 'client_id', 'service_id', 'from_zone_id', 'from_location', 'from_address', 'pickup', 'total', 'payed', 'balance'], 'required'],
+            [['status', 'type', 'client_id', 'service_id', 'from_zone_id', 'from_location', 'from_address', 'pickup'], 'required'],
 
-            // [['to_zone_id', 'to_location', 'to_address', 'passanger_name'], 'required'],
-            
+            [['status', 'payed_status', 'total', 'payed', 'balance'], 'required', 'on' => self::SCENARIO_CREATE],
+
             [['to_location', 'to_address', 'passanger_name'], 'default', 'value' => ''],
             [['to_zone_id'], 'default', 'value' => 0],
 
@@ -170,11 +172,41 @@ class Travel extends EActiveRecord
                     return $rate * ceil(abs($vo->getMinutes()) / 60);
                 }
             } else {
+                // var_dump($data); die();
                 return VehicleTypeZoneRate::getRatePrice($data['from_zone_id'], $data['to_zone_id'], $client->rate_id, $data['vehicle_type_id']);
             }
         }
 
         return 0;
+    }
+
+    public function updateVehicle($id, $data)
+    {
+        $model = TravelVehicle::findOne($id);
+        if($model != null) {
+
+            $model->vehicle_type_id = $data['vehicle_type_id'];
+            $model->adults = $data['adults'];
+            $model->children = $data['children'];
+            $model->bags = $data['bags'];
+
+            if($this->client != null) {
+                $model->vehicle_rate = VehicleTypeRate::getRatePrice($data['vehicle_type_id'], $this->client->rate_id);
+            }
+
+            if($this->client != null) {
+                $model->vehicle_zone_rate = VehicleTypeZoneRate::getRatePrice($this->from_zone_id, $this->to_zone_id, $this->client->rate_id, $data['vehicle_type_id']);
+            }
+
+            // var_dump($model->attributes);
+            // $model->validate();
+            // var_dump($model->getErrors());
+            // die();
+                 
+            return $model->save() && $this->updateTotals();            
+        }
+
+        return false;
     }
 
     public function addVehicle($data)
@@ -191,9 +223,7 @@ class Travel extends EActiveRecord
         if($this->client != null) {
             $model->vehicle_zone_rate = VehicleTypeZoneRate::getRatePrice($this->from_zone_id, $this->to_zone_id, $this->client->rate_id, $data['vehicle_type_id']);
         }
-        
-        // $model->validate();
-        // var_dump($model->getErrors()); die();        
+             
         return $model->save() && $this->updateTotals();
     }
 
