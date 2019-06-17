@@ -14,13 +14,16 @@ use common\models\Config;
     <?php $form = ActiveForm::begin(); ?>
 	
 	<?= $model->translateContent(); ?>
-
-    <?= $form->field($model, 'price')->textInput() ?>
-
-    <div class="text-right">
-        <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success']) ?>
+	
+	<div class="col-sm-4 form-group">
+		<?= $form->field($model, 'price')->textInput() ?>	
+	</div>
+    
+    <div class="col-sm-12 form-group text-right">
+        <div class="ln_solid"></div>
+        <?= Html::submitButton('<i class="fa fa-save"></i> Guardar', ['class' => 'btn btn-success']); ?>
     </div>
-
+    
     <?php ActiveForm::end(); ?>
 
 </div>

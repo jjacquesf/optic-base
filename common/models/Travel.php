@@ -156,6 +156,16 @@ class Travel extends EActiveRecord
         ];
     }
 
+    public static function quoteAdditional($qty, $additional_id)
+    {
+        $model = Additional::findOne($additional_id);
+        if($model != null) {
+            return $model->price * $qty;
+        }
+
+        return 0;
+    }
+
     public static function quoteVehicle($client_id, $type, $data)
     {
         $client = Client::findOne($client_id);
@@ -197,11 +207,6 @@ class Travel extends EActiveRecord
             if($this->client != null) {
                 $model->vehicle_zone_rate = VehicleTypeZoneRate::getRatePrice($this->from_zone_id, $this->to_zone_id, $this->client->rate_id, $data['vehicle_type_id']);
             }
-
-            // var_dump($model->attributes);
-            // $model->validate();
-            // var_dump($model->getErrors());
-            // die();
                  
             return $model->save() && $this->updateTotals();            
         }
@@ -227,6 +232,50 @@ class Travel extends EActiveRecord
         return $model->save() && $this->updateTotals();
     }
 
+    public function updateAdditional($id, $data)
+    {
+        $model = TravelAdditional::findOne($id);
+        if($model != null) {
+
+            $model->additional_id = $data['additional_id'];
+            $model->qty = $data['qty'];
+    
+            $additional = Additional::findOne($data['additional_id']);
+            if($additional != null) {
+                $model->additional_id = $additional->id;
+                $model->qty = $data['qty'];
+                $model->price = $additional->price;
+                $model->total = $model->qty * $additional->price;
+
+                return $model->save() && $this->updateTotals();
+                
+            } else {
+                return $model->delete() && $this->updateTotals();
+            }
+        }
+
+        return false;
+    }
+
+    public function addAdditional($data)
+    {
+        $model = new TravelAdditional();
+        $model->travel_id = $this->id;
+        $model->additional_id = $data['additional_id'];
+
+        $additional = Additional::findOne($data['additional_id']);
+
+        if($additional != null) {
+            $model->additional_id = $additional->id;
+            $model->qty = $data['qty'];
+            $model->price = $additional->price;
+            $model->total = $model->qty * $additional->price;
+
+            return $model->save() && $this->updateTotals();
+        }
+        return false;
+    }
+
     public function updateTotals()
     {
         $this->total = 0;
@@ -246,6 +295,10 @@ class Travel extends EActiveRecord
                     $this->total += 0;    
                 }
             }
+        }
+
+        foreach($this->additionals as $additional) {
+            $this->total += $additional->total;
         }
 
         if($this->service != null) {

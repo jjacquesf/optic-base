@@ -9,6 +9,7 @@ use common\models\Client;
 use common\models\VehicleType;
 use common\models\Travel;
 use yii\web\View;
+use common\models\Additional;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Travel */
@@ -158,7 +159,7 @@ $this->registerJs("
                 if(result.success == true) {
                     $('#Summary .subtotal').html( result.data.subtotal );
                     $('#Summary .service').html( result.data.service );
-                    $('#Summary .additionals').html( result.data.additionals );
+                    $('#Summary .additional').html( result.data.additional );
                     $('#Summary .total').html( result.data.total );
 
                     $('.total-container').removeClass('d-none');
@@ -357,6 +358,27 @@ $this->registerJs("
 
             updateTotal();
         });
+
+        $(context + ' .delete-vehicle').unbind('click');
+        $(context + ' .delete-vehicle').on('click', function(e) {
+            e.preventDefault();
+            
+            var suffix_id = $(this).data('id');
+            $('#vehicle-' + suffix_id).remove();
+
+            if( !isNaN(suffix_id) ) {
+                $.ajax({
+                    url: '".Url::to(['travel/delete-vehicle'])."',
+                    data: { id: suffix_id },
+                    success: function(result) {
+                        if(result.success == true) {
+                            updateTotal();
+                        }    
+                    },
+                    complete: function(status) {}
+                });    
+            }
+        });
     }
 
     $('.add-vehicle').on('click', function(e) {
@@ -376,6 +398,88 @@ $this->registerJs("
 
     bindVehiclesEvents('#vehicles-table tbody');
 
+    // ---
+
+    function bindAdditionalsEvents(context) {
+        $(context + ' .additional-field').unbind('change');
+        $(context + ' .additional-field').on('change', function(e) {
+            var suffix_id = $(this).data('suffix_id');
+            
+            $.ajax({
+                url: '" . Url::to(['/travel/get-additional']) . "',
+                dataType: 'json',
+                data: { id : $(this).val() }
+            })
+            .done(function(result) {
+
+                if(result.success == true) {
+                    // console.log(result.data);
+                    $('#traveladditional-additional_id_' + suffix_id).data('max_qty', result.data.max_qty);
+
+                    // $('#traveladditional-qty_' + suffix_id).val( result.data.max_qty );
+                }
+
+            })
+            .always(function(status) { updateTotal(); });
+        });
+        
+        $(context + ' .additional-qty-field').unbind('change');
+        $(context + ' .additional-qty-field').on('change', function(e) {
+
+            var suffix_id = $(this).data('suffix_id');
+
+            var max = parseInt( $('#traveladditional-additional_id' + suffix_id).data('max_qty') );
+            var qty = parseInt( $('#traveladditional-qty_' + suffix_id).val() );
+
+            if( qty > max  ) {
+                // $(this).val( Math.abs(parseInt($(this).val()) - (passangers - max)) );
+                alert('Superas el máximo de aditamentso existentes: ' + max);
+            }
+
+            updateTotal();
+        });
+
+        $(context + ' .delete-additional').unbind('click');
+        $(context + ' .delete-additional').on('click', function(e) {
+            e.preventDefault();
+            
+            var suffix_id = $(this).data('id');
+            $('#additional-' + suffix_id).remove();
+
+            if( !isNaN(suffix_id) ) {
+                $.ajax({
+                    url: '".Url::to(['travel/delete-additional'])."',
+                    data: { id: suffix_id },
+                    success: function(result) {
+                        if(result.success == true) {
+                            updateTotal();
+                        }    
+                    },
+                    complete: function(status) {}
+                });    
+            }
+        });
+    }
+
+    $('.add-additional').on('click', function(e) {
+        
+        e.preventDefault();
+
+        var tpl = \$('#additional-tpl').html();
+        Mustache.parse(tpl);
+
+        id = 'new_' + Math.floor(Math.random() * (100 - 0) + 0);
+        var rendered = Mustache.render(tpl, {id: id});
+
+        \$('#additionals-table tbody').append(rendered);
+        
+        bindAdditionalsEvents( '#additionals-table tbody tr#' + id );
+    });
+
+    bindAdditionalsEvents('#additionals-table tbody');
+    
+    // --
+
     $('#Summary').followWhen(185);
 
     $('.summary-update').on('change', function(e) {
@@ -390,11 +494,11 @@ $this->registerJs("
 <script id="vehicle-tpl" type="x-tmpl-mustache">
     <tr id="{{id}}">
         <td class="text-center">
-            <button
+            <a href="#"
                 class="btn btn-danger delete-vehicle"
                 data-id="{{id}}">
                 <i class="fa fa-trash"></i>
-            </button>
+            </a>
         </td>
         <td><?= Html::activeDropDownList($tvModel, 'vehicle_type_id', VehicleType::getListData(), [ 
                     'prompt' => '- Selecciona -',
@@ -444,10 +548,37 @@ $this->registerJs("
     </tr>
 </script>
 
+<script id="additional-tpl" type="x-tmpl-mustache">
+    <tr id="{{id}}">
+        <td class="text-center">
+            <a  href="#"
+                class="btn btn-danger delete-additional"
+                data-id="{{id}}">
+                <i class="fa fa-trash"></i>
+            </a>
+        </td>
+        <td><?= Html::activeDropDownList($addModel, 'additional_id', Additional::getListData(), [ 
+                    'prompt' => '- Selecciona -',
+                    'class' => 'form-control additional-field',
+                    'name' => 'TravelAdditionalForm[{{id}}][additional_id]',
+                    'id' => sprintf('%s_{{id}}', Html::getInputId($addModel, 'additional_id')),
+                    'data-suffix_id' => '{{id}}',
+                ]); ?></td>
+        <td><?= Html::activeTextInput($addModel, 'qty', [ 
+                    'placeholder' => '0',
+                    'class' => 'form-control additional-qty-field',
+                    'name' => 'TravelAdditionalForm[{{id}}][qty]',
+                    'id' => sprintf('%s_{{id}}', Html::getInputId($addModel, 'qty')),
+                    'data-suffix_id' => '{{id}}',
+                    'data-type' => 'qty',
+                ]); ?></td>                           
+    </tr>
+</script>
+
 
 <?php $form = ActiveForm::begin(['id' => 'travel-form']); ?>
 <div class="travel-form">
-    <div class="col-xs-9">
+    <div class="col-xs-9" style="padding-right: 2em;">
 
         
         <p class="lead">Información general</p>
@@ -499,98 +630,178 @@ $this->registerJs("
         <br>
         <p class="lead">Vehículos</p>
 
-        <div class="row">
-            <div class="col-sm-12">
+        <?php if( !empty(VehicleType::getListData()) ): ?>
+            <div class="row">
+                <div class="col-sm-12">
 
-                <div class="text-right">
-                    <button
-                        class="btn btn-info add-vehicle">
-                        <i class="fa fa-plus"></i> Agregar vehículo
-                    </button>
-                </div>
-                <div id="vehicles-app">
-                    <table id="vehicles-table" class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Tipo de vehículo</th>
-                                <th width="80">Adultos</th>
-                                <th width="80">Menores</th>
-                                <th width="80">Maletas</th>
-                                <th>Vehículo</th>
-                                <th>Operador</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if( !$travel->isNewRecord ): ?>
-                                <?php foreach($travel->vehicles as $vehicle): ?>
-                                    <tr class="vehicle-<?= $vehicle->id; ?>">
-                                        <td class="text-center">
-                                            <button
-                                                class="btn btn-danger delete-vehicle"
-                                                data-id="<?= $vehicle->id; ?>">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </td>
-                                        <td><?= Html::activeDropDownList($vehicle, 'vehicle_type_id', VehicleType::getListData(), [ 
-                                                    'prompt' => '- Selecciona -',
-                                                    'class' => 'form-control vehicle-type-field',
-                                                    'name' => "TravelVehicle[{$vehicle->id}][vehicle_type_id]",
-                                                    'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'vehicle_type_id'), $vehicle->id),
+                    <div class="text-right">
+                        <button
+                            class="btn btn-info add-vehicle">
+                            <i class="fa fa-plus"></i> Agregar vehículo
+                        </button>
+                    </div>
+                    <div id="vehicles-app">
+                        <table id="vehicles-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="80"></th>
+                                    <th>Tipo de vehículo</th>
+                                    <th width="80">Adultos</th>
+                                    <th width="80">Menores</th>
+                                    <th width="80">Maletas</th>
+                                    <th>Vehículo</th>
+                                    <th>Operador</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if( !$travel->isNewRecord ): ?>
+                                    <?php foreach($travel->vehicles as $vehicle): ?>
+                                        <tr id="vehicle-<?= $vehicle->id; ?>">
+                                            <td class="text-center">
+                                                <a href="#"
+                                                    class="btn btn-danger delete-vehicle"
+                                                    data-id="<?= $vehicle->id; ?>">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                            <td><?= Html::activeDropDownList($vehicle, 'vehicle_type_id', VehicleType::getListData(), [ 
+                                                        'prompt' => '- Selecciona -',
+                                                        'class' => 'form-control vehicle-type-field',
+                                                        'name' => "TravelVehicle[{$vehicle->id}][vehicle_type_id]",
+                                                        'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'vehicle_type_id'), $vehicle->id),
+                                                        'data-suffix_id' => $vehicle->id,
+                                                    ]); ?></td>
+                                            <td><?= Html::activeTextInput($vehicle, 'adults', [ 
+                                                    'placeholder' => '0',
+                                                    'class' => 'form-control passangers-field',
+                                                    'name' => "TravelVehicle[{$vehicle->id}][adults]",
+                                                    'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'adults'), $vehicle->id),
+                                                    'data-suffix_id' => $vehicle->id,
+                                                    'data-type' => 'adults',
+                                                ]); ?></td>
+                                            <td><?= Html::activeTextInput($vehicle, 'children', [ 
+                                                    'placeholder' => '0',
+                                                    'class' => 'form-control passangers-field',
+                                                    'name' => "TravelVehicle[{$vehicle->id}][children]",
+                                                    'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'children'), $vehicle->id),
+                                                    'data-suffix_id' => $vehicle->id,
+                                                    'data-type' => 'children',
+                                                ]); ?></td>
+                                            <td><?= Html::activeTextInput($vehicle, 'bags', [ 
+                                                    'placeholder' => '0',
+                                                    'class' => 'form-control bags-field',
+                                                    'name' => "TravelVehicle[{$vehicle->id}][bags]",
+                                                    'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'bags'), $vehicle->id),
                                                     'data-suffix_id' => $vehicle->id,
                                                 ]); ?></td>
-                                        <td><?= Html::activeTextInput($vehicle, 'adults', [ 
-                                                'placeholder' => '0',
-                                                'class' => 'form-control passangers-field',
-                                                'name' => "TravelVehicle[{$vehicle->id}][adults]",
-                                                'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'adults'), $vehicle->id),
-                                                'data-suffix_id' => $vehicle->id,
-                                                'data-type' => 'adults',
-                                            ]); ?></td>
-                                        <td><?= Html::activeTextInput($vehicle, 'children', [ 
-                                                'placeholder' => '0',
-                                                'class' => 'form-control passangers-field',
-                                                'name' => "TravelVehicle[{$vehicle->id}][children]",
-                                                'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'children'), $vehicle->id),
-                                                'data-suffix_id' => $vehicle->id,
-                                                'data-type' => 'children',
-                                            ]); ?></td>
-                                        <td><?= Html::activeTextInput($vehicle, 'bags', [ 
-                                                'placeholder' => '0',
-                                                'class' => 'form-control bags-field',
-                                                'name' => "TravelVehicle[{$vehicle->id}][bags]",
-                                                'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'bags'), $vehicle->id),
-                                                'data-suffix_id' => $vehicle->id,
-                                            ]); ?></td>
-                                        <td><?= Html::activeDropDownList($vehicle, 'vehicle_id', [], [ 
-                                                    'prompt' => '- Selecciona -',
-                                                    'class' => 'form-control',
-                                                    'name' => "TravelVehicle[{$vehicle->id}][vehicle_id]",
-                                                    'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'vehicle_id'), $vehicle->id),
-                                                    'data-suffix_id' => $vehicle->id,
-                                                ]); ?></td>
-                                        <td><?= Html::activeDropDownList($vehicle, 'operator_id', [], [ 
-                                                    'prompt' => '- Selecciona -',
-                                                    'class' => 'form-control',
-                                                    'name' => "TravelVehicle[{$vehicle->id}][operator_id]",
-                                                    'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'operator_id'), $vehicle->id),
-                                                    'data-suffix_id' => $vehicle->id,
-                                                ]); ?></td>                                
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
+                                            <td><?= Html::activeDropDownList($vehicle, 'vehicle_id', [], [ 
+                                                        'prompt' => '- Selecciona -',
+                                                        'class' => 'form-control',
+                                                        'name' => "TravelVehicle[{$vehicle->id}][vehicle_id]",
+                                                        'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'vehicle_id'), $vehicle->id),
+                                                        'data-suffix_id' => $vehicle->id,
+                                                    ]); ?></td>
+                                            <td><?= Html::activeDropDownList($vehicle, 'operator_id', [], [ 
+                                                        'prompt' => '- Selecciona -',
+                                                        'class' => 'form-control',
+                                                        'name' => "TravelVehicle[{$vehicle->id}][operator_id]",
+                                                        'id' => sprintf('%s_%d', Html::getInputId($vehicle, 'operator_id'), $vehicle->id),
+                                                        'data-suffix_id' => $vehicle->id,
+                                                    ]); ?></td>                                
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
 
-                        </tbody>
-                    </table>
-                    
+                            </tbody>
+                        </table>
+                        
+                    </div>
+
                 </div>
+                <div class="col-sm-12">
+                    <?= $form->field($model, 'passanger_name')->textArea(['rows' => 4]) ?>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="alert alert-info alert-dismissible fade in" role="alert">
+                        No hay tipos de vehículo datos de alta en el sistema.
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
 
-            </div>
-            <div class="col-sm-12">
-                <?= $form->field($model, 'passanger_name')->textArea(['rows' => 4]) ?>
-            </div>
-        </div>
+        <br>
+        <p class="lead">Adicionales</p>
         
+        <?php if( !empty(Additional::getListData()) ): ?>
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <div class="text-right">
+                        <button
+                            class="btn btn-info add-additional">
+                            <i class="fa fa-plus"></i> Agregar adicional
+                        </button>
+                    </div>
+                    <div id="vehicles-app">
+                        <table id="additionals-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="80"></th>
+                                    <th>Adicional</th>
+                                    <th width="80">Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if( !$travel->isNewRecord ): ?>
+                                    <?php foreach($travel->additionals as $additional): ?>
+                                        <tr id="additional-<?= $additional->id; ?>">
+                                            <td class="text-center">
+                                                <a href="#"
+                                                    class="btn btn-danger delete-additional"
+                                                    data-id="<?= $additional->id; ?>">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                            <td><?= Html::activeDropDownList($additional, 'additional_id', Additional::getListData(), [ 
+                                                        'prompt' => '- Selecciona -',
+                                                        'class' => 'form-control additional-field',
+                                                        'name' => "TravelAdditional[{$additional->id}][additional_id]",
+                                                        'id' => sprintf('%s_%d', Html::getInputId($additional, 'additional_id'), $additional->id),
+                                                        'data-suffix_id' => $additional->id,
+                                                    ]); ?></td>
+                                            <td><?= Html::activeTextInput($additional, 'qty', [ 
+                                                    'placeholder' => '0',
+                                                    'class' => 'form-control passangers-field',
+                                                    'name' => "TravelAdditional[{$additional->id}][qty]",
+                                                    'id' => sprintf('%s_%d', Html::getInputId($additional, 'qty'), $additional->id),
+                                                    'data-suffix_id' => $additional->id,
+                                                    'data-type' => 'qty',
+                                                ]); ?></td>                              
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+
+                            </tbody>
+                        </table>
+                        
+                    </div>
+
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="alert alert-info alert-dismissible fade in" role="alert">
+                        No hay adicionales datos de alta en el sistema.
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <br>
         <p class="lead">Origen y destino</p>
 
         <div class="row">
@@ -690,7 +901,7 @@ $this->registerJs("
                         </tr>
                         <tr>
                           <th>Adicionales</th>
-                          <td class="text-right additionals" >$ 0.00</td>
+                          <td class="text-right additional" >$ 0.00</td>
                         </tr>
                         <tr>
                           <th>Total:</th>
@@ -704,8 +915,8 @@ $this->registerJs("
                   </div>
                 </div>
 
-                <div class="col-sm-12 text-right">
-                    <br>
+                <div class="col-sm-12 form-group text-right">
+                    <div class="ln_solid"></div>
                     <?= Html::submitButton('<i class="fa fa-save"></i> Guardar', ['class' => 'btn btn-success']); ?>
                     <br><br>
                 </div>

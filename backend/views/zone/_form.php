@@ -105,9 +105,10 @@ $this->registerJs("
 				    <div id="map" style="width: 100%; height: 400px;"></div>
 				</div>	
 
-				<div class="text-right">
-				    <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success']) ?>
-				</div>
+                <div class="col-sm-12 form-group text-right">
+                    <div class="ln_solid"></div>
+                    <?= Html::submitButton('<i class="fa fa-save"></i> Guardar', ['class' => 'btn btn-success']); ?>
+                </div>
 
 				<?php ActiveForm::end(); ?>
 			</div>

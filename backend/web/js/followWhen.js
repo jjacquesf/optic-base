@@ -11,8 +11,8 @@ $.fn.followWhen = function ( pos ) {
             $this.css({
                 position: 'fixed',
                 top: 0,
-                right: '53px',
-                width: '226px',
+                right: '43px',
+                width: '236px',
                 'z-index': 5
             });
         } else {

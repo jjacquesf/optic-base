@@ -34,8 +34,11 @@ use yii\widgets\ActiveForm;
 	</div>
     
 
-    <div class="text-right">
-        <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success']) ?>
+    <div class="row">
+        <div class="col-sm-12 form-group text-right">
+            <div class="ln_solid"></div>
+            <?= Html::submitButton('<i class="fa fa-save"></i> Guardar', ['class' => 'btn btn-success']); ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

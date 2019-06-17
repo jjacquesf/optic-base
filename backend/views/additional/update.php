@@ -5,13 +5,13 @@ use backend\assets\ThemeAsset;
 $assets = ThemeAsset::register($this);
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Travel */
+/* @var $model common\models\Additional */
 
-$this->title = 'Modificar servicio: ' . $model->reference;
-$this->params['breadcrumbs'][] = ['label' => 'Servicios', 'url' => ['index']];
-$this->params['breadcrumbs'][] = 'Modificar';
+$this->title = Yii::t('app', 'Modificar: ') . $model->getFormatted('name');
+$this->params['breadcrumbs'][] = ['label' => 'Adicionales', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="travel-update">
+<div class="additional-update">
 
 	<div class="page-title">
 		<div class="title_left">
@@ -29,9 +29,6 @@ $this->params['breadcrumbs'][] = 'Modificar';
 			<div class="x_content">
 				<?= $this->render('_form', [
 			        'model' => $model,
-			        'travel' => $travel,
-			        'tvModel' => $tvModel,
-			        'addModel' => $addModel,
 			    ]) ?>
 			</div>
 		</div>

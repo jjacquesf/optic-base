@@ -107,6 +107,11 @@ $this->registerCss('@media print { a:after { content: "" !important;  } }');
                                             // 'icon' => 'home'
                                         ],
                                         [
+                                            'label' => Yii::t('app', 'Adicionales'), 
+                                            'url' => ['/additional/index'], 
+                                            // 'icon' => 'home'
+                                        ],
+                                        [
                                             'label' => Yii::t('app', 'Amenidades'), 
                                             'url' => ['/service/index'], 
                                             // 'icon' => 'home'

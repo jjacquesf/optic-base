@@ -66,8 +66,9 @@ $this->registerJs("
 <div class="col-sm-4"><?= $form->field($model, 'default_operator_id')->dropDownList([], ['prompt' => '- Ninguno -']) ?></div>
 
     
-    <div class="text-right">        
-        <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success']) ?>
+    <div class="col-sm-12 form-group text-right">
+        <div class="ln_solid"></div>
+        <?= Html::submitButton('<i class="fa fa-save"></i> Guardar', ['class' => 'btn btn-success']); ?>
     </div>
 
     <?php ActiveForm::end(); ?>

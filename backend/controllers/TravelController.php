@@ -8,8 +8,10 @@ use common\models\Vehicle;
 use common\models\OperatorVehicleType;
 use common\models\User;
 use common\models\TravelVehicle;
+use common\models\TravelAdditional;
 use common\models\VehicleType;
 use common\models\Service;
+use common\models\Additional;
 use backend\models\TravelForm;
 use backend\models\TravelSearch;
 use yii\web\Controller;
@@ -32,10 +34,10 @@ class TravelController extends Controller
         return [
             'access' => [
                  'class' => AccessControl::className(),
-                 'only' => ['index', 'view', 'create', 'update', 'delete', 'get-vehicle-type', 'quote'],
+                 'only' => ['index', 'view', 'create', 'update', 'delete', 'get-vehicle-type', 'get-additional', 'quote', 'delete-vehicle', 'delete-additional'],
                  'rules' => [
                      [
-                         'actions' => ['index', 'view', 'create', 'update', 'delete', 'get-vehicle-type', 'quote'],
+                         'actions' => ['index', 'view', 'create', 'update', 'delete', 'get-vehicle-type', 'get-additional', 'quote', 'delete-vehicle', 'delete-additional'],
                          'allow' => true,
                          'roles' => ['@'],
                      ],
@@ -47,6 +49,39 @@ class TravelController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+        ];
+    }
+
+    public function actionDeleteVehicle($id)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        
+        $model = TravelVehicle::findOne($id);
+        if($model != null) {
+            return [
+                'success' => $model->delete(),
+            ];
+        }
+
+        return [
+            'success' => false
+        ];
+    }
+
+    public function actionDeleteAdditional($id)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        
+        $model = TravelAdditional::findOne($id);
+
+        if($model != null) {
+            return [
+                'success' => $model->delete(),
+            ];
+        }
+
+        return [
+            'success' => false
         ];
     }
 
@@ -79,6 +114,19 @@ class TravelController extends Controller
                     $tvf['pickup'] = $model->pickup;
                     $tvf['dropoff'] = $model->dropoff;
                     $quote['subtotal'] += Travel::quoteVehicle($model->client_id, $model->type, $tvf);
+                }
+            }
+
+
+            if( isset($_POST['TravelAdditionalForm']) && is_array($_POST['TravelAdditionalForm']) ) {
+                foreach($_POST['TravelAdditionalForm'] as $taf) {
+                    $quote['additional'] += Travel::quoteAdditional($taf['qty'], $taf['additional_id']);
+                }
+            }
+
+            if( isset($_POST['TravelAdditional']) && is_array($_POST['TravelAdditional']) ) {
+                foreach($_POST['TravelAdditional'] as $taf) {
+                    $quote['additional'] += Travel::quoteAdditional($taf['qty'], $taf['additional_id']);
                 }
             }
 
@@ -130,6 +178,25 @@ class TravelController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+    public function actionGetAdditional($id)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $model = Additional::findOne($id);
+
+        if($model != null) {
+            $data = $model->attributes;
+            return [
+                'success' => true,
+                'data' => $data,
+            ];
+        }
+
+        return [
+            'success' => false,
+        ];
     }
 
     public function actionGetVehicleType($id)
@@ -197,6 +264,7 @@ class TravelController extends Controller
     {
         $model = new TravelForm();
         $tvModel = new TravelVehicle();
+        $addModel = new TravelAdditional();
 
         if ($model->load(Yii::$app->request->post()) && ( $travel = $model->register() )) {
             if( isset($_POST['TravelVehicleForm']) && is_array($_POST['TravelVehicleForm']) ) {
@@ -212,6 +280,7 @@ class TravelController extends Controller
             'model' => $model,
             'step' => $step,
             'tvModel' => $tvModel,
+            'addModel' => $addModel,
         ]);
     }
 
@@ -237,8 +306,11 @@ class TravelController extends Controller
         $model->dropoff = $dropoff->format('H:i');
 
         $tvModel = new TravelVehicle();
+        $addModel = new TravelAdditional();
 
         if ($model->load(Yii::$app->request->post()) && $model->updateData($travel)) {
+
+
             if( isset($_POST['TravelVehicleForm']) && is_array($_POST['TravelVehicleForm']) ) {
                 foreach($_POST['TravelVehicleForm'] as $tvf) {
                     $travel->addVehicle($tvf);
@@ -247,10 +319,19 @@ class TravelController extends Controller
 
             if( isset($_POST['TravelVehicle']) && is_array($_POST['TravelVehicle']) ) {
                 foreach($_POST['TravelVehicle'] as $id => $tv) {
-                    // var_dump($id);
-                    // var_dump($tv);
-                    // die();
                     $travel->updateVehicle($id, $tv);
+                }
+            }
+            
+            if( isset($_POST['TravelAdditionalForm']) && is_array($_POST['TravelAdditionalForm']) ) {
+                foreach($_POST['TravelAdditionalForm'] as $tvf) {
+                    $travel->addAdditional($tvf);
+                }
+            }
+
+            if( isset($_POST['TravelAdditional']) && is_array($_POST['TravelAdditional']) ) {
+                foreach($_POST['TravelAdditional'] as $id => $tv) {
+                    $travel->updateAdditional($id, $tv);
                 }
             }
 
@@ -261,6 +342,7 @@ class TravelController extends Controller
             'travel' => $travel,
             'model' => $model,
             'tvModel' => $tvModel,
+            'addModel' => $addModel,
         ]);
     }
 

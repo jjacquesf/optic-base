@@ -50,12 +50,15 @@ class EActiveRecord extends \yii\db\ActiveRecord
         $content = [];
         foreach(Config::getLangs() as $lang) {
             foreach($this->translated_content as $tc_name => $tc_code) {
-                $content[] = Html::beginTag('div', ['class' => 'form-group']);
+
+                // $content[] = Html::beginTag('div', ['class' => 'col-sm-4']);
+                $content[] = Html::beginTag('div', ['class' => 'form-group col-sm-4']);
                 $content[] = Html::label(Yii::t('app', sprintf('%s (%s)', $this->getAttributeLabel($tc_name), ucfirst($lang))), '');
                 $content[] = Html::textInput("Translate[{$lang}][{$tc_code}]", $this->getTranslate($tc_code, $lang), [
                     'class' => 'form-control'
                 ]);
                 $content[] = Html::endTag('div');
+                // $content[] = Html::endTag('div');
             }
         }
 
