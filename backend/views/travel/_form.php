@@ -17,12 +17,35 @@ use common\models\Additional;
 
 // var_dump($model); die();
 
-$this->registerJsFile('//maps.googleapis.com/maps/api/js?key=AIzaSyAZZj-ayn0lracynja85xIx3fUzcOwMWjc&libraries=places');
+$this->registerJsFile('//maps.googleapis.com/maps/api/js?key=AIzaSyAZZj-ayn0lracynja85xIx3fUzcOwMWjc&libraries=places,geometry');
 
 foreach(Zone::find()->all() as $zone) {
     $pol = $zone->getFormatted('polygon');
     $polygons[] = "polygons.push( { id: {$zone->id}, name: '{$zone->name}', polygon: new google.maps.Polygon({ paths: {$pol} }) } );";
 }
+
+$load_autocomplete = '';
+$load_autocomplete2 = '';
+
+if(!$travel->isNewRecord):
+
+    if(!empty($travel->from_location)) {
+        @list($lat, $lng) = explode(',', $travel->from_location);
+
+        $load_autocomplete = "pplace = new google.maps.LatLng({$lat}, {$lng});
+            autocomplete.set('place', pplace);";
+    }
+
+    if(!empty($travel->to_location)) {
+        @list($lat, $lng) = explode(',', $travel->to_location);
+
+        $load_autocomplete2 = "pplace2 = new google.maps.LatLng({$lat}, {$lng});
+            autocomplete2.set('place', pplace2);";
+    }
+    
+
+endif;
+
 
 $polygons = implode('', $polygons);
 $this->registerJs("
@@ -47,14 +70,14 @@ $this->registerJs("
         var marker_from = new google.maps.Marker({
             position: center,
             map: map_from,
-            draggable: true,
+            draggable: false,
             title: 'Punto de origen'
         });
 
         var marker_to = new google.maps.Marker({
             position: center,
             map: map_to,
-            draggable: true,
+            draggable: false,
             title: 'Punto de destino'
         });
 
@@ -64,8 +87,13 @@ $this->registerJs("
 
         autocomplete.addListener('place_changed', function() {
             var place = autocomplete.getPlace();
-            var location = place.geometry.location;
-            
+
+            if (!place.geometry)  {
+                var location = place;
+            } else {
+                var location = place.geometry.location;
+            }
+                            
             var found = false;
             for(var i=0;i<polygons.length;i++) {
                 if( google.maps.geometry.poly.containsLocation(location, polygons[i].polygon)  ) {
@@ -88,6 +116,9 @@ $this->registerJs("
             } else {
                 // console.log( 'Not found' );
 
+                alert('La ubicación seleccionada está fuera de las zonas de cobertura.');
+                
+                $('#travelform-from_address').val('');
                 $('#travelform-from_zone_id').val('');
                 $('#travelform-from_location').val('');
                 $('#from_zone').val('');
@@ -95,6 +126,8 @@ $this->registerJs("
 
             $('#travelform-from_zone_id').change();
         });
+
+        {$load_autocomplete}
 
         // ---
 
@@ -104,7 +137,13 @@ $this->registerJs("
 
         autocomplete2.addListener('place_changed', function() {
             var place2 = autocomplete2.getPlace();
-            var location2 = place2.geometry.location;
+            
+            // var location2 = place2.geometry.location;
+            if (!place2.geometry)  {
+                var location2 = place2;
+            } else {
+                var location2 = place2.geometry.location;
+            }  
             
             var found2 = false;
             for(var i=0;i<polygons.length;i++) {
@@ -121,13 +160,16 @@ $this->registerJs("
                 $('#travelform-to_location').val( location2.lat() + ',' + location2.lng() );
                 $('#to_zone').val( found2.name );
 
-                marker_to.setPosition(location);
-                map_to.setCenter(location);
+                marker_to.setPosition(location2);
+                map_to.setCenter(location2);
                 map_to.setZoom(16);
 
             } else {
                 // console.log( 'Not found' );
 
+                alert('La ubicación seleccionada está fuera de las zonas de cobertura.');
+
+                $('#travelform-to_address').val('');
                 $('#travelform-to_zone_id').val('');
                 $('#travelform-to_location').val('');
                 $('#to_zone').val('');
@@ -136,11 +178,11 @@ $this->registerJs("
             $('#travelform-to_zone_id').change();
         });
 
+        {$load_autocomplete2}
+
     }
 
     initMap();
-
-
 ", View::POS_READY);
 
 $this->registerJs("
