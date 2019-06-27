@@ -5,6 +5,7 @@ namespace backend\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Travel;
+use yii\db\Expression;
 
 /**
  * TravelSearch represents the model behind the search form of `common\models\Travel`.
@@ -44,6 +45,7 @@ class TravelSearch extends Travel
      */
     public function search($type, $params)
     {
+
         $query = Travel::find();
 
         // add conditions that should always apply here
@@ -88,16 +90,18 @@ class TravelSearch extends Travel
             ->andFilterWhere(['like', 'to_address', $this->to_address])
             ->andFilterWhere(['like', 'passanger_name', $this->passanger_name]);
 
-        if( $this->from_date == null) {
+
+        if( empty($this->from_date) ) {
             $this->from_date = date('Y-m-d');
         }
 
-        if( $this->to_date == null ) {
+        if( empty($this->to_date) ) {
             $this->to_date = date('Y-m-d');
         }
-
+        
         $query->andWhere('( DATE(pickup) >= :from_date AND DATE(pickup) <= :to_date )')
-            ->addParams([':from_date' => $this->from_date, ':to_date' => $this->to_date]);
+                ->addParams([':from_date' => $this->from_date, ':to_date' => $this->to_date]);    
+
 
         return $dataProvider;
     }

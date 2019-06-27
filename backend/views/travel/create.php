@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						        'model' => $model,
 						        'tvModel' => $tvModel,
 						        'addModel' => $addModel,
+						        'travel' => $travel,
 						    ]); ?>
 			</div>
 		</div>

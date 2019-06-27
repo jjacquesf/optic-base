@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\web\View;
-use yii\helpers\JSON;
+use yii\helpers\Json;
 use common\models\Zone;
 use yii\helpers\ArrayHelper;
 

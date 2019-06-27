@@ -47,7 +47,7 @@ $this->registerJs('
 
                 <div class="well" style="overflow: auto;">
                     <div class="col-xs-6">
-                        <?php $form = ActiveForm::begin(['method' => 'get']); ?>
+                        <?php $form = ActiveForm::begin(['action' => ['travel/index'], 'method' => 'get']); ?>
                             <div id="reportrange_right" class="pull-left" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
                                     <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
                                     <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
@@ -98,15 +98,7 @@ $this->registerJs('
                                         'value' => function($model, $key, $index, $column){
                                           return $model->getFormatted('status');
                                         },
-                                    ],
-                                    [
-                                        'class' => 'yii\grid\DataColumn',
-                                        'attribute' => 'type',
-                                        'format' => 'raw',
-                                        'value' => function($model, $key, $index, $column){
-                                          return $model->getFormatted('type');
-                                        },
-                                        // 'filter'
+                                        'filter' => $searchModel->status_options,
                                     ],
                                     [
                                         'class' => 'yii\grid\DataColumn',
@@ -117,22 +109,6 @@ $this->registerJs('
                                         },
                                         // 'filter'
                                     ],
-                                    // 'type',
-                                    // 'payed_status',
-                                    // 'client_id',
-                                    //'user_id',
-                                    //'created_at',
-                                    //'previous_travel_id',
-                                    //'service_id',
-                                    //'from_zone_id',
-                                    //'from_location',
-                                    //'from_address',
-                                    //'to_zone_id',
-                                    //'to_location',
-                                    //'to_address',
-                                    //'passanger_name',
-                                    //'pickup',
-                                    //'total',
                                     [
                                         'class' => 'yii\grid\DataColumn',
                                         'attribute' => 'total',
@@ -140,12 +116,10 @@ $this->registerJs('
                                         'value' => function($model, $key, $index, $column){
                                           return sprintf('$%s', number_format($model->total, 2));
                                         },
-                                        // 'filter'
+                                        'filter' => false,
                                     ],
-                                    //'payed',
-                                    //'balance',
-
-                                    ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}'],
+                                    ['class' => 'yii\grid\ActionColumn', 'template' => '{update}'],
+                                    ['class' => 'yii\grid\ActionColumn', 'template' => '{delete}'],
                                 ],
                             ]); 
                         ?>

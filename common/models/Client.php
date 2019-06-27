@@ -108,7 +108,7 @@ class Client extends EActiveRecord
         ];
     }
 
-    public function getListData()
+    public static function getListData()
     {
         return ArrayHelper::map(self::find()->where(['status' => self::STATUS_ACTIVE])->all(), 'id', 'profile.name');
     }

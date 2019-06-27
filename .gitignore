@@ -44,3 +44,4 @@ phpunit.phar
 /backend/web/robots.txt
 
 db.sql
+Archivo.sql

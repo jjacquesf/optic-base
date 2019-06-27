@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             //'status',
                             'profile.name',
                             'email',
-                            ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {update} {delete}'],
+                            ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}'],
                         ],
                     ]); ?>
                 

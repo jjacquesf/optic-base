@@ -266,6 +266,8 @@ class TravelController extends Controller
         $tvModel = new TravelVehicle();
         $addModel = new TravelAdditional();
 
+        $travel = new Travel();
+
         if ($model->load(Yii::$app->request->post()) && ( $travel = $model->register() )) {
             if( isset($_POST['TravelVehicleForm']) && is_array($_POST['TravelVehicleForm']) ) {
                 foreach($_POST['TravelVehicleForm'] as $tvf) {
@@ -281,6 +283,7 @@ class TravelController extends Controller
             'step' => $step,
             'tvModel' => $tvModel,
             'addModel' => $addModel,
+            'travel' => $travel,
         ]);
     }
 

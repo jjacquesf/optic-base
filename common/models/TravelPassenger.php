@@ -3,7 +3,7 @@
 namespace common\models;
 
 use Yii;
-use yii\helpers\JSON;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "optic_travel_passenger".

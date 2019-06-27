@@ -70,7 +70,7 @@ class Rate extends \yii\db\ActiveRecord
         return false;
     }
 
-    public function getListData()
+    public static function getListData()
     {
         return ArrayHelper::map(self::find()->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }

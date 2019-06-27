@@ -3,7 +3,7 @@
 namespace common\models;
 
 use Yii;
-use yii\helpers\JSON;
+use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 
 /**
