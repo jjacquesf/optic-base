@@ -13,8 +13,6 @@ echo "<?php\n";
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use backend\assets\ThemeAsset;
-$assets = ThemeAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */

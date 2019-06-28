@@ -13,8 +13,6 @@ echo "<?php\n";
 ?>
 
 use yii\helpers\Html;
-use backend\assets\ThemeAsset;
-$assets = ThemeAsset::register($this);
 
 use <?= $generator->indexWidgetType === 'grid' ? "yii\\grid\\GridView" : "yii\\widgets\\ListView" ?>;
 <?= $generator->enablePjax ? 'use yii\widgets\Pjax;' : '' ?>
@@ -45,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="x_content">
                 <p class="text-left">
-                    <?= "<?= " ?>Html::a(<?= $generator->generateString('Create ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>, ['create'], ['class' => 'btn btn-info pull-right']) ?>
+                    <?= "<?= " ?>Html::a(<?= $generator->generateString('Agregar ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>, ['create'], ['class' => 'btn btn-info pull-right']) ?>
                 </p>
 
                 <?= $generator->enablePjax ? "    <?php Pjax::begin(); ?>\n" : '' ?>
