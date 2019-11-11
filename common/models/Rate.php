@@ -14,6 +14,14 @@ use common\models\ClientSignupForm;
  */
 class Rate extends \yii\db\ActiveRecord
 {
+    const PUBLIC_YES = 1;
+    const PUBLIC_NO = 0;
+
+    public $public_options = [
+        self::PUBLIC_NO => 'No',
+        self::PUBLIC_YES => 'Si',
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -28,7 +36,8 @@ class Rate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'public'], 'required'],
+            ['public', 'integer'],
             [['name'], 'string', 'max' => 60],
         ];
     }

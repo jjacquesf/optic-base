@@ -103,7 +103,7 @@ $this->registerJs("
             }
 
             if( found != false ) {
-                // console.log( found );
+                console.log( found );
                 
                 $('#travelform-from_zone_id').val( found.id );
                 $('#travelform-from_location').val( location.lat() + ',' + location.lng() );

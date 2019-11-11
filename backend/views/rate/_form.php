@@ -16,6 +16,9 @@ use yii\widgets\ActiveForm;
 		<div class="col-sm-6">
 			<?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>		
 		</div>
+		<div class="col-sm-6">
+			<?= $form->field($model, 'public')->dropDownList($model->public_options) ?>		
+		</div>
 	</div>
 
 	<div class="row">

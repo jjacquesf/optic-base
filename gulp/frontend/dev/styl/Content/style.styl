@@ -1,0 +1,278 @@
+#home-slider
+  .sp-layer
+    left 25% !important
+    transform translate(-50%,-50%) !important
+    top 40% !important
+    width 35%
+    @media only screen and (max-width 992px)
+      left 35% !important
+      width 50%
+    @media only screen and (max-width 768px)
+      width 60%
+    @media only screen and (max-width 480px)
+      left 45% !important
+      width 80%
+    .title
+      font-size 2em
+      color $white
+      @media only screen and (max-width 768px)
+        font-size 1.5em
+      h2
+        margin 0
+        text-align left
+      p
+        margin-top 20px
+  .layer-two
+    @media only screen and (min-width 769px)
+      left 50% !important
+      top 50% !important
+.Home
+  .section-default
+    text-align center
+    padding-top 80px
+    padding-bottom 80px
+    h3
+      width 60%
+      margin 20px auto
+    p
+      width 60%
+      margin 40px auto
+    span
+      font-size 1.5em
+      font-weight bold
+    h3, p
+      @media only screen and (max-width 768px)
+        width 100%
+        text-align justify
+  .instructions
+    margin-bottom 30px
+    @media only screen and (max-width 992px)
+      display grid
+      grid-template-columns repeat(3, auto)
+      text-align center
+    @media only screen and (max-width 768px)
+      grid-template-columns repeat(2, auto)
+    @media only screen and (max-width 480px)
+      grid-template-columns repeat(1, auto)
+    .item
+      margin-bottom 20px
+      font-size 1.3em
+      @media only screen and (max-width 992px)
+        font-size 1em
+      @media only screen and (max-width 992px)
+        width 80%
+        margin auto
+      h3
+        font-weight 900
+        margin 0
+      span
+        color $yellow
+  .services
+    background-image url('img/banner_cars_optic_1.jpg')
+    .section-default
+      font-size 1.3em
+      @media only screen and (max-width 768px)
+        font-size 1em
+      p
+        margin auto
+  .box-reservation
+    background-color $yellow
+    padding-top 15px
+    padding-bottom 15px
+    padding-left 15px
+    padding-right 50px
+    @media only screen and (max-width 768px)
+      padding 15px
+    .box-header
+      display flex
+      justify-content space-between
+      align-items center
+      @media only screen and (max-width 768px)
+        flex-direction column
+      img
+        width 180px
+    .box-body
+      display grid
+      grid-template-columns 50% 50%
+      @media only screen and (max-width 768px)
+        grid-template-columns 100%
+      .reservation-form
+        .choose-destination
+          background-color #3f3f3e
+          border none
+          border-radius 0
+          color $white
+          display flex
+          justify-content space-between
+          align-items center
+          padding 10px
+          i.fa-arrow-down
+            color $yellow
+            border 1px solid $yellow
+            border-radius 40px
+            padding 4px
+        .add-people
+          display grid
+          grid-template-columns 50% 25% 25%
+          gap 0.5rem
+          input
+            height 100%
+          .btn-default
+            @media only screen and (max-width 768px)
+              padding 0
+      img
+        margin-left 7%
+        @media only screen and (max-width 768px)
+          margin-top 20px
+          margin-left auto
+          margin-right auto
+  .offers
+    text-align center
+    display grid
+    grid-template-columns repeat(4, auto)
+    align-items center
+    justify-content center
+    gap 8rem
+    margin 50px 0
+    @media only screen and (max-width 992px)
+      grid-template-columns repeat(3, auto)
+    @media only screen and (max-width 768px)
+      grid-template-columns repeat(2, auto)
+    @media only screen and (max-width 480px)
+      grid-template-columns repeat(1, auto)
+      gap 3rem
+    .item
+      margin-bottom 15px
+      width 140px
+      @media only screen and (max-width 768px)
+        width auto
+  .cta-advantage
+    background-image url('img/banner_cars_optic_2.jpg')
+    background-repeat no-repeat
+    background-position center
+    background-size cover
+    padding-top 5%
+    padding-bottom 5%
+    display grid
+    grid-template-columns repeat(3, auto)
+    padding 60px 0
+    @media only screen and (max-width 480px)
+      grid-template-columns repeat(1, auto)
+    .item
+      color $yellow
+      &:nth-child(2)
+        border-left 2px solid $yellow
+        border-right 2px solid $yellow
+        @media only screen and (max-width 480px)
+          border-left none
+          border-right none
+      @media only screen and (max-width 480px)
+        margin 10px 0
+      h2
+        width 40%
+        margin auto
+        @media only screen and (max-width 992px)
+          width 60%
+          font-size 1.2em
+  .our-vehicles
+    color $black
+    background-image url('img/banner_cars_optic_3.jpg')
+    position relative
+    .transparency
+      top 0
+      left 0
+      right 0
+      bottom 0
+      background-color rgba($white, 0.7);
+  .select-car
+    ul
+      display grid
+      grid-template-columns repeat(6, auto)
+      @media only screen and (max-width 768px)
+        grid-template-columns repeat(3, auto)
+      @media only screen and (max-width 480px)
+        grid-template-columns repeat(2, auto)
+    li
+      width 100%
+      a
+        color #aaaaaa
+    .models
+      background-color $gray
+      li
+        padding 30px 0
+        font-weight 800
+        text-align center
+        @media only screen and (max-width 480px)
+          padding 15px 0
+      .active
+        background-color $yellow
+        color #404040
+    .car-type
+      .main-img
+        position relative
+        .reserve
+          position absolute
+          top 80%
+          right 80px
+          display block
+          background-color $yellow
+          color #404040
+          font-weight bold
+          @media only screen and (max-width 768px)
+            top 70%
+          @media only screen and (max-width 480px)
+            top 50%
+            right 30px
+      li
+        padding 0
+        .thumbnail
+          background-repeat no-repeat
+          background-position center
+          background-size cover
+          height 200px
+          margin 0
+        .one
+          background-image url('img/IMG_7787_optic.jpg')
+        .two
+          background-image url('img/IMG_7794_optic.jpg')
+        .three
+          background-image url('img/IMG_7798_optic.jpg')
+        .four
+          background-image url('img/IMG_7811_optic.jpg')
+        .five
+          background-image url('img/IMG_7824_optic.jpg')
+        .six
+          background-image url('img/IMG_7824_optic.jpg')
+  .contact
+    background-color $yellow
+    padding-top 40px
+    padding-bottom 40px
+    h2
+      text-align left
+    a
+      display block
+      color $white
+      .icon
+        color $black
+        margin-right 10px
+    .mail
+      color $black
+      font-size 1.5em
+      margin-top 100px
+      @media only screen and (max-width 768px)
+        margin 10px 0
+    .btn-default
+      width 150px
+      font-weight bold
+
+.parallax
+  background-repeat no-repeat
+  background-position center
+  background-size cover
+  background-attachment fixed
+  text-align center
+  color $white
+
+.step-container
+  background #ffffff
+  padding 1em

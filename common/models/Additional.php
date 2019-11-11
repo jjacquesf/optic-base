@@ -79,11 +79,21 @@ class Additional extends EActiveRecord
                     ]);
     }
 
+    public static function getList()
+    {
+        return self::find()
+            ->joinWith(['translation'])
+            ->orderBy(['optic_translate.content' => SORT_ASC])
+            ->all();
+    }
+
     public static function getListData()
     {
         return ArrayHelper::map(self::find()
                                         ->joinWith(['translation'])
                                         ->orderBy(['optic_translate.content' => SORT_ASC])
-                                        ->all(), 'id', 'translation.content');
+                                        ->all(), 'id', function($model) {
+                                            return sprintf('%s ($ %s)', $model->translation->content, number_format($model->price, 2));
+                                        });
     }
 }

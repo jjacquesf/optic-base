@@ -60,6 +60,12 @@ class Config extends EActiveRecord
         return self::find()->one();
     }
 
+    public static function getPublicRateId()
+    {
+        $model = self::getConfig();
+        return $model->rate_id;
+    }
+
     public static function getLangs()
     {
         $model = self::getConfig();

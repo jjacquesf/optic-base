@@ -1,0 +1,100 @@
+.Header
+	background-color rgba($gray, 0.8)
+	position absolute
+	top 0
+	left 0
+	right 0
+	z-index 1
+	@media only screen and (max-width 768px)
+		position relative
+		background-color rgba($gray)
+	a
+		color $white
+		font-weight 500
+		display block
+		font-size 0.9em
+		text-decoration none
+	.desktop
+		display grid
+		grid-template-columns 40% 60%
+		align-items center
+		margin 15px auto
+		@media only screen and (max-width 992px)
+			grid-template-columns 30% 70%
+		@media only screen and (max-width 768px)
+			display none
+		a
+			justify-self start
+		.right
+			justify-self end
+			.top-menu
+				display flex
+				justify-content end
+				margin-bottom 20px
+				li:nth-child(4)
+					border-right 1px solid $white
+				a
+					color $yellow
+					font-weight bold
+				.lang
+					width 30px
+		.logo
+			display flex
+			align-items center
+			@media only screen and (max-width 992px)
+				flex-direction column
+			img
+				width 250px
+				@media only screen and (max-width 992px)
+					width 150px
+				@media only screen and (max-width 480px)
+					width 130px
+		ul
+			margin 0
+	.header-mobil
+		display none
+		@media only screen and (max-width 768px)
+			display grid
+			grid-template-columns 15% 65% 20%
+			align-items center
+			padding 10px 0
+			.icons
+				display flex
+				justify-content center
+				img
+					width 20px
+			.logo
+				justify-self center
+				width 150px
+		.open-menu
+			position absolute
+			top 20px
+			right 10px
+			font-size 1.5em
+			color $yellow
+	ul.mobil
+		display none
+		list-style none
+		text-align left
+		margin 0
+		padding-left 10px
+		position absolute
+		z-index 1
+		background-color rgba($gray)
+		left 0
+		right 0
+		border-top 1px solid $gray
+		li
+			margin 10px 0 !important
+			.phone
+				color $yellow
+				font-weight bold
+
+.fixed
+	position fixed
+	top 0
+	left 0
+	right 0
+	z-index 999
+	animation-name animateBanner
+	animation-duration 1s

@@ -1,0 +1,57 @@
+footer
+  background-image url('img/footer_optic.jpg')
+  background-repeat no-repeat
+  background-position center
+  background-size cover
+  background-attachment fixed
+  padding 20px 0
+  position relative
+  a
+    display block
+    color $white
+  i
+    margin-right 1rem
+  .top
+    display grid
+    grid-template-columns repeat(2, auto)
+    align-items center
+    @media only screen and (max-width 768px)
+      grid-template-columns auto
+      justify-content center
+    .logo
+      width 200px
+      margin 20px 0
+    .slogan, .social-media
+      justify-self end
+      color $white
+      @media only screen and (max-width 768px)
+        justify-self center
+  .center
+    display grid
+    grid-template-columns repeat(4, auto)
+    margin 30px 0
+    @media only screen and (max-width 768px)
+      grid-template-columns repeat(2, auto)
+      gap 2rem
+    .footer-menu
+      p
+        color $white
+        font-weight bold
+      ul
+        padding-left 0
+        list-style none
+      @media only screen and (max-width 768px)
+        justify-self center
+  .bottom
+    display flex
+    justify-content space-between
+    @media only screen and (max-width 768px)
+      flex-direction column
+      text-align center
+    .company
+      color $white
+      display flex
+      align-items center
+      @media only screen and (max-width 768px)
+        flex-direction column
+        justify-content center

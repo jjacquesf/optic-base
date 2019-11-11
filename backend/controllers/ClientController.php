@@ -122,7 +122,7 @@ class ClientController extends Controller
      */
     public function actionDelete($id)
     {
-        $model->$this->findModel($id);
+        $model = $this->findModel($id);
         $model->profile->delete();
         $model->delete();
 

@@ -1,0 +1,9 @@
+/node_modules
+/bower_components
+bundle.result.json
+dev/css/style.css
+public/assets/*
+public/assets/*
+public/*.html
+.DS_Store
+package-lock.json

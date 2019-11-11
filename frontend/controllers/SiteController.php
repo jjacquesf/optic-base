@@ -14,7 +14,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
-
+use frontend\models\QuoteForm;
 /**
  * Site controller
  */
@@ -65,6 +65,44 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    }
+
+    public function actionQuote()
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $model = new QuoteForm();
+        if($model->load(Yii::$app->request->get(), '') && $model->validate()) {
+            
+            return [
+                'success' => true,
+                'data' => $model->quote(),
+            ];
+        }
+
+        return ['success' => false];
+    }
+
+    public function actionBook()
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $model = new QuoteForm();
+        $model->scenario = QuoteForm::SCENARIO_BOOK;
+        if($model->load(Yii::$app->request->post()) 
+            && $model->validate()) {
+
+            $booking = $model->book();
+                
+            return [
+                'success' => true,
+                'data' => $booking,
+            ];
+        } else {
+            return $model->getErrors();
+        }
+
+        return ['success' => false];
     }
 
     /**

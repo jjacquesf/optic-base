@@ -1,0 +1,38 @@
+{
+  "name": "base-web",
+  "version": "1.0.0",
+  "description": "Base layout web app",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "bower": "^1.8.8"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-bundle-assets": "^2.28.0",
+    "gulp-callback": "0.0.3",
+    "gulp-clean-css": "^3.0.4",
+    "gulp-if": "^2.0.2",
+    "gulp-notify": "^3.0.0",
+    "gulp-pug": "^3.3.0",
+    "gulp-rimraf": "^0.2.1",
+    "gulp-stylus": "^2.6.0",
+    "gulp-watch": "^4.3.11",
+    "gulp-webserver": "^0.9.1",
+    "lazypipe": "^1.0.1",
+    "self-reload-json": "^0.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjacquesf/procare.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jjacquesf/procare/issues"
+  },
+  "homepage": "https://github.com/jjacquesf/procare#readme"
+}

@@ -49,6 +49,14 @@ class VehicleType extends EActiveRecord
         ];
     }
 
+    public static function getOptions($passangers, $bags)
+    {
+        return self::find()
+                    ->where("max_passangers >= {$passangers} AND max_bags >= {$bags}")
+                    ->orderBy(['max_passangers' => SORT_ASC])
+                    ->all(); 
+    }
+
     public static function getListData()
     {
         return ArrayHelper::map(self::find()->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');

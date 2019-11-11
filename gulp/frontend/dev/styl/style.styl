@@ -1,0 +1,135 @@
+$responsive_lg = 991px
+$responsive_md = 767px
+$responsive_sm = 479px
+$responsive_xs = 320px
+
+//Colors
+$pink = #f3648f
+$black = #000
+$gray = #333333
+$white = #fff
+$red = #ba0000
+$yellow = #fce63b
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700,800&display=swap')
+@import "b4.styl"
+@import "Header/style.styl"
+@import "Content/style.styl"
+@import "Footer/style.styl"
+
+body
+	background white
+	font-size 16px
+	font-family 'MyriadPro-Regular'
+
+h1
+	font-size 1.5em
+h2
+	font-size 1.8em
+	text-align center
+	font-family 'Raleway'
+	font-weight 800
+h3
+	font-size 1.3em
+h4
+	font-size 1.2em
+h5
+	font-size 1.1em
+p
+	font-size 1em
+a
+	&:hover
+		text-decoration none
+
+.slogan
+	font-family 'HunterRiver'
+
+.btn
+	border none
+	border-radius 0
+	padding 12px 10px
+	&:hover, &:focus
+		background-color rgba($gray, 0.8);
+		color $white
+		text-decoration none
+	&-default
+		background-color $gray
+		color $white
+	&-link
+		color $gray
+		border 1px solid $gray
+	&-more
+		width 150px
+
+.grid-four
+	display grid
+	grid-template-columns repeat(4, 25%)
+	@media only screen and (max-width $responsive_lg)
+		grid-template-columns repeat(3, 33.33%)
+	@media only screen and (max-width $responsive_md)
+		grid-template-columns repeat(2, 50%)
+	@media only screen and (max-width $responsive_sm)
+		grid-template-columns repeat(1, 100%)
+
+.grid-three
+	display grid
+	grid-template-columns repeat(3, 33.33%)
+	@media only screen and (max-width $responsive_md)
+		grid-template-columns repeat(2, 50%)
+	@media only screen and (max-width $responsive_sm)
+		grid-template-columns repeat(1, 100%)
+
+.svg-icon
+	width 15px
+
+.owl-nav
+	position absolute
+	top 50%
+	width 100%
+	i
+		font-size 1em
+		color $black
+	.owl-prev, .owl-next
+		position absolute
+		&:hover
+			background-color transparent !important
+			color $black
+	.owl-prev
+		right 100%
+	.owl-next
+		left 100%
+
+.sp-buttons
+	position absolute
+	bottom 0
+	.sp-selected-button
+		background-color $yellow !important
+		border-color $yellow !important
+	.sp-button
+		background-color transparent
+		border-color $white
+
+.notify
+	padding 0.8em
+	margin-bottom 1em
+	border 2px solid #ddd
+
+	&.success
+		background #e6efc2
+		color #264409
+		border-color #c6d880
+
+	&.error, &.alert
+		background #fbe3e4
+		color #8a1f11
+		border-color #fbc2c4
+
+	&.notice, &.warning
+		background #fff6bf
+		color #514721
+		border-color #ffd324
+
+	&.info
+		background #d5edf8
+		color #205791
+		border-color #92cae4

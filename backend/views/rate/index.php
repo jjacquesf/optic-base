@@ -44,7 +44,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             // ['class' => 'yii\grid\SerialColumn'],
 
                             // 'id',
-            'name',
+                            'name',
+                            'public',
 
                             ['class' => 'yii\grid\ActionColumn', 'template' => '{update} {delete}'],
                         ],

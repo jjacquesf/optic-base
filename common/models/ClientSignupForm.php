@@ -50,7 +50,7 @@ class ClientSignupForm extends Client
             ['password', 'required', 'on' => 'create'],
             ['password', 'string', 'min' => 6],
 
-            ['rate_id', 'default', 'value' => Config::getConfig('rate_id')],
+            ['rate_id', 'default', 'value' => Config::getPublicRateId()],
         ];
     }
 
@@ -85,7 +85,7 @@ class ClientSignupForm extends Client
         
         $client = new Client();
         $client->rate_id = $this->rate_id;
-        
+        $client->status = Client::STATUS_ACTIVE;
         $client->email = $this->email;
         $client->username = $this->email;
         $client->email = $this->email;
@@ -108,8 +108,7 @@ class ClientSignupForm extends Client
         	return $client;
         }
 
-        return $client->save();
-
+        return false;
     }
 
     /**

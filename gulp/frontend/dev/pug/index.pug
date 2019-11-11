@@ -1,0 +1,255 @@
+doctype html
+html(lang="es")
+	head
+		meta(name="charset", charset="UTF-8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge")
+		meta(name='viewport', content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width')
+		meta(name="title", content="")
+		meta(name="description", content="")
+		meta(name="keywords", content="")
+		meta(name="robots", content="index, follow")
+		meta(name="author", content="http://www.lava.mx")
+		meta(name="distribution", content="global")
+		meta(name="rating" content="general")
+		meta(name="revisit-after" content="14 Days")
+		title
+		link(rel="stylesheet", href="//use.fontawesome.com/releases/v5.0.13/css/all.css", integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp", crossorigin="anonymous")
+		link(rel="stylesheet", href="assets/vendor.css")
+		link(rel="stylesheet", href="assets/main.css")
+		link(rel="icon", type="image/png", href="favicon.png")
+
+		script(src="assets/vendor.js")
+		script(src="assets/main.js")
+	body
+		include parts/header.pug
+		
+		#home-slider.slider-pro
+			.sp-slides
+				.sp-slide
+					img.sp-image(data-default='assets/img/slider1_optic.jpg', data-retina='assets/img/slider1_optic.jpg', src='assets/img/slider1_optic.jpg', style='width: 100%; height: auto; margin-left: 0px; margin-top: -70px;')
+					.sp-layer
+						.title
+							h2
+								| Excedemos
+								| tus expectativas
+							p
+								| Toda la mobilidad que necesitas
+								| en un sólo lugar
+				.sp-slide
+					img.sp-image(data-default='assets/img/slider2_optic.jpg', data-retina='assets/img/slider2_optic.jpg', src='assets/img/slider2_optic.jpg', style='width: 100%; height: auto; margin-left: 0px; margin-top: -70px;')
+					.sp-layer.layer-two
+						.title
+							h2 Vive Los Cabos
+							span.slogan Los Cabos Premium Service
+				.sp-slide
+					img.sp-image(data-default='assets/img/slider3_optic.jpg', data-retina='assets/img/slider3_optic.jpg', src='assets/img/slider3_optic.jpg', style='width: 100%; height: auto; margin-left: 0px; margin-top: -70px;')
+					//.sp-layer
+						.title
+							img(src="assets/img/LOGO_3_OPTIC.png", alt="Optic").img-responsive
+							span.slogan Los Cabos Premium Service
+		.Home
+			.container-fluid
+				.row
+					.col-sm-12.my-5
+						h2(data-aos="fade-up" data-aos-easing="ease-in-out") RESERVA EN LÍNEA
+				.row
+					.col-md-4.col-lg-3.col-lg-offset-1
+						.instructions(data-aos="fade-right" data-aos-duration="4000" data-aos-delay="200")
+							.item
+								img(src="assets/img/icon_11_optic.jpg", alt="Optic")
+								h3 Programa
+								p Revisa la disponibilidad y las tarifas
+							.item
+								img(src="assets/img/icon_10_optic.jpg", alt="Optic")
+								h3 Elige
+								p Busca el vehículo ideal para tus necesidades
+							.item
+								img(src="assets/img/icon_9_optic.jpg", alt="Optic")
+								h3 Selecciona
+								p
+									| Escoge el método de pago y 
+									span reserva
+					.col-md-8.col-lg-6.col-lg-offset-1
+						.box-reservation(data-aos="fade-left" data-aos-duration="4000" data-aos-delay="200")
+							.box-header
+								img(src="assets/img/LOGO_3_OPTIC.png", alt="Optic")
+								span Los Cabos Premium Service
+							.box-body
+								.reservation-form
+									form(action="")
+										.form-group.mt-5
+											label PRIVATE SERVICE
+											span.form-control.choose-destination
+												i.fas.fa-map-marker-alt
+												| Choose your destination
+												i.fas.fa-arrow-down
+										.form-group
+											label From
+											input(type="text" placeholder="Airport, Hotel, Adress...").form-control
+										.form-group
+											label To
+											input(type="text" placeholder="Airport, Hotel, Adress...").form-control
+										.form-group.add-people
+											input(type="text" placeholder="Adults").form-control
+											button(type="submit").btn.btn-default
+												i.fas.fa-minus
+											button(type="submit").btn.btn-default
+												i.fas.fa-plus
+										.form-group.add-people
+											input(type="text" placeholder="Kids").form-control
+											button(type="submit").btn.btn-default
+												i.fas.fa-minus
+											button(type="submit").btn.btn-default
+												i.fas.fa-plus
+										.form-group.add-people
+											input(type="text" placeholder="Lap infants").form-control
+											button(type="submit").btn.btn-default
+												i.fas.fa-minus
+											button(type="submit").btn.btn-default
+												i.fas.fa-plus
+										span Include a return trip?
+										input(type="checkbox" value="trip")
+										input(type="submit" value="BOOK A RIDE").btn.btn-default.d-block.mt-3
+								img(src="assets/img/banner-reserve.jpg", alt="").img-responsive
+				.row
+					.col-sm-12.section-default
+						h2(data-aos="fade-up" data-aos-easing="ease-in-out") NOSOTROS
+						h3(data-aos="fade-in" delay="500")
+							| Ofrecemos el mejor servicio privado de lujo de transportación.
+						p(data-aos="fade-in" delay="500")
+							| Desde cualquier ubicación en Cabo San Lucas, San José del Cabo o los alrededores,
+							| todos los hoteles del corredor turístico y el aeropuerto internacional de Los Cabos.
+							| Contamos con personal bilingüe altamente capacitado en resolver todas la necesidades de transporte.
+						span(data-aos="fade-in" delay="500") Unidades último modelo
+				.row.services.parallax
+					.col-sm-12.section-default
+						h2(data-aos="fade-up" data-aos-easing="ease-in-out") SERVICIOS
+						h3(data-aos="fade-in" delay="500")
+							| Nuestro servicio ofrece transporte privado, exclusivo, seguro y confiable.
+						p(data-aos="fade-in" delay="500")
+							| Nuestro personal de operaciones le apoya en todos los traslados para realizar
+							| actividades fuera del hotel.
+						span(data-aos="fade-in" delay="500") Su satisfacción y seguridad es nuestra máxima prioridad.
+				.row
+					.col-sm-12
+						h2(data-aos="fade-up" data-aos-easing="ease-in-out").mt-5 OFRECEMOS
+						.offers
+							.item(data-aos="fade-in" delay="800" data-aos-duration="1000")
+								img(src="assets/img/icon_1_optic.jpg", alt="Optic").img-responsive
+								span Unidades Privadas
+							.item(data-aos="fade-in" delay="800" data-aos-duration="1000")
+								img(src="assets/img/icon_2_optic.jpg", alt="Optic").img-responsive
+								span Chofere Bilingües y Certificados
+							.item(data-aos="fade-in" delay="800" data-aos-duration="1000")
+								img(src="assets/img/icon_3_optic.jpg", alt="Optic").img-responsive
+								span Amenidades de cortesía
+							.item(data-aos="fade-in" delay="800" data-aos-duration="1000")
+								img(src="assets/img/icon_4_optic.jpg", alt="Optic").img-responsive
+								span Seguro
+							.item(data-aos="fade-in" delay="800" data-aos-duration="1000")
+								img(src="assets/img/icon_5_optic.jpg", alt="Optic").img-responsive
+								span Wi Fi
+							.item(data-aos="fade-in" delay="800" data-aos-duration="1000")
+								img(src="assets/img/icon_6_optic.jpg", alt="Optic").img-responsive
+								span Cuotas de Autopista
+							.item(data-aos="fade-in" delay="800" data-aos-duration="1000")
+								img(src="assets/img/icon_7_optic.jpg", alt="Optic").img-responsive
+								span Manejo de su equipaje
+							.item(data-aos="fade-in" delay="800" data-aos-duration="1000")
+								img(src="assets/img/icon_8_optic.jpg", alt="Optic").img-responsive
+								span
+									| Rastreo de Vuelos
+									p Sin Cargo Extra
+				.row
+					.col-sm-12.px-0
+						.cta-advantage
+							.item(data-aos="fade-down" data-aos-duration="1000")
+								h2
+									| TARIFAS
+									| TODO INCLUÍDO
+							.item(data-aos="fade-down" data-aos-duration="1000")
+								h2
+									| CONDUCTORES
+									| PROFESIONALES
+							.item(data-aos="fade-down" data-aos-duration="1000")
+								h2
+									| SIEMPRE
+									| A TIEMPO
+				.row.parallax.our-vehicles
+					.col-sm-12.section-default.transparency
+						.content
+							h2(data-aos="fade-up" data-aos-easing="ease-in-out") NUESTROS VEHÍCULOS
+							h3
+								| Contamos con una variedad de vehículos, últimos modelos, conductores profesionales.
+							p
+								| Servicio de transportación en Los Cabos, San José y sus alrededores,
+								| todos los hoteles del corredor turístico, Aeropuerto internacional de Los Cabos.
+							span Tu traslado será una experiencia de alto nivel.
+				.row.select-car
+					.col-sm-12.px-0
+						ul.list-inline.mb-0.models
+							li.active
+								a(href="#" onclick="showModel(this.id)")#VCLASS V CLASS
+							li
+								a(href="#" onclick="showModel(this.id)")#ESCALADE ESCALADE
+							li
+								a(href="#" onclick="showModel(this.id)")#GL GL 500
+							li
+								a(href="#" onclick="showModel(this.id)")#SUBURBAN SUBURBAN
+							li
+								a(href="#" onclick="showModel(this.id)")#SPRINTER SPRINTER
+							li
+								a(href="#" onclick="showModel(this.id)")#MODEL MODEL X
+						.car-type.vclass
+							.main-img(data-aos="fade-up" data-aos-easing="ease-in-out")
+								img(src="assets/img/banner_cars_optic_4.jpg", alt="").img-responsive
+								a(href="#").btn.btn-primary.reserve RESERVAR
+							ul.list-inline.mb-0
+								li(data-aos="fade-in" delay="800" data-aos-duration="1000")
+									a(href="#").thumbnail.one
+								li(data-aos="fade-in" delay="800" data-aos-duration="1000")
+									a(href="#").thumbnail.two
+								li(data-aos="fade-in" delay="800" data-aos-duration="1000")
+									a(href="#").thumbnail.three
+								li(data-aos="fade-in" delay="800" data-aos-duration="1000")
+									a(href="#").thumbnail.four
+								li(data-aos="fade-in" delay="800" data-aos-duration="1000")
+									a(href="#").thumbnail.five
+								li(data-aos="fade-in" delay="800" data-aos-duration="1000")
+									a(href="#").thumbnail.six
+						.car-type.escalade.d-none
+							.main-img
+								img(src="assets/img/banner_cars_optic_4.jpg", alt="").img-responsive
+							ul.list-inline.mb-0
+								li
+									a(href="#").thumbnail.one
+								li
+									a(href="#").thumbnail.two
+								li
+									a(href="#").thumbnail.three
+								li
+									a(href="#").thumbnail.four
+								li
+									a(href="#").thumbnail.five
+								li
+									a(href="#").thumbnail.six
+				.row.contact
+					.col-sm-6.col-md-4.col-md-offset-2(data-aos="fade-right" data-aos-duration="4000" data-aos-delay="200")
+						h2(data-aos="fade-up" data-aos-easing="ease-in-out") CONTACTO
+						a(href="mailto:info@opticpt.com").mail info@opticpt.com
+						a(href="tel:(52) 624 130 6373")
+							i.fas.fa-phone.icon
+							| (52) 624 130 6373
+						a(href="#")
+							i.fas.fa-map-marker-alt.icon
+							| Cabo San Lucas Col.Centro 23477
+					.col-sm-6.col-md-4(data-aos="fade-left" data-aos-duration="4000" data-aos-delay="200")
+						form(action="").my-5
+							.form-group
+								input(type="text" placeholder="Nombre").form-control
+							.form-group
+								input(type="text" placeholder="Correo electrónico").form-control
+							.form-group
+								textarea(name="", cols="30", rows="5" placeholder="Mensaje").form-control
+							input(type="submit" value="ENVIAR").btn.btn-default.pull-right
+		include parts/footer.pug

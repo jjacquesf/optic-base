@@ -166,6 +166,16 @@ class Travel extends EActiveRecord
         return 0;
     }
 
+    public static function publicQuoteVehicle($from_zone_id, $to_zone_id, $vehicle_type_id)
+    {
+        $rate = Rate::find()->where(['public' => Rate::PUBLIC_YES])->one();
+        if($rate != null) {
+            return VehicleTypeZoneRate::getRatePrice($from_zone_id, $to_zone_id, $rate->id, $vehicle_type_id);
+        }
+        
+        return false;
+    }
+
     public static function quoteVehicle($client_id, $type, $data)
     {
         $client = Client::findOne($client_id);
@@ -219,6 +229,15 @@ class Travel extends EActiveRecord
         $model = new TravelVehicle();
         $model->travel_id = $this->id;
         $model->vehicle_type_id = $data['vehicle_type_id'];
+        if(isset($data['adults'])) {
+            $model->adults = $data['adults'];
+        }
+        if(isset($data['children'])) {
+            $model->children = $data['children'];
+        }
+        if(isset($data['bags'])) {
+            $model->bags = $data['bags'];
+        }
 
 
         if($this->client != null) {
