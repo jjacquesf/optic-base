@@ -17,6 +17,7 @@ module.exports = {
         './bower_components/magnify/dist/js/jquery.magnify.js',
         './bower_components/aos/dist/aos.js',
         './bower_components/clockpicker/dist/bootstrap-clockpicker.min.js',
+        './bower_components/lighbox2/dist/js/lightbox.js',
         // './bower_components/pnotify/dist/pnotify.js',
         // './bower_components/iCheck/icheck.js'
       ],
@@ -28,6 +29,7 @@ module.exports = {
         './bower_components/magnify/dist/css/magnify.css',
         './bower_components/aos/dist/aos.css',
         './bower_components/clockpicker/dist/bootstrap-clockpicker.min.css',
+        './bower_components/lighbox2/dist/css/lightbox.css',
         // './bower_components/pnotify/dist/pnotify.css',
         // './bower_components/pnotify/dist/pnotify.brighttheme.css',
         // './bower_components/iCheck/skins/minimal/minimal.css',

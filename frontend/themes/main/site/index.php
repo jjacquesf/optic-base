@@ -139,35 +139,79 @@ $assets = ThemeAsset::register($this);
     <div class="row select-car">
         <div class="col-sm-12 px-0">
         <ul class="list-inline mb-0 models">
-            <li class="active"><a href="#" onclick="showModel(this.id)" id="VCLASS">V CLASS</a></li>
-            <li><a href="#" onclick="showModel(this.id)" id="ESCALADE">ESCALADE</a></li>
-            <li><a href="#" onclick="showModel(this.id)" id="GL">GL 500</a></li>
-            <li><a href="#" onclick="showModel(this.id)" id="SUBURBAN">SUBURBAN</a></li>
-            <li><a href="#" onclick="showModel(this.id)" id="SPRINTER">SPRINTER</a></li>
-            <li><a href="#" onclick="showModel(this.id)" id="MODEL">MODEL X</a></li>
+            <li class="model-link" class="model-link"><a href="#" data-target_id="#vclass">V CLASS</a></li>
+            <li class="model-link"><a href="#" data-target_id="#escalade">ESCALADE</a></li>
+            <li class="model-link"><a href="#" data-target_id="#gl500">GL 500</a></li>
+            <li class="model-link"><a href="#" data-target_id="#suburvan">SUBURBAN</a></li>
+            <li class="model-link"><a href="#" data-target_id="#sprinter">SPRINTER</a></li>
+            <li class="model-link"><a href="#" data-target_id="#tesla">MODEL X</a></li>
         </ul>
-        <div class="car-type vclass">
-            <div class="main-img" data-aos="fade-up" data-aos-easing="ease-in-out"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/banner_cars_optic_4.jpg" alt=""><a class="btn btn-primary reserve" href="#">RESERVAR</a></div>
-            <ul class="list-inline mb-0">
-            <li data-aos="fade-in" delay="800" data-aos-duration="1000"><a class="thumbnail one" href="#"></a></li>
-            <li data-aos="fade-in" delay="800" data-aos-duration="1000"><a class="thumbnail two" href="#"></a></li>
-            <li data-aos="fade-in" delay="800" data-aos-duration="1000"><a class="thumbnail three" href="#"></a></li>
-            <li data-aos="fade-in" delay="800" data-aos-duration="1000"><a class="thumbnail four" href="#"></a></li>
-            <li data-aos="fade-in" delay="800" data-aos-duration="1000"><a class="thumbnail five" href="#"></a></li>
-            <li data-aos="fade-in" delay="800" data-aos-duration="1000"><a class="thumbnail six" href="#"></a></li>
-            </ul>
-        </div>
-        <div class="car-type escalade d-none">
-            <div class="main-img"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/banner_cars_optic_4.jpg" alt=""></div>
-            <ul class="list-inline mb-0">
-            <li><a class="thumbnail one" href="#"></a></li>
-            <li><a class="thumbnail two" href="#"></a></li>
-            <li><a class="thumbnail three" href="#"></a></li>
-            <li><a class="thumbnail four" href="#"></a></li>
-            <li><a class="thumbnail five" href="#"></a></li>
-            <li><a class="thumbnail six" href="#"></a></li>
-            </ul>
-        </div>
+        <div id="vclass" class="car-type vclass">
+            <div class="main-img" data-aos="fade-up" data-aos-easing="ease-in-out"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/VCLASS.jpg" alt=""><a class="btn btn-primary reserve" href="#">RESERVAR</a></div>
+                <ul class="list-inline mb-0">
+                <li><a class="thumbnail one" data-lightbox="vclass" href="<?= $assets->baseUrl; ?>/img/IMG_7787_optic.jpg"></a></li>
+                <li data-aos="fade-in" delay="800" data-aos-duration="1000"><a class="thumbnail two" data-lightbox="vclass" href="<?= $assets->baseUrl; ?>/img/IMG_7787_optic.jpg"></a></li>
+                <li data-aos="fade-in" delay="800" data-aos-duration="1000"><a class="thumbnail three" data-lightbox="vclass" href="<?= $assets->baseUrl; ?>/img/IMG_7794_optic.jpg"></a></li>
+                <li data-aos="fade-in" delay="800" data-aos-duration="1000"><a class="thumbnail four" data-lightbox="vclass" href="<?= $assets->baseUrl; ?>/img/IMG_7798_optic.jpg"></a></li>
+                <li data-aos="fade-in" delay="800" data-aos-duration="1000"><a class="thumbnail five" data-lightbox="vclass" href="<?= $assets->baseUrl; ?>/img/IMG_7811_optic.jpg"></a></li>
+                <li data-aos="fade-in" delay="800" data-aos-duration="1000"><a class="thumbnail six" data-lightbox="vclass" href="<?= $assets->baseUrl; ?>/img/IMG_7824_optic.jpg"></a></li>
+                </ul>
+            </div>
+            <div id="escalade" class="car-type escalade">
+                <div class="main-img"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/ESCALADE.jpg" alt=""></div>
+                <ul class="list-inline mb-0">
+                <li><a class="thumbnail one"></a></li>
+                <li><a class="thumbnail two" href="#"></a></li>
+                <li><a class="thumbnail three" href="#"></a></li>
+                <li><a class="thumbnail four" href="#"></a></li>
+                <li><a class="thumbnail five" href="#"></a></li>
+                <li><a class="thumbnail six" href="#"></a></li>
+                </ul>
+            </div>
+            <div id="gl500" class="car-type escalade">
+                <div class="main-img"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/GL500.jpg" alt=""></div>
+                <ul class="list-inline mb-0">
+                <li><a class="thumbnail one" href="#"></a></li>
+                <li><a class="thumbnail two" href="#"></a></li>
+                <li><a class="thumbnail three" href="#"></a></li>
+                <li><a class="thumbnail four" href="#"></a></li>
+                <li><a class="thumbnail five" href="#"></a></li>
+                <li><a class="thumbnail six" href="#"></a></li>
+                </ul>
+            </div>
+            <div id="suburvan" class="car-type escalade">
+                <div class="main-img"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/SUBURVAN.jpg" alt=""></div>
+                <ul class="list-inline mb-0">
+                <li><a class="thumbnail one" href="#"></a></li>
+                <li><a class="thumbnail two" href="#"></a></li>
+                <li><a class="thumbnail three" href="#"></a></li>
+                <li><a class="thumbnail four" href="#"></a></li>
+                <li><a class="thumbnail five" href="#"></a></li>
+                <li><a class="thumbnail six" href="#"></a></li>
+                </ul>
+            </div>
+            <div id="sprinter" class="car-type escalade">
+                <div class="main-img"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/SPRINTER.jpg" alt=""></div>
+                <ul class="list-inline mb-0">
+                <li><a class="thumbnail one" href="#"></a></li>
+                <li><a class="thumbnail two" href="#"></a></li>
+                <li><a class="thumbnail three" href="#"></a></li>
+                <li><a class="thumbnail four" href="#"></a></li>
+                <li><a class="thumbnail five" href="#"></a></li>
+                <li><a class="thumbnail six" href="#"></a></li>
+                </ul>
+            </div>
+            <div id="tesla" class="car-type escalade">
+                <div class="main-img"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/TESLA.jpg" alt=""></div>
+                <ul class="list-inline mb-0">
+                <li><a class="thumbnail one" href="#"></a></li>
+                <li><a class="thumbnail two" href="#"></a></li>
+                <li><a class="thumbnail three" href="#"></a></li>
+                <li><a class="thumbnail four" href="#"></a></li>
+                <li><a class="thumbnail five" href="#"></a></li>
+                <li><a class="thumbnail six" href="#"></a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="row contact">

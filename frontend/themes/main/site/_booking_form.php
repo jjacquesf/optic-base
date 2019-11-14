@@ -496,17 +496,21 @@ $this->registerJs("
                     <thead>
                         <tr>
                             <th>Vehículo</th>
-                            <th>Max. Pasajeros</th>
-                            <th>Max. Maletas</th>
+                            <!-- <th>Max. Pasajeros</th>
+                            <th>Max. Maletas</th> -->
                             <th>Precio</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="quote in quotes">
-                            <td>{{quote.vehicle.name}}</td>
-                            <td>{{quote.vehicle.max_passangers}}</td>
-                            <td>{{quote.vehicle.max_bags}}</td>
+                            <td><b>{{quote.vehicle.name}}</b>
+                                <div>
+                                    <small>Max. Pasajeros: {{quote.vehicle.max_passangers}}</small><br>
+                                    <small>Max. Maletas: {{quote.vehicle.max_bags}}</small>
+                                </div></td>
+                            <!-- <td>{{quote.vehicle.max_passangers}}</td>
+                            <td>{{quote.vehicle.max_bags}}</td> -->
                             <td>{{ formatCurrency(quote.price) }}</td>
                             <td><button type="button" class="btn btn-sm btn-primary" v-on:click="choose(quote)"><?= Yii::t('app', 'Elegir'); ?></button></td>
                         </tr>
@@ -632,7 +636,7 @@ $this->registerJs("
                     </div>    
                 </form>                   
             </div>
-            <div v-if="step == 4" class="step-container">
+            <div v-if="step == 5" class="step-container">
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="form-group">
@@ -667,7 +671,7 @@ $this->registerJs("
                             <?= Html::hiddenInput('cmd', '_cart'); ?>
                             <?= Html::hiddenInput('upload', '1'); ?>
 
-                            <button type="button" class="btn btn-success pull-right"><?= Yii::t('app', 'Pagar ahora'); ?></button>
+                            <button type="submit" class="btn btn-success btn-block"><?= Yii::t('app', 'Pagar ahora'); ?></button>
                             <?= Html::endForm(); ?>
                             
                         </div>

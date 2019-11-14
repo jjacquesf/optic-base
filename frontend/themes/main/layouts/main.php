@@ -130,6 +130,7 @@
             <div class="social-media">
             <?= Menu::widget([
                             'options' => ['class' => 'list-inline'],
+                            'encodeLabels' => false,
                             // 'itemOptions' => ['class' => 'text-uppercase'],
                             'items' => [
                                 ['label' => '<i class="fab fa-youtube"></i>', 'url' => 'http://www.google.com', 'options' => []],

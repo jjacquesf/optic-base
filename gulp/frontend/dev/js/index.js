@@ -78,32 +78,52 @@ $( document ).ready(function() {
 
     // showModel();
 
+    $('.model-link a').on('click', function(e) {
+      
+      e.preventDefault();
+
+      $('.model-link').removeClass('active');
+      $(this).parent().addClass('active');
+
+      var target = $(this).data('target_id');
+      $('.car-type').hide();
+      $(target).show();
+      console.log('target', target);
+
+    });
+
+    $('a', $('.model-link').first()).trigger('click');
+
     AOS.init();
 
 });
 
-function showModel(clickedId) {
-  event.preventDefault();
-  console.log(clickedId);
+// function showModel() {
+//   event.preventDefault();
 
-  var modelVCLASS = $('.vclass');
-  var modelESCALADE = $('.escalade');
+//   var target = $(this).data('target_id');
+//   $('.car-type').hide();
+//   $(target).show();
+//   console.log('target', target);
 
-  if (clickedId == 'VCLASS') {
+  // var modelVCLASS = $('.vclass');
+  // var modelESCALADE = $('.escalade');
 
-    if (modelVCLASS.hasClass('d-none')) {
-      $(modelVCLASS).removeClass('d-none');
-      $(modelESCALADE).addClass('d-none');
-    }
+  // if (clickedId == 'VCLASS') {
 
-  }
+  //   if (modelVCLASS.hasClass('d-none')) {
+  //     $(modelVCLASS).removeClass('d-none');
+  //     $(modelESCALADE).addClass('d-none');
+  //   }
 
-  if (clickedId == 'ESCALADE') {
+  // }
 
-    if (modelESCALADE.hasClass('d-none')) {
-      $(modelESCALADE).removeClass('d-none');
-      $(modelVCLASS).addClass('d-none');
-    }
+  // if (clickedId == 'ESCALADE') {
 
-  }
-}
+  //   if (modelESCALADE.hasClass('d-none')) {
+  //     $(modelESCALADE).removeClass('d-none');
+  //     $(modelVCLASS).addClass('d-none');
+  //   }
+
+  // }
+// }

@@ -24,6 +24,7 @@
     "slider-pro": "^1.5.0",
     "magnify": "^2.3.3",
     "aos": "^2.3.4",
-    "clockpicker": "https://github.com/weareoutman/clockpicker.git#^0.0.7"
+    "clockpicker": "https://github.com/weareoutman/clockpicker.git#^0.0.7",
+    "lightbox2": "^2.11.1"
   }
 }
