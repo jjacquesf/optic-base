@@ -148,7 +148,16 @@ $this->registerJs("
             const polygons = [];
             {$polygons}
 
-            var autocomplete = new google.maps.places.Autocomplete(document.getElementById('travelform-from_address'), { types: ['establishment'] });
+            var defaultBounds = new google.maps.LatLngBounds(
+                new google.maps.LatLng(22.899857, -110.220852),
+                new google.maps.LatLng(23.704526, -109.462100)
+            );
+
+            var autocomplete = new google.maps.places.Autocomplete(document.getElementById('travelform-from_address'), { 
+                types: ['establishment'], 
+                bounds: defaultBounds,
+                strictBounds: true
+            });
             autocomplete.setFields(['address_components', 'geometry', 'name']);
 
             autocomplete.addListener('place_changed', function() {
@@ -181,7 +190,11 @@ $this->registerJs("
                 }
             });
 
-            var autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('travelform-to_address'), { types: ['establishment'] });
+            var autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('travelform-to_address'), { 
+                types: ['establishment'], 
+                bounds: defaultBounds,
+                strictBounds: true
+            });
             autocomplete2.setFields(['address_components', 'geometry', 'name']);
 
             autocomplete2.addListener('place_changed', function() {

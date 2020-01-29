@@ -72,6 +72,7 @@ class VehicleTypeZoneRate extends EActiveRecord
             $model->vehicle_type_id = $vehicle_type_id;
             $model->price = $price;
         }
+        
 
         return $model->save();
     }
