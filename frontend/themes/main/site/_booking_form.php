@@ -147,7 +147,7 @@ $this->registerJs("
             var app = this;
             const polygons = [];
             {$polygons}
-
+            
             var defaultBounds = new google.maps.LatLngBounds(
                 new google.maps.LatLng(22.899857, -110.220852),
                 new google.maps.LatLng(23.704526, -109.462100)

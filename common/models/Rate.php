@@ -66,6 +66,7 @@ class Rate extends \yii\db\ActiveRecord
                 foreach($data['VehicleTypeZoneRate'] as $zones_id => $vt_ids) {
 
                     @list($z1_id, $z2_id) = explode('_', $zones_id);
+
                     foreach($vt_ids as $vt_id => $price) {
                         VehicleTypeZoneRate::setRatePrice($z1_id, $z2_id, $this->id, $vt_id, $price);
                     }
