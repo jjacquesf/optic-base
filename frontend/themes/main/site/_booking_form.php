@@ -503,8 +503,8 @@ $this->registerJs("
             </form>
         </div>
         <img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/banner-reserve.jpg" v-if="step == 1">
-        <div class="p-3">
-            <div v-if="step == 2" class="step-container">
+        <div class="m-3 step-container" v-if="step == 2 || step == 3 || step == 4 || step == 5">                   
+            <div v-if="step == 2">
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
@@ -516,7 +516,7 @@ $this->registerJs("
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="quote in quotes">
+                        <tr v-for="quote in quotes" v-if="quote.price > 0">
                             <td><b>{{quote.vehicle.name}}</b>
                                 <div>
                                     <small>Max. Pasajeros: {{quote.vehicle.max_passangers}}</small><br>
@@ -530,7 +530,7 @@ $this->registerJs("
                     </tbody>
                 </table>
             </div>
-            <div v-if="step == 3" class="step-container">
+            <div v-if="step == 3">
                 <div class="reservation-form">
                     <table class="table table-striped table-bordered">
                         <thead>
@@ -575,7 +575,7 @@ $this->registerJs("
                     </div>
                 </div>
             </div>
-            <div v-if="step == 4" class="step-container">
+            <div v-if="step == 4">
                 <form id="step4-form" method="post" @submit.prevent="submit">
                     <div class="row">
                         <div class="col-xs-12">
@@ -615,7 +615,7 @@ $this->registerJs("
                             <div 
                                 class="form-group"
                                 v-bind:class="{ 'has-error': $v.client_email.$error }">
-                                <label><?= Yii::t('app', 'Nombre completo'); ?></label>
+                                <label><?= Yii::t('app', 'Email'); ?></label>
                                 <input 
                                     id="travelform-client_email" 
                                     name="client_email" 
@@ -649,11 +649,12 @@ $this->registerJs("
                     </div>    
                 </form>                   
             </div>
-            <div v-if="step == 5" class="step-container">
+            <div v-if="step == 5">
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="form-group">
-                                <label class="text-uppercase"><?= Yii::t('app', 'Realizar pago'); ?></label>
+                                <h4 style="font-size: 1.5em;"><?= Yii::t('app', 'Código de reserva'); ?> {{$v.booking_reference.$model}}</h4>
+                                <h3><?= Yii::t('app', 'Realizar pago'); ?></h3>
                             </div>
                         </div>
                         <div class="col-xs-12 text-center">
