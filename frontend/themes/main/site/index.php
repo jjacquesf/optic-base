@@ -138,16 +138,16 @@ $assets = ThemeAsset::register($this);
     </div>
     <div class="row select-car">
         <div class="col-sm-12 px-0">
-        <ul class="list-inline mb-0 models">
-            <li class="model-link" class="model-link"><a href="#" data-target_id="#vclass">V CLASS</a></li>
-            <li class="model-link"><a href="#" data-target_id="#escalade">ESCALADE</a></li>
-            <li class="model-link"><a href="#" data-target_id="#gl500">GL 500</a></li>
-            <li class="model-link"><a href="#" data-target_id="#suburvan">SUBURBAN</a></li>
-            <li class="model-link"><a href="#" data-target_id="#sprinter">SPRINTER</a></li>
-            <li class="model-link"><a href="#" data-target_id="#tesla">MODEL X</a></li>
-        </ul>
-        <div id="vclass" class="car-type vclass">
-            <div class="main-img" data-aos="fade-up" data-aos-easing="ease-in-out"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/VCLASS.jpg" alt=""><a class="btn btn-primary reserve" href="#">RESERVAR</a></div>
+            <ul class="list-inline mb-0 models">
+                <li class="model-link" class="model-link"><a href="#" data-target_id="#vclass">V CLASS</a></li>
+                <li class="model-link"><a href="#" data-target_id="#escalade">ESCALADE</a></li>
+                <li class="model-link"><a href="#" data-target_id="#gl500">GL 500</a></li>
+                <li class="model-link"><a href="#" data-target_id="#suburvan">SUBURBAN</a></li>
+                <li class="model-link"><a href="#" data-target_id="#sprinter">SPRINTER</a></li>
+                <li class="model-link"><a href="#" data-target_id="#tesla">MODEL X</a></li>
+            </ul>
+            <div id="vclass" class="car-type vclass">
+                <div class="main-img" data-aos="fade-up" data-aos-easing="ease-in-out"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/VCLASS.jpg" alt=""><a class="btn btn-primary reserve" href="#">RESERVAR</a></div>
                 <ul class="list-inline mb-0">
                 <li><a class="thumbnail one" data-lightbox="vclass" href="<?= $assets->baseUrl; ?>/img/IMG_7787_optic.jpg"></a></li>
                 <li data-aos="fade-in" delay="800" data-aos-duration="1000"><a class="thumbnail two" data-lightbox="vclass" href="<?= $assets->baseUrl; ?>/img/IMG_7787_optic.jpg"></a></li>
@@ -158,47 +158,47 @@ $assets = ThemeAsset::register($this);
                 </ul>
             </div>
             <div id="escalade" class="car-type escalade">
-                <div class="main-img"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/ESCALADE.jpg" alt=""></div>
+                <div class="main-img"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/ESCALADE_V2.jpg" alt=""></div>
                 <ul class="list-inline mb-0">
                 <li><a class="thumbnail one"></a></li>
-                <li><a class="thumbnail two" href="#"></a></li>
-                <li><a class="thumbnail three" href="#"></a></li>
-                <li><a class="thumbnail four" href="#"></a></li>
-                <li><a class="thumbnail five" href="#"></a></li>
-                <li><a class="thumbnail six" href="#"></a></li>
+                <li><a class="thumbnail two" data-lightbox="escalade" href="<?= $assets->baseUrl; ?>/img/escalade/big/1.jpg"></a></li>
+                <li><a class="thumbnail three" data-lightbox="escalade" href="<?= $assets->baseUrl; ?>/img/escalade/big/2.jpg"></a></li>
+                <li><a class="thumbnail four" data-lightbox="escalade" href="<?= $assets->baseUrl; ?>/img/escalade/big/3.jpg"></a></li>
+                <li><a class="thumbnail five" data-lightbox="escalade" href="<?= $assets->baseUrl; ?>/img/escalade/big/4.jpg"></a></li>
+                <li><a class="thumbnail six" data-lightbox="escalade" href="<?= $assets->baseUrl; ?>/img/escalade/big/5.jpg"></a></li>
                 </ul>
             </div>
             <div id="gl500" class="car-type escalade">
-                <div class="main-img"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/GL500.jpg" alt=""></div>
+                <div class="main-img"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/GL500_V2.jpg" alt=""></div>
                 <ul class="list-inline mb-0">
-                <li><a class="thumbnail one" href="#"></a></li>
-                <li><a class="thumbnail two" href="#"></a></li>
-                <li><a class="thumbnail three" href="#"></a></li>
-                <li><a class="thumbnail four" href="#"></a></li>
-                <li><a class="thumbnail five" href="#"></a></li>
-                <li><a class="thumbnail six" href="#"></a></li>
+                <li><a class="thumbnail one" data-lightbox="gl500" href="<?= $assets->baseUrl; ?>/img/gl500/big/1.jpg"></a></li>
+                <li><a class="thumbnail two" data-lightbox="gl500" href="<?= $assets->baseUrl; ?>/img/gl500/big/2.jpg"></a></li>
+                <li><a class="thumbnail three" data-lightbox="gl500" href="<?= $assets->baseUrl; ?>/img/gl500/big/3.jpg"></a></li>
+                <li><a class="thumbnail four" data-lightbox="gl500" href="<?= $assets->baseUrl; ?>/img/gl500/big/4.jpg"></a></li>
+                <li><a class="thumbnail five" data-lightbox="gl500" href="<?= $assets->baseUrl; ?>/img/gl500/big/5.jpg"></a></li>
+                <li><a class="thumbnail six" data-lightbox="gl500" href="<?= $assets->baseUrl; ?>/img/gl500/big/6.jpg"></a></li>
                 </ul>
             </div>
             <div id="suburvan" class="car-type escalade">
-                <div class="main-img"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/SUBURVAN.jpg" alt=""></div>
+                <div class="main-img"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/SUBURVAN_V2.jpg" alt=""></div>
                 <ul class="list-inline mb-0">
-                <li><a class="thumbnail one" href="#"></a></li>
-                <li><a class="thumbnail two" href="#"></a></li>
-                <li><a class="thumbnail three" href="#"></a></li>
-                <li><a class="thumbnail four" href="#"></a></li>
-                <li><a class="thumbnail five" href="#"></a></li>
-                <li><a class="thumbnail six" href="#"></a></li>
+                <li><a class="thumbnail one" data-lightbox="suburvan" href="<?= $assets->baseUrl; ?>/img/suburvan/big/1.jpg"></a></li>
+                <li><a class="thumbnail two" data-lightbox="suburvan" href="<?= $assets->baseUrl; ?>/img/suburvan/big/2.jpg"></a></li>
+                <li><a class="thumbnail three" data-lightbox="suburvan" href="<?= $assets->baseUrl; ?>/img/suburvan/big/3.jpg"></a></li>
+                <li><a class="thumbnail four" data-lightbox="suburvan" href="<?= $assets->baseUrl; ?>/img/suburvan/big/4.jpg"></a></li>
+                <li><a class="thumbnail five" data-lightbox="suburvan" href="<?= $assets->baseUrl; ?>/img/suburvan/big/5.jpg"></a></li>
+                <li><a class="thumbnail six" data-lightbox="suburvan" href="<?= $assets->baseUrl; ?>/img/suburvan/big/6.jpg"></a></li>
                 </ul>
             </div>
             <div id="sprinter" class="car-type escalade">
-                <div class="main-img"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/SPRINTER.jpg" alt=""></div>
+                <div class="main-img"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/SPRINTER_V2.jpg" alt=""></div>
                 <ul class="list-inline mb-0">
-                <li><a class="thumbnail one" href="#"></a></li>
-                <li><a class="thumbnail two" href="#"></a></li>
-                <li><a class="thumbnail three" href="#"></a></li>
-                <li><a class="thumbnail four" href="#"></a></li>
-                <li><a class="thumbnail five" href="#"></a></li>
-                <li><a class="thumbnail six" href="#"></a></li>
+                <li><a class="thumbnail one" data-lightbox="sprinter" href="<?= $assets->baseUrl; ?>/img/sprinter/big/1.jpg"></a></li>
+                <li><a class="thumbnail two" data-lightbox="sprinter" href="<?= $assets->baseUrl; ?>/img/sprinter/big/2.jpg"></a></li>
+                <li><a class="thumbnail three" data-lightbox="sprinter" href="<?= $assets->baseUrl; ?>/img/sprinter/big/3.jpg"></a></li>
+                <li><a class="thumbnail four" data-lightbox="sprinter" href="<?= $assets->baseUrl; ?>/img/sprinter/big/4.jpg"></a></li>
+                <li><a class="thumbnail five" data-lightbox="sprinter" href="<?= $assets->baseUrl; ?>/img/sprinter/big/5.jpg"></a></li>
+                <li><a class="thumbnail six" data-lightbox="sprinter" href="<?= $assets->baseUrl; ?>/img/sprinter/big/6.jpg"></a></li>
                 </ul>
             </div>
             <div id="tesla" class="car-type escalade">

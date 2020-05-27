@@ -4,7 +4,8 @@
   "description": "Base layout web app",
   "main": "gulpfile.js",
   "dependencies": {
-    "bower": "^1.8.8"
+    "bower": "^1.8.8",
+    "lightbox2": "^2.11.1"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
