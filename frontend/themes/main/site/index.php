@@ -139,11 +139,11 @@ $assets = ThemeAsset::register($this);
     <div class="row select-car">
         <div class="col-sm-12 px-0">
             <ul class="list-inline mb-0 models">
-                <li class="model-link" class="model-link"><a href="#" data-target_id="#vclass">V CLASS</a></li>
-                <li class="model-link"><a href="#" data-target_id="#escalade">ESCALADE</a></li>
+                <li class="model-link" class="model-link"><a href="#" data-target_id="#escalade">ESCALADE</a></li>
                 <li class="model-link"><a href="#" data-target_id="#gl500">GL 500</a></li>
                 <li class="model-link"><a href="#" data-target_id="#suburvan">SUBURBAN</a></li>
                 <li class="model-link"><a href="#" data-target_id="#sprinter">SPRINTER</a></li>
+                <li class="model-link"><a href="#" data-target_id="#vclass">V CLASS</a></li>
                 <li class="model-link"><a href="#" data-target_id="#tesla">MODEL X</a></li>
             </ul>
             <div id="vclass" class="car-type vclass">

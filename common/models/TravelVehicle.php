@@ -62,21 +62,21 @@ class TravelVehicle extends EActiveRecord
     
     public function getTravel()
     {
-        return $this->hasOne(Travel::clasName(), ['id' => 'travel_id']);
+        return $this->hasOne(Travel::className(), ['id' => 'travel_id']);
     }
 
     public function getOperator()
     {
-        return $this->hasOne(User::clasName(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     public function getVehicleType()
     {
-        return $this->hasOne(VehicleType::clasName(), ['id' => 'vehicle_type_id']);
+        return $this->hasOne(VehicleType::className(), ['id' => 'vehicle_type_id']);
     }
 
     public function getVehicle()
     {
-        return $this->hasOne(Vehicle::clasName(), ['id' => 'vehicle_id']);
+        return $this->hasOne(Vehicle::className(), ['id' => 'vehicle_id']);
     }
 }

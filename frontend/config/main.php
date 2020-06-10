@@ -53,6 +53,7 @@ return [
             'business_account' => 'director@opticpt.com',
             'currency_code' => 'USD',
             'sandbox' => false,
+            'ipn_url' => 'http://opticpt.com/index.php?r=site/paypal-ipn',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

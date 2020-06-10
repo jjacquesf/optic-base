@@ -93,6 +93,21 @@ class SiteController extends Controller
             && $model->validate()) {
 
             $booking = $model->book();
+
+            if($booking->client != null) {
+                Yii::$app->mailer
+                    ->compose(
+                        ['html' => 'booking-html', 'text' => 'booking-text'],
+                        ['booking' => $booking]
+                    )
+                    ->setTo($booking->client->email)
+                    ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
+                    ->setReplyTo([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
+                    ->setSubject(Yii::t('app', 'Reservación') . ' ' . $booking->reference)
+                    // ->setTextBody($this->body)
+                    ->send();
+            }
+
                 
             return [
                 'success' => true,
@@ -103,6 +118,49 @@ class SiteController extends Controller
         }
 
         return ['success' => false];
+    }
+
+    /**
+    * @inheritdoc
+    */
+    public function beforeAction($action)
+    {            
+      if ($action->id == 'paypal-ipn') {
+          $this->enableCsrfValidation = false;
+      }
+
+      return parent::beforeAction($action);
+    }
+
+    /**
+     * Paypal IPN.
+     *
+     * @return mixed
+     */
+    public function actionPaypalIpn()
+    {
+        // Validate post request
+        //$listener->requirePostMethod();
+
+        // $_POST = (array) json_decode('{"mc_gross":"370.01.00","protection_eligibility":"Eligible","address_status":"unconfirmed","item_number1":"","tax":"0.00","item_number2":"","payer_id":"R7EAN4CLRBQRL","address_street":"Calle Juarez 1","payment_date":"17:44:12 May 04, 2015 PDT","payment_status":"Completed","charset":"windows-1252","address_zip":"11580","mc_shipping":"0.00","mc_handling":"0.00","first_name":"Comprador","mc_fee":"23.28","address_country_code":"MX","address_name":"Comprador Fashion Zone","notify_version":"3.8","custom":"29","payer_status":"verified","business":"vendedor@fashionzone.com.mx","address_country":"Mexico","num_cart_items":"2","mc_handling1":"0.00","mc_handling2":"0.00","address_city":"Miguel Hidalgo","verify_sign":"AJdvZnAElO.KLz0lzCVaXF7q8Yb9A76selImIl8x3gODxEw86imOY3h6","payer_email":"comprador@fashionzone.com.mx","mc_shipping1":"0.00","mc_shipping2":"0.00","tax1":"0.00","tax2":"0.00","txn_id":"5VV760049B618681N","payment_type":"instant","last_name":"Fashion Zone","address_state":"Ciudad de Mexico","item_name1":"TBTNARTAA2H","receiver_email":"vendedor@fashionzone.com.mx","item_name2":"PUTNNGUNA3U","payment_fee":"","quantity1":"1","quantity2":"1","receiver_id":"MHAW22797VZ2Y","txn_type":"cart","mc_gross_1":"850","mc_currency":"MXN","mc_gross_2":"177.00","residence_country":"MX","test_ipn":"1","transaction_subject":"2300","payment_gross":"","ipn_track_id":"f65ac1d570292"}');
+
+        $ipn="REQUEST\n";
+        if(!empty($_POST)) {
+            $ipn .= json_encode($_POST);
+        }
+
+        @mail('jjacquesf@gmail.com', 'Optic IPN Request', $ipn);
+
+        if (($result = Yii::$app->paypalEC->processIpn($_POST))) {
+
+            // $order = Order::find()->where([ 'reference' => $result['custom'] ])->one();
+            // if(!is_null($order)) {
+
+            //     if($order->addPayment(Order::PAYMENT_METHOD_PAYPAL, $result['amount'], $result['txn_id'], Payment::STATUS_ACTIVE, $result['comments'])) {
+            //         return true;
+            //     }
+            // }
+        }
     }
 
     /**
