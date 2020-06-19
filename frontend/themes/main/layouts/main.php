@@ -26,7 +26,7 @@
     <?php $this->head() ?>
   </head>
   <body>
-    <header class="Header">
+    <header class="Header <?= Yii::$app->session->getFlash('special-class', ''); ?>">
       <div class="container-fluid">
         <div class="row">
           <div class="col-sm-12 text-center">
@@ -38,9 +38,9 @@
                             'encodeLabels' => false,
                             'itemOptions' => ['class' => 'text-uppercase'],
                             'items' => [
-                                ['label' => '<i class="fas fa-phone mr-3"></i>01 52 (624) 130 6373', 'url' => 'tel:01526241306373', 'options' => []],
-                                ['label' => '|', 'url' => false],
-                                ['label' => '01 52 (624) 157 8132', 'url' => 'tel:01526241578132', 'options' => []],
+                                // ['label' => '<i class="fas fa-phone mr-3"></i> 01 52 (624) 130 6373', 'url' => 'tel:01526241306373', 'options' => []],
+                                // ['label' => '|', 'url' => false],
+                                ['label' => '<i class="fas fa-phone mr-3"></i> 01 52 (624) 157 8132', 'url' => 'tel:01526241578132', 'options' => []],
                                 ['label' => Html::img(sprintf('%s/img/lang-es.jpg', $assets->baseUrl), ['class' => 'img-responsive lang']), 'url' => ['/'], 'options' => []],
                                 ['label' => Html::img(sprintf('%s/img/lang-eu.jpg', $assets->baseUrl), ['class' => 'img-responsive lang']), 'url' => ['/'], 'options' => []],
                             ]
@@ -90,8 +90,8 @@
                             ['label' => Yii::t('app', 'Vehículos'), 'url' => ['/'], 'options' => []],
                             ['label' => Yii::t('app', 'Reservación'), 'url' => ['/'], 'options' => []],
                             ['label' => Yii::t('app', 'Contácto'), 'url' => ['/'], 'options' => []],
-                            ['label' => 'tel:01526241306373', 'url' => '<i class="fas fa-phone mr-3"></i>01 52 (624) 130 6373', 'options' => []],
-                            ['label' => 'tel:01526241578132', 'url' => '<i class="fas fa-phone mr-2"></i>01 52 (624) 157 8132', 'options' => []],
+                            // ['label' => 'tel:01526241306373', 'url' => '<i class="fas fa-phone mr-3"></i>01 52 (624) 130 6373', 'options' => []],
+                            ['label' => 'tel:01526241578132', 'url' => '<i class="fas fa-phone mr-2"></i> 01 52 (624) 157 8132', 'options' => []],
 
                         ]
                     ]); ?>
@@ -210,6 +210,21 @@
         </div>
       </div>
     </footer>
+    <!-- GetButton.io widget -->
+    <script type="text/javascript">
+        (function () {
+            var options = {
+                whatsapp: "+52 1 624 121 3559", // WhatsApp number
+                call_to_action: "Message us", // Call to action
+                position: "right", // Position may be 'right' or 'left'
+            };
+            var proto = document.location.protocol, host = "getbutton.io", url = proto + "//static." + host;
+            var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+            s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+            var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+        })();
+    </script>
+    <!-- /GetButton.io widget -->
     <?php $this->endBody() ?>
   </body>
 </html><?php $this->endPage() ?>

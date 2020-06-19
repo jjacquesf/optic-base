@@ -275,6 +275,22 @@ class TravelController extends Controller
                 }
             }
 
+
+            if($travel->client != null) {
+                Yii::$app->mailer
+                    ->compose(
+                        ['html' => 'booking-html', 'text' => 'booking-text'],
+                        ['booking' => $travel]
+                    )
+                    ->setTo($travel->client->email)
+                    ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
+                    ->setReplyTo([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
+                    ->setSubject(Yii::t('app', 'Reservación') . ' ' . $travel->reference)
+                    // ->setTextBody($this->body)
+                    ->send();
+            }
+
+
             return $this->redirect(['index']);
         }
 

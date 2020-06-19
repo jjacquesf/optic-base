@@ -106,11 +106,15 @@
           justify-content space-between
           align-items center
           padding 10px
-          i.fa-arrow-down
+          i.fas.end
             color $yellow
             border 1px solid $yellow
             border-radius 40px
             padding 4px
+        button.choose-destination
+          &:hover
+            text-decoration none
+            background-color lightness(#3f3f3e, 10%)
         .add-people
           display grid
           grid-template-columns 35% 25% 25%
@@ -335,4 +339,120 @@
     background-image url('img/suburvan/5m.jpg')
   .six
     background-image url('img/suburvan/6m.jpg')
-    
+
+.card-form
+  -webkit-border-radius 5px
+  -moz-border-radius 5px
+  border-radius 5px
+  -webkit-box-shadow 0 1px 3px rgba(0, 0, 0, .3)
+  -moz-box-shadow 0 1px 3px rgba(0, 0, 0, .3)
+  box-shadow 0 1px 3px rgba(0, 0, 0, .3)
+  background-color #f9f9f7
+  border 1px solid #fff
+  margin 0 auto 0
+  left 0
+  padding 13px 20px
+  // position absolute
+  box-sizing border-box
+  width 100%
+  h2
+    color #555
+    // font-family ff-dagny-web-pro, "Helvetica Neue", Verdana, Geneva, Arial, Helvetica, sans-serif
+    font-size 16px
+    font-style normal
+    margin-bottom 0
+    text-align left
+  ul
+    margin 0
+    padding 0
+    list-style-type none
+  li
+    list-style-type none
+    margin 8px 0
+    .help
+      color #aaa
+      display block
+      font-size 11px
+      font-weight 400
+      line-height 14px
+      padding-top 14px
+      a
+        color #76a1cd
+  label
+    color #555
+    display block
+    font-size 14px
+    font-weight 400
+  input
+    background-color #fff
+    border 1px solid #e5e5e5
+    color #333
+    display block
+    font-size 18px
+    height 32px
+    padding 0 5px
+    width 100%
+    box-sizing box-sizing
+    &::-webkit-input-placeholder
+      color #ddd
+    &:-moz-placeholder
+      color #ddd
+      opacity 1
+    &::-moz-placeholder
+      color #ddd
+      opacity 1
+    &:-ms-input-placeholder
+      color #ddd
+    &:focus
+      outline 1px solid #38d
+  #card_number
+    background-image url(img/card-images.png), url(img/card-images.png)
+    background-position 2px -121px, 260px -61px
+    background-size 120px 361px, 120px 361px
+    background-repeat no-repeat
+    padding-left 54px
+    width 100%
+    &.visa
+      background-position 2px -163px, 260px -61px
+    &.visa_electron
+      background-position 2px -205px, 260px -61px
+    &.mastercard
+      background-position 2px -247px, 260px -61px
+    &.maestro
+      background-position 2px -289px, 260px -61px
+    &.discover
+      background-position 2px -331px, 260px -61px
+    &.valid
+      &.visa
+        background-position 2px -163px, 260px -87px
+      &.visa_electron
+        background-position 2px -205px, 260px -87px
+      &.mastercard
+        background-position 2px -247px, 260px -87px
+      &.maestro
+        background-position 2px -289px, 260px -87px
+      &.discover
+        background-position 2px -331px, 260px -87px
+
+.vertical
+  overflow hidden
+  li
+    float left
+    width 49% !important
+    .or
+      color #aaa
+      float left
+      font-size 12px
+      margin-left -8px
+      margin-top 32px
+    &:last-child
+      float right
+      text-align right
+      input
+        float right
+  input
+    width 60% !important
+
+ins
+  overflow hidden
+  width 100%

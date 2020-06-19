@@ -6,8 +6,12 @@ use common\models\Additional;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\Json;
+use frontend\models\SearchTravelForm;
+use yii\widgets\ActiveForm;
 
 $assets = ThemeAsset::register($this);
+
+$searchForm = new SearchTravelForm();
 
 $polygons = [];
 foreach(Zone::find()->all() as $zone) {
@@ -328,9 +332,10 @@ $this->registerJs("
                     },
                     success: function(result) {
                         if(result.success == true) {
-                            ctrl.step = 5;
-                            ctrl.booking_reference = result.data.reference
-                            ctrl.booking_total = result.data.total
+                            // ctrl.step = 5;
+                            // ctrl.booking_reference = result.data.reference
+                            // ctrl.booking_total = result.data.total
+                            window.location.href = '" . Url::to(['/site/travel-detail', 'id' => '']) .  "' + result.data.id;
                         }
                     },
                     complete: function(result) {}
@@ -354,8 +359,9 @@ $this->registerJs("
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="form-group mt-5">
-                            <label class="text-uppercase"><?= Yii::t('app', 'Servicio Privado'); ?></label>
-                            <span class="form-control choose-destination"><i class="fas fa-map-marker-alt"></i><?= Yii::t('app', 'Configura tu servicio.') ?><i class="fas fa-arrow-down"></i></span>
+                            <!-- <label class="text-uppercase"><?= Yii::t('app', 'Servicio Privado'); ?></label> -->
+                            <button class="form-control choose-destination my-1" v-on:click="goToStep(0)"><i class="fas fa-search"></i><?= Yii::t('app', 'Ya tengo una reservación.') ?><i class="fas end fa-arrow-right"></i></button>
+                            <span class="form-control choose-destination"><i class="fas fa-map-marker-alt"></i><?= Yii::t('app', 'Configura tu servicio.') ?><i class="fas end fa-arrow-down"></i></span>
                         </div>
                     </div>
                     <div class="col-xs-12">
@@ -501,6 +507,52 @@ $this->registerJs("
                     </div>
                 </div>    
             </form>
+        </div>
+        <div class="m-5" v-if="step == 0">
+            <div class="reservation-form">    
+                <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <span class="form-control choose-destination"><i class="fas fa-search"></i><?= Yii::t('app', 'Buscar mi reservación.') ?><i class="fas end fa-arrow-down"></i></span>
+                    </div>
+                    <div class="col-xs-12">
+
+                        <div class="row">
+                        
+                            <?php $form = ActiveForm::begin([
+                                                'id' => 'search-travel',
+                                                'action' => ['/site/travel-search'],
+                                  ]); ?>
+
+                                <div class="col-xs-12">
+                                    <?= $form->field($searchForm, 'email') ?>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <?= $form->field($searchForm, 'reference') ?>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <?php /* $form->field($searchForm, 'date')->widget(\yii\jui\DatePicker::classname(), [
+                                        // 'language' => 'ru',
+                                        'dateFormat' => 'php:d/m/Y',
+                                        'options' => [
+                                            'class' => 'form-control',
+                                            'autocomplete' => 'off',
+                                        ],
+                                    ])*/ ?>
+                                </div>
+
+                                <div class="col-xs-6"></div>
+
+                                <div class="form-group col-xs-6 text-right">
+                                    <?= Html::submitButton(Yii::t('app', 'Buscar mi viaje'), ['class' => 'btn btn-default text-uppercase', 'name' => 'sarch-button']) ?>
+                                </div>
+
+                            <?php ActiveForm::end(); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/banner-reserve.jpg" v-if="step == 1">
         <div class="m-3 step-container" v-if="step == 2 || step == 3 || step == 4 || step == 5">                   

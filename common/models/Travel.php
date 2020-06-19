@@ -51,7 +51,7 @@ class Travel extends EActiveRecord
 
     public $status_options = [
         self::STATUS_CANCELED => 'Cancelado',
-        self::STATUS_PENDING => 'Pendiente',
+        self::STATUS_PENDING => 'Próximo',
         self::STATUS_ACTIVE => 'En Servicio',
         self::STATUS_COMPLETE => 'Completa',
     ];
@@ -65,9 +65,9 @@ class Travel extends EActiveRecord
     ];
 
     public $payed_status_options = [
-        self::PAYED_STATUS_PENDING => 'Pendiente',
-        self::PAYED_STATUS_PARTIAL => 'Parcial',
-        self::PAYED_STATUS_COMPLETE => 'Completo',
+        self::PAYED_STATUS_PENDING => 'Pendiente de pago',
+        self::PAYED_STATUS_PARTIAL => 'Parcial de pago',
+        self::PAYED_STATUS_COMPLETE => 'Completo de pago',
     ];
 
     public $info_contents = [
@@ -96,6 +96,19 @@ class Travel extends EActiveRecord
         ],
     ];
 
+    public $airline_options = [
+        'Aeroméxico' => 'Aeroméxico',
+        'American Airlines' => 'American Airlines',
+        'Alaska airlines' => 'Alaska airlines',
+        'British airlines' => 'British airlines',
+        'Internet' => 'Internet',
+        'South west' => 'South west',
+        'Volaris' => 'Volaris',
+        'Viva aerobús' => 'Viva aerobús',
+        'West jet' => 'West jet',
+        'Privado' => 'Privado / Private',
+    ];
+
     /**
      * {@inheritdoc}
      */
@@ -121,6 +134,7 @@ class Travel extends EActiveRecord
             [['created_at', 'pickup', 'dropoff'], 'safe'],
             [['total', 'payed', 'balance'], 'number'],
             [['from_location', 'from_address', 'to_location', 'to_address', 'passanger_name'], 'string', 'max' => 255],
+            [['airline', 'flight'], 'string', 'max' => 255],
             ['created_at', 'default', 'value' => new Expression('NOW()')],
         ];
     }
@@ -153,6 +167,7 @@ class Travel extends EActiveRecord
             'payed' => Yii::t('app', 'Pagado'),
             'balance' => Yii::t('app', 'Saldo'),
             'reference' => Yii::t('app', 'Referencia'),
+            'airline' => Yii::t('app', 'Aereolina'),
         ];
     }
 
@@ -295,6 +310,35 @@ class Travel extends EActiveRecord
         return false;
     }
 
+    public function addPayment($type, $amount, $details) {
+        $model = new TravelPayment();
+        $model->travel_id = $this->id;
+        $model->status = TravelPayment::STATUS_VALIDATED;
+        $model->created_at = date('Y-m-d H:i:s');
+        $model->type = $type;
+        $model->amount = $amount;
+        $model->details = $details;
+
+        if($model->save()) {
+            $model->updatePayed();
+            $model->updateTotals();
+            return $payment;
+        }
+
+        return false;
+    }
+
+    public function updatePayed() {
+        $this->payed = 0;
+        foreach($this->payments as $payment) {
+            if($payment->status == TravelPayment::STATUS_VALIDATED) {
+                $this->payed += $payment->amount;
+            }
+        }
+
+        return $this->update(['payed']);
+    }
+
     public function updateTotals()
     {
         $this->total = 0;
@@ -333,10 +377,45 @@ class Travel extends EActiveRecord
     {
         switch($attr)
         {
+            case 'status':
+                if(isset($this->status_options[$this->status])) {
+                    return $this->status_options[$this->status];
+                }
+                break;
+            case 'payed_status':
+                if(isset($this->payed_status_options[$this->payed_status])) {
+                    return $this->payed_status_options[$this->payed_status];
+                }
+                break;
             case 'type':
                 if(isset($this->type_options[$this->type])) {
                     return $this->type_options[$this->type];
                 }
+                break;
+            case 'card':
+
+                $travel_label = Yii::t('app', 'Origen - Destino');
+                $name_label = Yii::t('app', 'Titular');
+                $ad_label = Yii::t('app', 'Fecha de llegada');
+                $dd_label = Yii::t('app', 'Hora de llegada');
+                $pass_label = Yii::t('app', 'Pasajeros');
+                $veh_label = Yii::t('app', 'Vehículo');
+
+                $card = [];
+                $card[] = "<div class=\"col-xs-12\"><h5>{$travel_label}</h5><p>{$this->from_address} / {$this->to_address}</p></div>";
+                $card[] = "<div class=\"col-xs-12\"><h5>{$name_label}</h5><p>" . $this->getFormatted('client.name') . "</p></div>";
+                $card[] = "<div class=\"col-xs-6\"><h5>{$ad_label}</h5><p>" . date('d/m/Y', strtotime($this->pickup)) . "hrs.</p></div>";
+                // $card[] = "<p>Aerol&iacute;nea y No. de Vuelo:</p>";
+                $card[] = "<div class=\"col-xs-6\"><h5>{$dd_label}</h5><p>" . date('H:i', strtotime($this->pickup)) . "hrs.</p></div>";
+                $card[] = "<div class=\"col-xs-12\"><h5>{$pass_label}</h5><p>{$this->passanger_name}</p></div>";
+
+                $i = 1;
+                foreach($this->vehicles as $vehicle) {
+                    $card[] = "<div class=\"col-xs-6\"><h5>{$veh_label} {$i}</h5><p>{$vehicle->vehicleType->name}</p></div>";
+                    $i++;
+                }
+
+                return implode("\n", $card);
                 break;
             case 'client.name':
                 return $this->client->profile->name;
@@ -383,7 +462,7 @@ class Travel extends EActiveRecord
 
     public function getPassangers()
     {
-        return $this->hasMany(TravelPassangers::className(), ['travel_id' => 'id']);
+        return $this->hasMany(TravelPassenger::className(), ['travel_id' => 'id']);
     }
 
     public function getInfo()

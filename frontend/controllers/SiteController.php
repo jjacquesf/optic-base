@@ -15,6 +15,9 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use frontend\models\QuoteForm;
+use frontend\models\SearchTravelForm;
+use common\models\Travel;
+use frontend\models\FlightInfoForm;
 /**
  * Site controller
  */
@@ -93,6 +96,7 @@ class SiteController extends Controller
             && $model->validate()) {
 
             $booking = $model->book();
+            Yii::$app->session->set('auth-travel-detail-id', $booking->id);
 
             if($booking->client != null) {
                 Yii::$app->mailer
@@ -108,7 +112,6 @@ class SiteController extends Controller
                     ->send();
             }
 
-                
             return [
                 'success' => true,
                 'data' => $booking,
@@ -118,6 +121,57 @@ class SiteController extends Controller
         }
 
         return ['success' => false];
+    }
+
+    public function actionTravelSearch() 
+    {
+        Yii::$app->session->setFlash('special-class', 'non-fixed');
+        $model = new SearchTravelForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $travelModel = $model->search();
+
+            if($travelModel != null) {
+                Yii::$app->session->set('auth-travel-detail-id', $travelModel->id);
+                return $this->redirect(['/site/travel-detail', 'id' => $travelModel->id]);
+            }
+        }
+
+        return $this->redirect(['/site/index']);
+    }
+
+    public function actionTravelDetail($id) 
+    {
+        Yii::$app->session->setFlash('special-class', 'non-fixed');
+        $atd = Yii::$app->session->get('auth-travel-detail-id', false);
+        if($atd && $atd == $id) {
+            $model = Travel::findOne($id);
+            $flightModel = new FlightInfoForm();
+
+            if($model != null) {
+
+                $flightModel->flight = $model->flight;
+                $flightModel->airline = $model->airline;
+                $flightModel->passangers = $model->passanger_name;
+    
+                if ($flightModel->load(Yii::$app->request->post()) && $model->validate()) {
+                    
+                    $model->flight = $flightModel->flight;
+                    $model->airline = $flightModel->airline;
+                    $model->passanger_name = $flightModel->passangers;
+    
+                    $model->update(['flight', 'airline', 'passanger_name']);
+        
+                    return $this->refresh();
+                }
+
+                return $this->render('travel_detail', [
+                    'model' => $model,
+                    'flightModel' => $flightModel,
+                ]);
+            }
+        }
+
+        return $this->redirect(['/site/index']);
     }
 
     /**
@@ -153,13 +207,10 @@ class SiteController extends Controller
 
         if (($result = Yii::$app->paypalEC->processIpn($_POST))) {
 
-            // $order = Order::find()->where([ 'reference' => $result['custom'] ])->one();
-            // if(!is_null($order)) {
-
-            //     if($order->addPayment(Order::PAYMENT_METHOD_PAYPAL, $result['amount'], $result['txn_id'], Payment::STATUS_ACTIVE, $result['comments'])) {
-            //         return true;
-            //     }
-            // }
+            $model = Travel::findOne($result['custom']);
+            if($model != null) {
+                $model->addPayment(TravelPayment::TYPE_PAYPAL, $result['amount'], $result['txn_id']);
+            }
         }
     }
 

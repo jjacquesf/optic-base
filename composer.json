@@ -21,7 +21,8 @@
         "mdmsoft/yii2-upload-file": "~2.0",
         "yiister/yii2-gentelella": "~1.0",
         "yiisoft/yii2-jui": "^2.0@dev",
-        "fightbulc/moment": "dev-master"
+        "fightbulc/moment": "dev-master",
+        "guzzlehttp/guzzle": "~6.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

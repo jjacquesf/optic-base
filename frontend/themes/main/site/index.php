@@ -1,5 +1,6 @@
 <?php
 use frontend\assets\ThemeAsset;
+use yii\helpers\Url;
 
 $assets = ThemeAsset::register($this);
 
@@ -39,7 +40,10 @@ $assets = ThemeAsset::register($this);
     <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 my-5">
-        <h2 data-aos="fade-up" data-aos-easing="ease-in-out">RESERVA EN LÍNEA</h2>
+            <h2 data-aos="fade-up" data-aos-easing="ease-in-out">RESERVA EN LÍNEA</h2>
+            <a href="<?= Url::to(['/site/search-travel']); ?>" class="btn btn-info btn-sm pull-right">
+                <i class="fas fa-search"></i> Buscar mi reserva
+            </a>
         </div>
     </div>
     <div class="row">

@@ -14,9 +14,16 @@ use Yii;
  * @property int $travel_id
  * @property int $type
  * @property double $amount
+ * @property string $details
  */
 class TravelPayment extends EActiveRecord
 {
+    const TYPE_PAYPAL = 1;
+    const TYPE_CC = 2;
+
+    const STATUS_PENDING = 0;
+    const STATUS_VALIDATED = 1;
+
     /**
      * {@inheritdoc}
      */
@@ -31,8 +38,9 @@ class TravelPayment extends EActiveRecord
     public function rules()
     {
         return [
-            [['status', 'file_id', 'created_at', 'travel_id', 'type', 'amount'], 'required'],
+            [['status', 'created_at', 'travel_id', 'type', 'amount'], 'required'],
             [['status', 'file_id', 'travel_id', 'type'], 'integer'],
+            [['details'], 'string', 'max' => 255],
             [['created_at'], 'safe'],
             [['amount'], 'number'],
         ];
@@ -51,6 +59,7 @@ class TravelPayment extends EActiveRecord
             'travel_id' => Yii::t('app', 'Travel ID'),
             'type' => Yii::t('app', 'Type'),
             'amount' => Yii::t('app', 'Amount'),
+            'details' => Yii::t('app', 'Details'),
         ];
     }
 

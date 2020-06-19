@@ -25,6 +25,7 @@
     "magnify": "^2.3.3",
     "aos": "^2.3.4",
     "clockpicker": "https://github.com/weareoutman/clockpicker.git#^0.0.7",
-    "lightbox2": "^2.11.1"
+    "lightbox2": "^2.11.1",
+    "jquery-mask-plugin": "https://github.com/igorescobar/jQuery-Mask-Plugin.git#^1.14.16"
   }
 }

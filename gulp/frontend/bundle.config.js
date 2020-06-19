@@ -18,6 +18,8 @@ module.exports = {
         './bower_components/aos/dist/aos.js',
         './bower_components/clockpicker/dist/bootstrap-clockpicker.min.js',
         './bower_components/lightbox2/dist/js/lightbox.js',
+        './bower_components/jquery-creditcardvalidator/jquery.creditCardValidator.js',
+        './bower_components/jquery-mask-plugin/dist/jquery.mask.min.js'
         // './bower_components/pnotify/dist/pnotify.js',
         // './bower_components/iCheck/icheck.js'
       ],
