@@ -127,7 +127,7 @@ class Travel extends EActiveRecord
 
             [['status', 'payed_status', 'total', 'payed', 'balance'], 'required', 'on' => self::SCENARIO_CREATE],
 
-            [['to_location', 'to_address', 'passanger_name'], 'default', 'value' => ''],
+            [['to_location', 'to_address', 'passanger_name', 'airline', 'flight'], 'default', 'value' => ''],
             [['to_zone_id'], 'default', 'value' => 0],
 
             [['status', 'type', 'payed_status', 'client_id', 'user_id', 'previous_travel_id', 'service_id', 'from_zone_id', 'to_zone_id'], 'integer'],
@@ -320,9 +320,8 @@ class Travel extends EActiveRecord
         $model->details = $details;
 
         if($model->save()) {
-            $model->updatePayed();
-            $model->updateTotals();
-            return $payment;
+            $this->updateTotals();
+            return $model;
         }
 
         return false;
@@ -368,9 +367,22 @@ class Travel extends EActiveRecord
             $this->total += $this->service->price;
         }
 
-        $this->balance = $this->total - $this->payed;
+        $this->total = 2;
 
-        return $this->save();
+        $this->updatePayed();
+        $this->balance = $this->total - $this->payed;
+        $this->update(['total', 'balance']);
+        $this->refresh();
+
+        if($this->payed == 0 && $this->total > 0) {
+            $this->payed_status = self::PAYED_STATUS_PENDING;
+        } else if($this->balance <= 0) {
+            $this->payed_status = self::PAYED_STATUS_COMPLETE;
+        } else if($this->balance > 0) {
+            $this->payed_status = self::PAYED_STATUS_PARTIAL;
+        }
+
+        return $this->update(['payed_status']);
     }
 
     public function getFormatted($attr, $lang = 'es')

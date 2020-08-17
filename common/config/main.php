@@ -18,8 +18,9 @@ return [
             'cert_3d' => '03',
             'cert_3d_forward_path' => 'https://opticpt.com/index.php?r=banorte%2Fdefault%2F3d-secure-response&travel_id=',
             'mode' => 'AUT', // PRD, AUT, DEC, RND
-            'pw_username' => 'a8373132',
-            'pw_password' => 'jN4=h!3J\\',
+    
+            'pw_username' => '83731322',
+            'pw_password' => '3D.Kwxk_Ln8-',
         ],
     ],
 ];

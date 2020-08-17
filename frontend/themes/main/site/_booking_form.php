@@ -569,14 +569,14 @@ $this->registerJs("
                     </thead>
                     <tbody>
                         <tr v-for="quote in quotes" v-if="quote.price > 0">
-                            <td><b>{{quote.vehicle.name}}</b>
+                            <td width="150"><b>{{quote.vehicle.name}}</b>
                                 <div>
                                     <small>Max. Pasajeros: {{quote.vehicle.max_passangers}}</small><br>
                                     <small>Max. Maletas: {{quote.vehicle.max_bags}}</small>
                                 </div></td>
                             <!-- <td>{{quote.vehicle.max_passangers}}</td>
                             <td>{{quote.vehicle.max_bags}}</td> -->
-                            <td>{{ formatCurrency(quote.price) }}</td>
+                            <td><small>{{ formatCurrency(quote.price) }} USD</small></td>
                             <td><button type="button" class="btn btn-sm btn-primary" v-on:click="choose(quote)"><?= Yii::t('app', 'Elegir'); ?></button></td>
                         </tr>
                     </tbody>
@@ -610,15 +610,15 @@ $this->registerJs("
                     <table class="table table-striped table-bordered">
                         <tr>
                             <th class="text-right"><?= Yii::t('app', 'Vehículo'); ?></th>
-                            <td class="text-right">{{ formatCurrency(getSubtotal()) }}</td>
+                            <td class="text-right">{{ formatCurrency(getSubtotal()) }} USD</td>
                         </tr>
                         <tr>
                             <th class="text-right"><?= Yii::t('app', 'Adicional'); ?></th>
-                            <td class="text-right">{{ formatCurrency(getAdditional()) }}</td>
+                            <td class="text-right">{{ formatCurrency(getAdditional()) }} USD</td>
                         </tr>
                         <tr>
                             <th class="text-right"><?= Yii::t('app', 'Total'); ?></th>
-                            <td class="text-right">{{ formatCurrency(getTotal()) }}</td>
+                            <td class="text-right">{{ formatCurrency(getTotal()) }} USD</td>
                         </tr>
                     </table>
                     <div class="text-left">
@@ -688,7 +688,7 @@ $this->registerJs("
                                     v-model="$v.client_comments.$model" 
                                     class="form-control" 
                                     type="text" 
-                                    placeholder="<?= Yii::t('app', 'Número de vuelo, aereolínea, etc'); ?>"></textarea>
+                                    placeholder="<?= Yii::t('app', 'Pasajeros, instrucciones específicas, comentarios adicionales, etc'); ?>"></textarea>
                             </div>
                         </div>
                     </div>

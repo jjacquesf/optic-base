@@ -122,7 +122,9 @@ class TravelForm extends Travel
                 $model->dropoff = sprintf('%s %s:00', $date->format('Y-m-d'), $model->dropoff);
             }
 
-            $model->passanger_name = 'Lorem de pasajeros';
+            if(empty($model->passanger_name)) {
+                $model->passanger_name = Yii::t('app', 'No se especificó');
+            }
 
             return $model->save() ? $model : null;
         }

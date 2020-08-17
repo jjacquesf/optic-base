@@ -93,7 +93,7 @@ class Additional extends EActiveRecord
                                         ->joinWith(['translation'])
                                         ->orderBy(['optic_translate.content' => SORT_ASC])
                                         ->all(), 'id', function($model) {
-                                            return sprintf('%s ($ %s)', $model->translation->content, number_format($model->price, 2));
+                                            return sprintf('%s ($ %s USD)', $model->translation->content, number_format($model->price, 2));
                                         });
     }
 }

@@ -94,6 +94,22 @@ class DefaultController extends Controller
                         $payworks2Response = Yii::$app->banorte->makePayworks2Request($model->total, $responseModel->Status, $responseModel->ECI, $responseModel->XID, $responseModel->CAVV);
                         if($payworks2Response->validate()) {
                             $payment = $model->addPayment(TravelPayment::TYPE_CC, $model->total, $payworks2Response->getFormatted('payw_details'));
+
+                            if($model->client != null) {
+                                Yii::$app->mailer
+                                    ->compose(
+                                        ['html' => 'payment-html', 'text' => 'payment-text'],
+                                        ['booking' => $model]
+                                    )
+                                    ->setTo($model->client->email)
+                                    ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
+                                    ->setReplyTo([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
+                                    ->setSubject(Yii::t('app', 'Pago Reservación') . ' ' . $model->reference)
+                                    // ->setTextBody($this->body)
+                                    ->send();
+                            }
+                
+
                             Yii::$app->session->setFlash('payment-success', $payworks2Response->getFormatted('payw_result'));
                         } else {
                             Yii::$app->session->setFlash('payment-error', $payworks2Response->getFormatted('payw_result'));

@@ -58,6 +58,21 @@
             </div>
         </div>
         <div class="col-xs-12 my-3 mb-4 col-sm-4">
+            <h4>&nbsp;</h4>
+            <?php if(Yii::$app->session->hasFlash('payment-error')): ?>
+                <div class="alert alert-danger" role="alert">
+                    <h5><?= Yii::t('app', 'Error al procesar el pago.'); ?></h5>
+                    <p><?= Yii::$app->session->getFlash('payment-error'); ?></p>
+                </div>
+            <?php endif; ?>
+
+            <?php if(Yii::$app->session->hasFlash('payment-success')): ?>
+                <div class="alert alert-success" role="alert">
+                    <h5><?= Yii::t('app', 'Pago recibido correctamente.'); ?></h5>
+                    <p><?= Yii::$app->session->getFlash('payment-success'); ?></p>
+                </div>
+            <?php endif; ?>
+
             <?php if($model->payed_status == Travel::PAYED_STATUS_PENDING): ?>
                 <h4><?= Yii::t('app', 'Seleccione la forma de pago'); ?></h4>
                 <div class="row">
@@ -67,6 +82,8 @@
                         <?= $this->render('_banorte_cc_form', ['travelModel' => $model]); ?>
                     </div>
                 </div>
+            <?php else: ?>
+                <?= $this->render('_travel_payments', ['model' => $model]); ?>
             <?php endif; ?>
         </div>
     </div>

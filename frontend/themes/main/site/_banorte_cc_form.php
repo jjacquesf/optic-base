@@ -62,20 +62,6 @@ $this->registerJs('
 ', View::POS_READY);
 
 ?>
-<?php if(Yii::$app->session->hasFlash('payment-error')): ?>
-    <div class="alert alert-danger" role="alert">
-        <h5><?= Yii::t('app', 'Error al procesar el pago.'); ?></h5>
-        <p><?= Yii::$app->session->getFlash('payment-error'); ?></p>
-    </div>
-<?php endif; ?>
-
-<?php if(Yii::$app->session->hasFlash('payment-success')): ?>
-    <div class="alert alert-success" role="alert">
-        <h5><?= Yii::t('app', 'Pago recibido correctamente.'); ?></h5>
-        <p><?= Yii::$app->session->getFlash('payment-success'); ?></p>
-    </div>
-<?php endif; ?>
-
 <?php 
     $form = ActiveForm::begin([
         'id' => 'banorte-cc-form',

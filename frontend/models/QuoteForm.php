@@ -120,6 +120,7 @@ class QuoteForm extends Model
             $model->type = Travel::TYPE_ARRIVAL;
             $model->client_id = $client->id;
             $model->service_id = $service->id;
+            $model->passanger_name = $this->comments;
             $travel = $model->register();
             
             if($travel) {

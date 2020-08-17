@@ -24,6 +24,12 @@ class TravelPayment extends EActiveRecord
     const STATUS_PENDING = 0;
     const STATUS_VALIDATED = 1;
 
+    public $type_options = [
+        self::TYPE_PAYPAL => 'Paypal',
+        self::TYPE_CC => 'Tarjeta de crédito',
+    ];
+
+
     /**
      * {@inheritdoc}
      */
@@ -61,6 +67,25 @@ class TravelPayment extends EActiveRecord
             'amount' => Yii::t('app', 'Amount'),
             'details' => Yii::t('app', 'Details'),
         ];
+    }
+
+    public function getFormatted($attr, $lang = 'es') {
+        switch($attr)
+        {
+            case 'type':
+                if(isset($this->type_options[$this->type])) {
+                    return $this->type_options[$this->type];
+                }
+                break;
+            case 'amount':
+                return '$ ' . number_format($this->amount, 2, '.', ',') . ' USD';
+                break;
+            case 'details':
+                return nl2br($this->details);
+                break;
+        }
+
+        return parent::getFormatted($attr, $lang);
     }
 
     public function getTravel()

@@ -149,6 +149,8 @@ class SiteController extends Controller
 
             if($model != null) {
 
+                $model->updateTotals();
+
                 $flightModel->flight = $model->flight;
                 $flightModel->airline = $model->airline;
                 $flightModel->passangers = $model->passanger_name;
@@ -210,6 +212,21 @@ class SiteController extends Controller
             $model = Travel::findOne($result['custom']);
             if($model != null) {
                 $model->addPayment(TravelPayment::TYPE_PAYPAL, $result['amount'], $result['txn_id']);
+                
+                if($model->client != null) {
+                    Yii::$app->mailer
+                        ->compose(
+                            ['html' => 'payment-html', 'text' => 'payment-text'],
+                            ['booking' => $model]
+                        )
+                        ->setTo($model->client->email)
+                        ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
+                        ->setReplyTo([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
+                        ->setSubject(Yii::t('app', 'Pago Reservación') . ' ' . $model->reference)
+                        // ->setTextBody($this->body)
+                        ->send();
+                }
+    
             }
         }
     }
@@ -222,6 +239,16 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+    
+    /**
+     * Displays homepage.
+     *
+     * @return mixed
+     */
+    public function actionCard()
+    {
+        return $this->render('card');
     }
 
     /**
