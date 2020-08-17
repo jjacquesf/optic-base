@@ -158,7 +158,7 @@ $this->registerJs("
             );
 
             var autocomplete = new google.maps.places.Autocomplete(document.getElementById('travelform-from_address'), { 
-                types: ['establishment'], 
+                // types: ['establishment'], 
                 bounds: defaultBounds,
                 strictBounds: true
             });
@@ -195,7 +195,7 @@ $this->registerJs("
             });
 
             var autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('travelform-to_address'), { 
-                types: ['establishment'], 
+                // types: ['establishment'], 
                 bounds: defaultBounds,
                 strictBounds: true
             });

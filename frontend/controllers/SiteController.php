@@ -107,7 +107,7 @@ class SiteController extends Controller
                     ->setTo($booking->client->email)
                     ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
                     ->setReplyTo([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
-                    ->setSubject(Yii::t('app', 'Reservación') . ' ' . $booking->reference)
+                    ->setSubject(Yii::t('app', 'Reservaci贸n') . ' ' . $booking->reference)
                     // ->setTextBody($this->body)
                     ->send();
             }
@@ -222,7 +222,7 @@ class SiteController extends Controller
                         ->setTo($model->client->email)
                         ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
                         ->setReplyTo([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
-                        ->setSubject(Yii::t('app', 'Pago Reservación') . ' ' . $model->reference)
+                        ->setSubject(Yii::t('app', 'Pago Reservaci贸n') . ' ' . $model->reference)
                         // ->setTextBody($this->body)
                         ->send();
                 }

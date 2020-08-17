@@ -208,12 +208,11 @@ $assets = ThemeAsset::register($this);
             <div id="tesla" class="car-type escalade">
                 <div class="main-img"><img class="img-responsive" src="<?= $assets->baseUrl; ?>/img/TESLA.jpg" alt=""></div>
                 <ul class="list-inline mb-0">
-                <li><a class="thumbnail one" href="#"></a></li>
-                <li><a class="thumbnail two" href="#"></a></li>
-                <li><a class="thumbnail three" href="#"></a></li>
-                <li><a class="thumbnail four" href="#"></a></li>
-                <li><a class="thumbnail five" href="#"></a></li>
-                <li><a class="thumbnail six" href="#"></a></li>
+                <li><a class="thumbnail one" data-lightbox="modelx" href="<?= $assets->baseUrl; ?>/img/modelx/1m.jpg"></a></li>
+                <li><a class="thumbnail two" data-lightbox="modelx" href="<?= $assets->baseUrl; ?>/img/modelx/2m.jpg"></a></li>
+                <li><a class="thumbnail three" data-lightbox="modelx" href="<?= $assets->baseUrl; ?>/img/modelx/3m.jpg"></a></li>
+                <li><a class="thumbnail four" data-lightbox="modelx" href="<?= $assets->baseUrl; ?>/img/modelx/4m.jpg"></a></li>
+                <li><a class="thumbnail five" data-lightbox="modelx" href="<?= $assets->baseUrl; ?>/img/modelx/5m.jpg"></a></li>
                 </ul>
             </div>
         </div>

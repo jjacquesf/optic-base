@@ -367,7 +367,7 @@ class Travel extends EActiveRecord
             $this->total += $this->service->price;
         }
 
-        $this->total = 2;
+        // $this->total = 2;
 
         $this->updatePayed();
         $this->balance = $this->total - $this->payed;
