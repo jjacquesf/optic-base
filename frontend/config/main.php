@@ -12,6 +12,7 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'language' => 'es',
+    'sourceLanguage' => 'es',
     'modules' => [
         'banorte' => [
             'class' => 'frontend\\modules\\banorte\\Module',

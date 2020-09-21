@@ -22,5 +22,14 @@ return [
             'pw_username' => '83731322',
             'pw_password' => '3D.Kwxk_Ln8-',
         ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'sourceLanguage' => 'es',
+                    'basePath' => '@app/messages'
+                ],
+            ],
+        ],
     ],
 ];
