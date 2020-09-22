@@ -158,28 +158,21 @@ $this->registerJs("
             );
 
             var autocomplete = new google.maps.places.Autocomplete(document.getElementById('travelform-from_address'), { 
-                // types: ['establishment'], 
-                bounds: defaultBounds,
-                strictBounds: true
+                bounds: defaultBounds
+                // strictBounds: true
             });
             autocomplete.setFields(['address_components', 'geometry', 'name']);
 
             autocomplete.addListener('place_changed', function() {
                 var place = this.getPlace();
-    
-                if (!place.geometry)  {
-                    var location = place;
-                } else {
-                    var location = place.geometry.location;
-                }
-                                
-                var found = false;
-                for(var i=0;i<polygons.length;i++) {
-                    if( google.maps.geometry.poly.containsLocation(location, polygons[i].polygon)  ) {
-                        found = polygons[i];
-                        break;
-                    }
-                }
+            
+                var found = true;
+                // for(var i=0;i<polygons.length;i++) {
+                //     if( google.maps.geometry.poly.containsLocation(location, polygons[i].polygon)  ) {
+                //         found = polygons[i];
+                //         break;
+                //     }
+                // }
 
                 if( found != false ) {
                     app.\$v.from_address.\$model = place.name
@@ -196,8 +189,8 @@ $this->registerJs("
 
             var autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('travelform-to_address'), { 
                 // types: ['establishment'], 
-                bounds: defaultBounds,
-                strictBounds: true
+                bounds: defaultBounds
+                // strictBounds: true
             });
             autocomplete2.setFields(['address_components', 'geometry', 'name']);
 
@@ -210,13 +203,13 @@ $this->registerJs("
                     var location = place.geometry.location;
                 }
                                 
-                var found = false;
-                for(var i=0;i<polygons.length;i++) {
-                    if( google.maps.geometry.poly.containsLocation(location, polygons[i].polygon)  ) {
-                        found = polygons[i];
-                        break;
-                    }
-                }
+                var found = true;
+                // for(var i=0;i<polygons.length;i++) {
+                //     if( google.maps.geometry.poly.containsLocation(location, polygons[i].polygon)  ) {
+                //         found = polygons[i];
+                //         break;
+                //     }
+                // }
 
                 if( found != false ) {
                     app.\$v.to_address.\$model = place.name
