@@ -54,12 +54,13 @@
                 <?= Menu::widget([
                             'options' => ['class' => 'list-inline'],
                             'itemOptions' => ['class' => 'text-uppercase'],
+                            'linkTemplate' => '<a href="{url}" class="anchor">{label}</a>',
                             'items' => [
-                                ['label' => Yii::t('app', 'Nosotros'), 'url' => ['/'], 'options' => []],
-                                ['label' => Yii::t('app', 'Servicios'), 'url' => ['/'], 'options' => []],
-                                ['label' => Yii::t('app', 'Vehículos'), 'url' => ['/'], 'options' => []],
-                                ['label' => Yii::t('app', 'Reservación'), 'url' => ['/'], 'options' => []],
-                                ['label' => Yii::t('app', 'Contácto'), 'url' => ['/'], 'options' => []],
+                                ['label' => Yii::t('app', 'Reservar'), 'url' => '#reservar', 'options' => []],
+                                ['label' => Yii::t('app', 'Servicios'), 'url' => '#servicios', 'options' => []],
+                                ['label' => Yii::t('app', 'Vehículos'), 'url' => '#vehiculos', 'options' => []],
+                                ['label' => Yii::t('app', 'Nosotros'), 'url' => '#nosotros', 'options' => []],
+                                ['label' => Yii::t('app', 'Contácto'), 'url' => '#contacto', 'options' => []],
 
                             ]
                         ]); ?>
@@ -205,7 +206,7 @@
               <li><a href="#">Política de Privacidad |</a></li>
               <li><a href="#">Derechos Reservados Optic Private Transportation</a></li>
             </ul> -->
-            <div class="company"><span>Sitio diseñado por</span><img class="img-responsive" src="assets/img/eskalon.png" alt="eskalon"></div>
+            <div class="company"><span>Sitio diseñado por</span><img width="60" src="<?= $assets->baseUrl; ?>/img/eskalon.png" alt="Eskalon" class="ml-3"></div>
           </div>
         </div>
       </div>

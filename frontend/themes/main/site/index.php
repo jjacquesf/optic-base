@@ -36,28 +36,25 @@ $assets = ThemeAsset::register($this);
     </div>
     </div>
 </div>
-<div class="Home">
+<div id="reservar" class="Home">
     <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 my-5">
             <h2 data-aos="fade-up" data-aos-easing="ease-in-out">RESERVA EN LÍNEA</h2>
-            <a href="<?= Url::to(['/site/search-travel']); ?>" class="btn btn-info btn-sm pull-right">
-                <i class="fas fa-search"></i> Buscar mi reserva
-            </a>
         </div>
     </div>
-    <div class="row">
+    <div id="reservar" class="row">
         <div class="col-md-4 col-lg-4">
         <div class="instructions" data-aos="fade-right" data-aos-duration="4000" data-aos-delay="200">
-            <div class="item"><img src="<?= $assets->baseUrl; ?>/img/icon_11_optic.jpg" alt="Optic">
+            <div class="item"><img class="img-fluid" src="<?= $assets->baseUrl; ?>/img/icon_11_optic.jpg" alt="Optic">
             <h3>Programa</h3>
             <p>Revisa la disponibilidad y las tarifas</p>
             </div>
-            <div class="item"><img src="<?= $assets->baseUrl; ?>/img/icon_10_optic.jpg" alt="Optic">
+            <div class="item"><img class="img-fluid" src="<?= $assets->baseUrl; ?>/img/icon_10_optic.jpg" alt="Optic">
             <h3>Elige</h3>
             <p>Busca el vehículo ideal para tus necesidades</p>
             </div>
-            <div class="item"><img src="<?= $assets->baseUrl; ?>/img/icon_9_optic.jpg" alt="Optic">
+            <div class="item"><img class="img-fluid" src="<?= $assets->baseUrl; ?>/img/icon_9_optic.jpg" alt="Optic">
             <h3>Selecciona</h3>
             <p>Escoge el método de pago y <span>reserva</span></p>
             </div>
@@ -67,7 +64,7 @@ $assets = ThemeAsset::register($this);
             <?= $this->render('_booking_form'); ?>
         </div>
     </div>
-    <div class="row">
+    <div id="nosotros" class="row">
         <div class="col-sm-12 section-default">
         <h2 data-aos="fade-up" data-aos-easing="ease-in-out">NOSOTROS</h2>
         <h3 data-aos="fade-in" delay="500">Ofrecemos el mejor servicio privado de lujo de transportación.</h3>
@@ -78,7 +75,7 @@ $assets = ThemeAsset::register($this);
         </p><span data-aos="fade-in" delay="500">Unidades último modelo</span>
         </div>
     </div>
-    <div class="row services parallax">
+    <div id="servicios" class="row services parallax">
         <div class="col-sm-12 section-default">
         <h2 data-aos="fade-up" data-aos-easing="ease-in-out">SERVICIOS</h2>
         <h3 data-aos="fade-in" delay="500">Nuestro servicio ofrece transporte privado, exclusivo, seguro y confiable.</h3>
@@ -128,7 +125,7 @@ $assets = ThemeAsset::register($this);
         </div>
         </div>
     </div>
-    <div class="row parallax our-vehicles">
+    <div  id="vehiculos" class="row parallax our-vehicles">
         <div class="col-sm-12 section-default transparency">
         <div class="content">
             <h2 data-aos="fade-up" data-aos-easing="ease-in-out">NUESTROS VEHÍCULOS</h2>
@@ -217,9 +214,12 @@ $assets = ThemeAsset::register($this);
             </div>
         </div>
     </div>
-    <div class="row contact">
+    <div id="contact" class="row contact">
         <div class="col-sm-6 col-md-4 col-md-offset-2" data-aos="fade-right" data-aos-duration="4000" data-aos-delay="200">
-        <h2 data-aos="fade-up" data-aos-easing="ease-in-out">CONTACTO</h2><a class="mail" href="mailto:info@opticpt.com">info@opticpt.com</a><a href="tel:(52) 624 130 6373"><i class="fas fa-phone icon"></i>(52) 624 130 6373</a><a href="#"><i class="fas fa-map-marker-alt icon"></i>Cabo San Lucas Col.Centro 23477</a>
+            <h2 data-aos="fade-up" data-aos-easing="ease-in-out">CONTACTO</h2>
+            <a class="mail mt-5" href="mailto:info@opticpt.com">info@opticpt.com</a>
+            <a href="tel:(52) 624 130 6373" class=" mt-3"><i class="fas fa-phone icon"></i>(52) 624 130 6373</a>
+            <!-- <a href="#"><i class="fas fa-map-marker-alt icon"></i>Cabo San Lucas Col.Centro 23477</a> -->
         </div>
         <div class="col-sm-6 col-md-4" data-aos="fade-left" data-aos-duration="4000" data-aos-delay="200">
         <form class="my-5" action="">

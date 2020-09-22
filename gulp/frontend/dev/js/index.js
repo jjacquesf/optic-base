@@ -56,25 +56,24 @@ $( document ).ready(function() {
     $( ".owl-prev").html('<i class="fas fa-chevron-left"></i>');
     $( ".owl-next").html('<i class="fas fa-chevron-right"></i>');
 
+    $('a.anchor[href^="#"]').on("click", function(o) {
+      if (!$(this).hasClass("exclude")) {
+          o.preventDefault();
+          var e = this.hash,
+              a = $(e);
+              
+          $("html, body").stop().animate({
+              scrollTop: a.offset().top - 75
+          }, 900, "swing", function() {})
+      }
+    });
+
     //Open Mobil Menu
     $('.open-menu').click(function(e){
       e.preventDefault();
 
       $('.mobil').slideToggle('fast');
     });
-
-    // Product ZOOM & Change beetwen thumbnail
-    $(".img-detail-link").click( function(e) {
-       e.preventDefault();
-       var src = $(this).attr('data-src');
-
-       $("#img-detail").attr('src',src);
-       $(".img-zoom").attr('href',src);
-
-       $("#img-detail").magnify();
-    });
-
-    $("#img-detail").magnify();
 
     // showModel();
 

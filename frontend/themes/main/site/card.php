@@ -69,13 +69,13 @@ $assets = ThemeAsset::register($this);
     </div>
     <div class="row">
         <div class="col-sm-12 section-default">
-        <h2 data-aos="fade-up" data-aos-easing="ease-in-out">NOSOTROS</h2>
-        <h3 data-aos="fade-in" delay="500">Ofrecemos el mejor servicio privado de lujo de transportación.</h3>
-        <p data-aos="fade-in" delay="500">
-            Desde cualquier ubicación en Cabo San Lucas, San José del Cabo o los alrededores,
-            todos los hoteles del corredor turístico y el aeropuerto internacional de Los Cabos.
-            Contamos con personal bilingüe altamente capacitado en resolver todas la necesidades de transporte.
-        </p><span data-aos="fade-in" delay="500">Unidades último modelo</span>
+            <h2 data-aos="fade-up" data-aos-easing="ease-in-out">NOSOTROS</h2>
+            <h3 data-aos="fade-in" delay="500">Ofrecemos el mejor servicio privado de lujo de transportación.</h3>
+            <p data-aos="fade-in" delay="500">
+                Desde cualquier ubicación en Cabo San Lucas, San José del Cabo o los alrededores,
+                todos los hoteles del corredor turístico y el aeropuerto internacional de Los Cabos.
+                Contamos con personal bilingüe altamente capacitado en resolver todas la necesidades de transporte.
+            </p><span data-aos="fade-in" delay="500">Unidades último modelo</span>
         </div>
     </div>
     <div class="row services parallax">
